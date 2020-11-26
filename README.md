@@ -1,6 +1,6 @@
 # SHACL: Shapes Constraint Language (SHACL) for Ruby
 
-This is a pure-Ruby library for working with the [Shape Constraint Language][SHACLSpec] to validate the shape of [RDF][] graphs.
+This is a pure-Ruby library for working with the [Shape Constraint Language][SHACL Spec] to validate the shape of [RDF][] graphs.
 
 <https://ruby-rdf.github.com/shacl>
 
@@ -12,13 +12,18 @@ This is a pure-Ruby library for working with the [Shape Constraint Language][SHA
 ## Features
 
 * 100% pure Ruby with minimal dependencies and no bloat.
-* Fully compatible with [SHACL][SHACLSpec] specifications.
+* Fully compatible with [SHACL][SHACL Spec] specifications.
 * 100% free and unencumbered [public domain](https://unlicense.org/) software.
 
 ## Description
 
-The SHACL gem implements a [SHACL][SHACLSpec] Shape Expression engine.
+The SHACL gem implements a [SHACL][SHACL Spec] Shape Expression engine.
 
+### Implementation Strategy
+
+Similar to the [ShEx gem][] and to the general strategy for querying graphs in the [SPARQL gem][], the strategy is to parse SHACL shapes into executable operators, which are called recursively to create result sets corresponding to matched nodes and properties.
+
+The parsed shapes can be serialized as [S-Expressions][], which match the execution path. These [S-Expressions][] can be parsed to recreate the executable shape constraints.
 
 ## Examples
 
@@ -29,7 +34,6 @@ operations on RDF files, including ShEx. The commands specific to ShEx is
 ## Documentation
 
 <https://rubydoc.info/github/ruby-rdf/shacl>
-
 
 ## Implementation Notes
 
@@ -96,7 +100,13 @@ This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange develo
 This is free and unencumbered public domain software. For more information,
 see <https://unlicense.org/> or the accompanying {file:LICENSE} file.
 
-[SHACLSpec]:    https://www.w3.org/TR/shacl/
-[RDF]:          https://www.w3.org/RDF/
-[RDF.rb]:       https://rubydoc.info/github/ruby-rdf/rdf
-[PDD]:              https://unlicense.org/#unlicensing-contributions
+[SHACL Spec]:    https://www.w3.org/TR/shacl/
+[RDF]:           https://www.w3.org/RDF/
+[YARD]:          https://yardoc.org/
+[YARD-GS]:       https://rubydoc.info/docs/yard/file/docs/GettingStarted.md
+[PDD]:           https://unlicense.org/#unlicensing-contributions
+[S-Expressions]: https://en.wikipedia.org/wiki/S-expression
+[RDF.rb]:        https://rubydoc.info/github/ruby-rdf/rdf
+[SPARQL gem]:    https://ruby-rdf.github.com/sparql
+[SXP gem]:       https://ruby-rdf.github.com/sxp
+[ShEx gem]:      https://ruby-rdf.github.com/shex
