@@ -26,10 +26,10 @@ task :vocab do
   cmd += " https://www.w3.org/ns/shacl.ttl"
   puts "  #{cmd}"
   begin
-    %x{#{cmd} && sed 's/\r//g' lib/shacl/vocab.rb_t > lib/shacl/vocab.rb}
+    %x{#{cmd} && sed 's/\r//g' lib/rdf/vocab/shacl.rb_t > lib/rdf/vocab/shacl.rb}
   rescue
     puts "Failed to load shacl vocabulary: #{$!.message}"
   ensure
-    %x{rm -f lib/shacl/vocab.rb_t}
+    %x{rm -f lib/rdf/vocab/shacl.rb_t}
   end
 end

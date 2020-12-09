@@ -1,0 +1,206 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require "bundler/setup"
+$:.unshift(File.expand_path("../../lib", __FILE__))
+$:.unshift(File.expand_path("../../spec", __FILE__))
+require 'rdf'
+require 'rdf/isomorphic'
+require 'rspec'
+require 'shex'
+require 'suite_helper'
+require 'getoptlong'
+
+ASSERTOR = "https://greggkellogg.net/foaf#me"
+RUN_TIME = Time.now
+TEST_BASE = 'https://raw.githubusercontent.com/shexSpec/shexTest/master/'
+
+def earl_preamble(options)
+  options[:output].write File.read(File.expand_path("../../etc/doap.ttl", __FILE__))
+  options[:output].puts %(
+<> foaf:primaryTopic <https://rubygems.org/gems/shex> ;
+  dc:issued "#{RUN_TIME.xmlschema}"^^xsd:dateTime ;
+  foaf:maker <#{ASSERTOR}> .
+
+<#{ASSERTOR}> a foaf:Person, earl:Assertor;
+  foaf:name "Gregg Kellogg";
+  foaf:title "Implementor";
+  foaf:homepage <https://greggkellogg.net/> .
+)
+end
+
+def run_tc(t, **options)
+  STDERR.write "run #{t.name}" unless options[:quiet]
+  result = "untested"
+
+  begin
+    puts t.inspect if options[:verbose]
+
+    validate = case t.name
+    when '_all', 'kitchenSink' then false
+    else true
+    end
+    schema = ShEx.parse(t.schema_source,
+      base_uri: t.base,
+      validate: validate,
+      logger: t.logger)
+
+    puts "\nsxp: " + SXP::Generator.string(schema.to_sxp_bin) if options[:verbose]
+
+    focus = ShEx::Algebra::Operator.value(t.focus, base_uri: t.base)
+    map = if t.map
+      t.shape_map.inject({}) do |memo, (k,v)|
+        memo.merge(ShEx::Algebra::Operator.value(k, base_uri: t.base) => ShEx::Algebra::Operator.iri(v, base_uri: t.base))
+      end
+    elsif t.shape
+      {focus => ShEx::Algebra::Operator.iri(t.shape, base_uri: t.base)}
+    else
+      {}
+    end
+    focus = nil unless map.empty?
+
+    if t.positive_test?
+      if t.validation_test?
+        r = schema.execute(t.graph, map, focus: focus, logger: t.logger, shapeExterns: t.shapeExterns)
+        puts "\nresult: " + SXP::Generator.string(r.to_sxp_bin) if options[:verbose]
+        result = "passed"
+      else
+        result = schema.is_a?(ShEx::Algebra::Schema) ? "passed" : "failed"
+      end
+    else
+      if t.validation_test?
+        r = schema.execute(t.graph, map, focus: focus, logger: t.logger, shapeExterns: t.shapeExterns)
+        puts "\nresult: " + SXP::Generator.string(r.to_sxp_bin) if options[:verbose]
+        result = "failed"
+      else
+        result = "failed"
+      end
+    end
+  rescue ShEx::ParseError, ShEx::StructureError, ArgumentError => e
+    puts "\nexception: " + e.inspect if options[:verbose]
+    result = if t.negative_test? && (t.syntax_test? || t.structure_test?)
+      "passed"
+    else
+      "failed"
+    end
+  rescue ShEx::NotSatisfied => e
+    puts "\nexception: " + e.inspect if options[:verbose]
+    result = if t.negative_test? && t.validation_test?
+      "passed"
+    else
+      "failed"
+    end
+  rescue Interrupt
+    exit(1)
+  rescue Exception => e
+    result = "failed"
+  end
+
+  if options[:debug]
+    puts "\ndebug: " + t.logger.to_s
+  end
+
+  if options[:earl]
+    test = TEST_BASE + t.base.join(t.id).to_s.sub('.jsonld', '').split('/')[-2..-1].join("/")
+    options[:output].puts %{
+[ a earl:Assertion;
+  earl:assertedBy <#{ASSERTOR}>;
+  earl:subject <https://rubygems.org/gems/shex>;
+  earl:test <#{test}>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:#{result};
+    dc:date "#{RUN_TIME.xmlschema}"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+}
+  end
+
+  options[:result_count][result] ||= 0
+  options[:result_count][result] += 1
+
+  if options[:quiet]
+    STDERR.write(result == "passed" ? '.' : 'F')
+  else
+    STDERR.puts " #{result}"
+  end
+end
+
+options = {
+  output:       STDOUT,
+  validate:     true,
+  verbose:      false,
+}
+suite = "rdfxml"
+opts = GetoptLong.new(
+  ["--debug", GetoptLong::NO_ARGUMENT],
+  ["--earl", GetoptLong::NO_ARGUMENT],
+  ["--help", "-?", GetoptLong::NO_ARGUMENT],
+  ["--mancache", GetoptLong::NO_ARGUMENT],
+  ["--output", "-o", GetoptLong::REQUIRED_ARGUMENT],
+  ["--quiet", "-q", GetoptLong::NO_ARGUMENT],
+  ["--verbose", "-v", GetoptLong::NO_ARGUMENT],
+)
+
+def help(options)
+  puts "Usage: #{$0} [options] [test-number ...]"
+  puts "Options:"
+  puts "      --debug:              Display detailed debug output"
+  puts "      --earl:               Generate EARL report"
+  puts "      --quiet:              Minimal output"
+  puts "      --mancache:           Creates an N-Triples representation of the combined manifests"
+  puts "      --output:             Output to specified file"
+  puts "      --verbose:            Verbose processing"
+  puts "      --help,-?:            This message"
+  exit(0)
+end
+
+opts.each do |opt, arg|
+  case opt
+  when '--earl'     then options[:quiet] = options[:earl] = true
+  when '--debug'    then options[:debug] = true
+  when '--mancache' then options[:mancache] = true
+  when '--output'   then options[:output] = File.open(arg, "w")
+  when '--quiet'    then options[:quiet] = true
+  when '--verbose'  then options[:verbose] = true
+  end
+end
+
+earl_preamble(options) if options[:earl]
+result_count = {}
+man_graph = RDF::Graph.new
+
+%w(schemas/manifest.jsonld negativeSyntax/manifest.jsonld negativeStructure/manifest.jsonld validation/manifest.jsonld).each do |variant|
+  manifest = Fixtures::SuiteTest::BASE + variant
+
+  Fixtures::SuiteTest::Manifest.open(manifest) do |m|
+    if options[:mancache]
+      # Output N-Triples for this manifest
+      puts m.id
+      JSON::LD::API.toRdf(m.instance_variable_get(:@json), base: "#{TEST_BASE}#{variant.sub('.jsonld', '')}") {|s|
+        man_graph << s
+      }
+      next
+    end
+
+    m.entries.each do |tc|
+      next unless ARGV.empty? || ARGV.any? {|n| tc.name.match(/#{n}/)}
+      run_tc(tc, options.merge(result_count: result_count))
+    end
+  end
+end
+
+if options[:mancache]
+  require 'rdf/turtle'
+  options[:output].write(man_graph.dump(:ttl, standard_prefixes: true,
+    base_uri: TEST_BASE,
+    prefixes: {
+      mf:    "http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#",
+      sht:   "http://www.w3.org/ns/shacl/test-suite#",
+      sx:    "https://shexspec.github.io/shexTest/ns#"
+  }))
+else
+  STDERR.puts "" if options[:quiet]
+
+  result_count.each do |result, count|
+    puts "#{result}: #{count}"
+  end
+end
