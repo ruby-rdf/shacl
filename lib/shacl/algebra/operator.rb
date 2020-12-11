@@ -70,7 +70,10 @@ module SHACL::Algebra
         when 'property'
           operands.push(*as_array(v).map {|vv| PropertyShape.from_json(vv, **options)})
         when 'targetClass'        then node_opts[:targetClass] = as_array(v).map {|vv| iri(vv, **options)} if v
-        when 'targetNode'         then node_opts[:targetNode] = as_array(v).map {|vv| iri(vv, **options)} if v
+        when 'targetNode'
+          node_opts[:targetNode] = as_array(v).map do |vv|
+            from_expanded_value(vv, **options)
+          end if v
         when 'targetObjectsOf'    then node_opts[:targetObjectsOf] = as_array(v).map {|vv| iri(vv, **options)} if v
         when 'targetSubjectsOf'   then node_opts[:targetSubjectsOf] = as_array(v).map {|vv| iri(vv, **options)} if v
         when 'type'               then node_opts[:type] = as_array(v).map {|vv| iri(vv, **options)} if v
@@ -130,6 +133,40 @@ module SHACL::Algebra
         base_uri.join(value)
       else
         RDF::URI(value)
+      end
+    end
+
+    # Interpret a JSON-LD expanded value
+    # @param [Hash] item
+    # @return [RDF::Term]
+    def self.from_expanded_value(item, **options)
+      if item['@value']
+        value, datatype = item.fetch('@value'), item.fetch('@type', nil)
+        case value
+        when TrueClass, FalseClass
+          value = value.to_s
+          datatype ||= RDF::XSD.boolean.to_s
+        when Numeric
+          # Don't serialize as double if there are no fractional bits
+          as_double = value.ceil != value || value >= 1e21 || datatype == RDF::XSD.double
+          lit = if as_double
+            RDF::Literal::Double.new(value, canonicalize: true)
+          else
+            RDF::Literal.new(value.numerator, canonicalize: true)
+          end
+
+          datatype ||= lit.datatype
+          value = lit.to_s.sub("E+", "E")
+        else
+          datatype ||= item.has_key?('@language') ? RDF.langString : RDF::XSD.string
+        end
+        datatype = RDF::URI(datatype) if datatype && !datatype.is_a?(RDF::URI)
+        language = item.fetch('@language', nil) if datatype == RDF.langString
+        RDF::Literal.new(value, datatype: datatype, language: language)
+      elsif item['id']
+        self.iri(item['id'], **options)
+      else
+        RDF::Node.new
       end
     end
 

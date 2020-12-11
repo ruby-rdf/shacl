@@ -114,16 +114,13 @@ module SHACL
         "languageIn": {"@container": "@list"},
         "lessThan": {"@type": "@id"},
         "lessThanOrEquals": {"@type": "@id"},
-        "node": {"@type": "@id"},
         "nodeKind": {"@type": "@vocab"},
         "or": {"@type": "@id", "@container": "@list"},
         "path": {"@type": "@vocab"},
         "property": {"@type": "@id"},
         "severity": {"@type": "@vocab"},
         "targetClass": {"@type": "@id"},
-        "targetNode": {"@type": "@id"},
-        "targetObjectsOf": {"@type": "@id"},
-        "targetSubjectsOf": {"@type": "@id"}
+        "targetNode": {"@type": "@none"}
       },
       "@type": "NodeShape",
       "property": {},
