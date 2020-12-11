@@ -27,7 +27,7 @@ module SHACL
       [:focus, :path, :shape, :severity, :component, :details, :value, :message].inject([:ValidationResult]) do |memo, sym|
         v = to_h[sym]
         v = v.pname if v.respond_to?(:pname)
-        v ? (memo + [sym, *v]) : memo
+        v ? (memo + [[sym, *v]]) : memo
       end.to_sxp_bin
     end
 

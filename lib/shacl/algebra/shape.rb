@@ -23,5 +23,22 @@ module SHACL::Algebra
           **options)
       end.flatten.compact
     end
+
+    # Specifies a condition to be satisfied with regards to the datatype of each value node.
+    #
+    # @param [RDF::URI] type
+    # @param [Array<RDF::Term>] value_nodes
+    # @return [Array<SHACL::ValidationResult>]
+    def builtin_datatype(datatype, node, path, value_nodes, **options)
+      value_nodes.map do |n|
+        has_datatype = n.literal? && n.datatype == datatype && n.valid?
+        satisfy(focus: node, path: path,
+          value: n,
+          message: "should be a valid literal with datatype #{datatype}",
+          severity: (has_datatype ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          component: RDF::Vocab::SHACL.DatatypeConstraintComponent,
+          **options)
+      end.flatten.compact
+    end
   end
 end
