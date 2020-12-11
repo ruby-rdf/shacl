@@ -18,7 +18,7 @@ module SHACL::Algebra
     def targetNodes
       (Array(@options[:targetNode]) +
       Array(@options[:targetClass]).map do |cls|
-        graph.query(predicate: RDF.type, object: cls).objects
+        graph.query(predicate: RDF.type, object: cls).subjects
       end +
       Array(@options[:targetSubjectsOf]).map do |cls|
         graph.query(predicate: pred).subjects
