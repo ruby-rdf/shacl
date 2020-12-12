@@ -39,7 +39,7 @@ operations on RDF files, including ShEx. The commands specific to ShEx is
 
 ## Dependencies
 
-* [Ruby](https://ruby-lang.org/) (>= 2.4)
+* [Ruby](https://ruby-lang.org/) (>= 2.5)
 * [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.1)
 
 ## Installation
