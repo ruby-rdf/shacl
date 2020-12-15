@@ -154,7 +154,7 @@ module Fixtures
       end
 
       def dataGraph
-        @graph ||= RDF::OrderedRepo.load(action['dataGraph'])
+        @dataGraph ||= RDF::OrderedRepo.load(action['dataGraph'])
       end
 
       def shapesGraphInput
@@ -162,7 +162,7 @@ module Fixtures
       end
 
       def shapesGraph
-        @graph ||= RDF::OrderedRepo.load(action['shapesGraph']) if action['shapesGraph']
+        @shapesGraph ||= RDF::OrderedRepo.load(action['shapesGraph']) if action['shapesGraph']
       end
 
       def positive_test?

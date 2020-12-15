@@ -24,6 +24,7 @@ module SHACL::Algebra
       minExclusive minInclusive maxExclusive maxInclusive
       minLength maxLength
       pattern flags languageIn uniqueLang
+      qualifiedValueShapesDisjoint qualifiedMinCount qualifiedMaxCount
       equals disjoint lessThan lessThanOrEquals
       closed ignoredProperties hasValue in
     ).map(&:to_sym).freeze
@@ -63,12 +64,17 @@ module SHACL::Algebra
         when 'node'
           operands.push(*as_array(v).map {|vv| NodeShape.from_json(vv, **options)})
         when 'nodeKind'           then node_opts[:nodeKind] = iri(v, **options)
-        when 'not'                then operands << Not.new(v, **options)
+        when 'not'
+          elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
+          operands << Not.new(*elements, **options.dup)
         when 'or'
           elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
           operands << Or.new(*elements, **options.dup)
         when 'property'
           operands.push(*as_array(v).map {|vv| PropertyShape.from_json(vv, **options)})
+        when 'qualifiedValueShape'
+          elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
+          operands << QualifiedValueShape.new(*elements, **options.dup)
         when 'targetClass'        then node_opts[:targetClass] = as_array(v).map {|vv| iri(vv, **options)} if v
         when 'targetNode'
           node_opts[:targetNode] = as_array(v).map do |vv|

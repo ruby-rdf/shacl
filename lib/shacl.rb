@@ -1,10 +1,11 @@
+require 'shacl/shapes'
+require 'shacl/validation_result'
+require 'rdf/vocab/shacl'
+
 ##
 # A SHACL runtime for RDF.rb.
 #
 # @see https://www.w3.org/TR/shacl/
-require 'shacl/shapes'
-require 'shacl/validation_result'
-require 'rdf/vocab/shacl'
 
 module SHACL
   autoload :Algebra,    'shacl/algebra'

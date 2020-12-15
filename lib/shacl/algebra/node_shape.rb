@@ -13,8 +13,7 @@ module SHACL::Algebra
     #  * `targetObjectsOf`
     #  * `id` – where `type` includes `rdfs:Class`
     #
-    # @param [RDF::Queryable] graph    
-    # @return [RDF::Resource]
+    # @return [Array<RDF::Term>]
     def targetNodes
       (Array(@options[:targetNode]) +
       Array(@options[:targetClass]).map do |cls|

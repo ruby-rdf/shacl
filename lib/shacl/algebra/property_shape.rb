@@ -58,14 +58,38 @@ module SHACL::Algebra
     # Builin evaluators
     ##
 
-    # Specifies the minimum number of value nodes.
+    # Specifies the maximum number of value nodes.
     #
     # @param [Integer] count
+    # @param [RDF::Term] node the focus node
+    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [Array<RDF::Term>] value_nodes
+    # @return [Array<SHACL::ValidationResult>]
+    def builtin_maxCount(count, node, path, value_nodes, **options)
+      satisfy(focus: node, path: path,
+        message: "maxCount #{value_nodes.count} <= #{count}",
+        severity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+        component: RDF::Vocab::SHACL.MaxCountConstraintComponent,
+        **options)
+    end
+
+    # Specifies the minimum number of value nodes.
+    #
+    # @example
+    #   ex:MinCountExampleShape
+    #   	a sh:PropertyShape ;
+    #   	sh:targetNode ex:Alice, ex:Bob ;
+    #   	sh:path ex:name ;
+    #   	sh:minCount 1 .
+    #
+    # @param [Integer] count
+    # @param [RDF::Term] node the focus node
+    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
-        message: "minWidth #{value_nodes.count} >= #{count}",
+        message: "minCount #{value_nodes.count} >= #{count}",
         severity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.MinCountConstraintComponent,
         **options)
