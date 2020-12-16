@@ -5,32 +5,6 @@ module SHACL::Algebra
   class NodeShape < SHACL::Algebra::Shape
     NAME = :NodeShape
 
-    ##
-    # Returns the nodes matching this particular shape, based upon the shape properties:
-    #  * `targetNode`
-    #  * `targetClass`
-    #  * `targetSubjectsOf`
-    #  * `targetObjectsOf`
-    #  * `id` – where `type` includes `rdfs:Class`
-    #
-    # @return [Array<RDF::Term>]
-    def targetNodes
-      (Array(@options[:targetNode]) +
-      Array(@options[:targetClass]).map do |cls|
-        graph.query(predicate: RDF.type, object: cls).subjects
-      end +
-      Array(@options[:targetSubjectsOf]).map do |cls|
-        graph.query(predicate: pred).subjects
-      end +
-      Array(@options[:targetObjectsOf]).map do |cls|
-        graph.query(predicate: pred).objects
-      end + (
-        Array(type).include?(RDF::RDFS.Class) ?
-          graph.query(predicate: RDF.type, object: id).subjects :
-          []
-      )).flatten
-    end
-
     # Validates the specified `node` within `graph`, a list of {ValidationResult}.
     #
     # A node conforms if it is not deactivated and all of its operands conform.
@@ -42,7 +16,7 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
-      log_debug(NAME, depth: depth) {{id: id}.to_sxp}
+      log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
       # Evaluate against builtins
       builtin_results = @options.map do |k, v|

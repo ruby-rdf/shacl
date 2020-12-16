@@ -137,7 +137,7 @@ end
 earl_preamble(options) if options[:earl]
 result_count = {}
 
-%w(core/node).each do |variant|
+%w(core/node core/property).each do |variant|
   manifest = TEST_BASE + variant + '/manifest.ttl'
 
   Fixtures::SuiteTest::Manifest.open(manifest) do |m|

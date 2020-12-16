@@ -4,6 +4,32 @@ module SHACL::Algebra
     NAME = :Shape
 
     ##
+    # Returns the nodes matching this particular shape, based upon the shape properties:
+    #  * `targetNode`
+    #  * `targetClass`
+    #  * `targetSubjectsOf`
+    #  * `targetObjectsOf`
+    #  * `id` – where `type` includes `rdfs:Class`
+    #
+    # @return [Array<RDF::Term>]
+    def targetNodes
+      (Array(@options[:targetNode]) +
+      Array(@options[:targetClass]).map do |cls|
+        graph.query(predicate: RDF.type, object: cls).subjects
+      end +
+      Array(@options[:targetSubjectsOf]).map do |cls|
+        graph.query(predicate: pred).subjects
+      end +
+      Array(@options[:targetObjectsOf]).map do |cls|
+        graph.query(predicate: pred).objects
+      end + (
+        Array(type).include?(RDF::RDFS.Class) ?
+          graph.query(predicate: RDF.type, object: id).subjects :
+          []
+      )).flatten
+    end
+
+    ##
     # Builin evaluators. These evaulators may be used on either NodeShapes or PropertyShapes.
     ##
 

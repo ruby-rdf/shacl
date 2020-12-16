@@ -10,7 +10,7 @@ module SHACL::Algebra
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, depth: 0, **options)
-      log_debug(NAME, depth: depth)
+      log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
       operands.each do |op|
         results = op.conforms(node, depth: depth + 1, **options)
         if results.any?(&:conform?)

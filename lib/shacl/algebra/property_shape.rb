@@ -17,10 +17,10 @@ module SHACL::Algebra
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
       path = parse_path(@options[:path])
-      log_debug(NAME, depth: depth) {{id: id, path: path}.to_sxp}
+      log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
 
       # Turn the `path` attribute into a SPARQL Property Path and evaluate to find related nodes.
-      if path.uri?
+      if path.is_a?(RDF::URI)
         value_nodes = graph.query(subject: node, predicate: path).objects
 
         # Evaluate against builtins
@@ -50,8 +50,64 @@ module SHACL::Algebra
       case path
       when String then iri(path, **@options)
       else
-        log_error(NAME, "Can't handle path") {path.to_sxp}
+        if path.is_a?(Hash) && path['id']
+          iri(path['id'], **@options)
+        else
+          log_error(NAME, "Can't handle path") {path.to_sxp}
+        end
       end
+    end
+
+    def compare(method, property, node,path, value_nodes, **options)
+      nodes = graph.query(subject: node, predicate: property).objects
+      value_nodes.map do |left|
+        nodes.map do |right|
+          unless (left.simple? && right.simple?) ||
+            (left.is_a?(RDF::Literal::Numeric) && right.is_a?(RDF::Literal::Numeric)) ||
+            (left.datatype == right.datatype && left.language == right.language)
+            not_satisfied(focus: node, path: path,
+              value: left,
+              message: "value is incomperable with #{right.to_sxp}",
+              component: RDF::Vocab::SHACL.LessThanConstraintComponent,
+              **options)
+          else
+            conforms = left.send(method, right)
+            satisfy(focus: node, path: path,
+              value: left,
+              message: "should be #{method} than #{right.to_sxp}",
+              severity: (conforms ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+              component: RDF::Vocab::SHACL.LessThanConstraintComponent,
+              **options)
+          end
+        end
+      end.flatten.compact
+    end
+
+    # Specifies the condition that each value node is smaller than all the objects of the triples that have the focus node as subject and the value of sh:lessThan as predicate.
+    #
+    # @example
+    #   ex:LessThanExampleShape
+    #   	a sh:NodeShape ;
+    #   	sh:property [
+    #   		sh:path ex:startDate ;
+    #   		sh:lessThan ex:endDate ;
+    #   	] .
+    #
+    # @param [RDF::URI] property the property of the focus node whose values must be equal to some value node.
+    # @param [RDF::Term] node the focus node
+    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @return [Array<SHACL::ValidationResult>]
+    def builtin_lessThan(property, node, path, value_nodes, **options)
+      compare(:<, property, node, path, value_nodes, **options)
+    end
+    def builtin_lessThanOrEquals(property, node, path, value_nodes, **options)
+      compare(:<=, property, node, path, value_nodes, **options)
+    end
+    def builtin_greaterThan(property, node, path, value_nodes, **options)
+      compare(:>, property, node, path, value_nodes, **options)
+    end
+    def builtin_greaterThanOrEquals(property, node, path, value_nodes, **options)
+      compare(:>=, property, node, path, value_nodes, **options)
     end
 
     ##
@@ -93,6 +149,33 @@ module SHACL::Algebra
         severity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.MinCountConstraintComponent,
         **options)
+    end
+
+    # The property `sh:uniqueLang` can be set to `true` to specify that no pair of value nodes may use the same language tag.
+    #
+    # @param [Boolean] uniq
+    # @param [RDF::Term] node the focus node
+    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [Array<RDF::Term>] value_nodes
+    # @return [Array<SHACL::ValidationResult>]
+    def builtin_uniqueLang(uniq, node, path, value_nodes, **options)
+      if !value_nodes.all?(&:literal?)
+        not_satisfied(focus: node, path: path,
+          message: "not all values are literals",
+          component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
+          **options)
+      elsif value_nodes.map(&:language).length != value_nodes.map(&:language).uniq.length
+        not_satisfied(focus: node, path: path,
+          message: "not all values have unique language tags",
+          component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
+          **options)
+      else
+        satisfy(focus: node, path: path,
+          message: "all literals have unique language tags",
+          severity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
+          **options)
+      end
     end
   end
 end

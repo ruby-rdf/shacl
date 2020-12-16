@@ -10,7 +10,7 @@ module SHACL::Algebra
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, depth: 0, **options)
-      log_debug(NAME, depth: depth)
+      log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
       max_count = options.fetch(:qualifiedMaxCount, 0)
       min_count = options.fetch(:qualifiedMinCount, 0)
       operands.map do |op|
