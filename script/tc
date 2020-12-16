@@ -30,7 +30,8 @@ def earl_preamble(options)
 end
 
 def run_tc(t, **options)
-  STDERR.write "run #{t.id.split('/').last}: #{t.label}" unless options[:quiet]
+  rel = t.id.sub('urn:x-shacl-test:/', '')
+  STDERR.write "run #{rel}: #{t.label}" unless options[:quiet]
   result = "untested"
 
   begin
@@ -137,7 +138,12 @@ end
 earl_preamble(options) if options[:earl]
 result_count = {}
 
-%w(core/node core/property core/targets).each do |variant|
+%w(
+  core/misc
+  core/node
+  core/property
+  core/targets
+).each do |variant|
   manifest = TEST_BASE + variant + '/manifest.ttl'
 
   Fixtures::SuiteTest::Manifest.open(manifest) do |m|
