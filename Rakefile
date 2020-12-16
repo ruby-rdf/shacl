@@ -33,3 +33,15 @@ task :vocab do
     %x{rm -f lib/rdf/vocab/shacl.rb_t}
   end
 end
+
+desc "Build cached context for interpreting IRIs from JSON representation"
+task context: "lib/shacl/shapes.rb" do
+  File.open("lib/shacl/context.rb", "w") do |f|
+    require 'json/ld'
+    require 'shacl'
+    c = JSON::LD::Context.parse(SHACL::Shapes::SHAPES_FRAME['@context'])
+    c.context_base = "http://github.com/ruby-rdf/shacl/"
+    f.write c.to_rb
+  end
+end
+

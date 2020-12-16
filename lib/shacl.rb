@@ -1,5 +1,4 @@
 require 'shacl/shapes'
-require 'shacl/validation_result'
 require 'rdf/vocab/shacl'
 
 ##

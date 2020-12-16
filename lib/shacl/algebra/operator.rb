@@ -39,11 +39,9 @@ module SHACL::Algebra
     # Creates an operator instance from a parsed SHACL representation
     # @param [Hash] operator
     # @param [Hash] options ({})
-    # @option options [RDF::URI] :base
     # @option options [Hash{String => RDF::URI}] :prefixes
     # @return [Operator]
     def self.from_json(operator, **options)
-      options[:base_uri] ||= RDF::Vocab::SHACL.to_uri
       operands = []
       node_opts = options.dup
       operator.each do |k, v|
@@ -57,7 +55,7 @@ module SHACL::Algebra
         when 'datatype'           then node_opts[:datatype] = iri(v, **options)
         when 'disjoint'           then node_opts[:disjoint] = iri(v, **options)
         when 'equals'             then node_opts[:equals] = iri(v, **options)
-        when 'id'                 then node_opts[:id] = iri(v, **options)
+        when 'id'                 then node_opts[:id] = iri(v, vocab: false, **options)
         when 'ignoredProperties'  then node_opts[:ignoredPropertiese] = as_array(v).map {|vv| iri(vv, **options)} if v
         when 'lessThan'           then node_opts[:lessThan] = iri(v, **options)
         when 'lessThanOrEquals'   then node_opts[:lessThanOrEquals] = iri(v, **options)
@@ -117,10 +115,8 @@ module SHACL::Algebra
 
     # Create URIs
     # @param [RDF::Value, String] value
+    # @param [Boolean] vocab resolve vocabulary relative to the builtin context.
     # @param [Hash{Symbol => Object}] options
-    # @option options [RDF::URI] :base_uri
-    # @option options [Hash{String => RDF::URI}] :prefixes
-    # @option options [JSON::LD::Context] :context
     # @return [RDF::Value]
     def iri(value, options = @options)
       self.class.iri(value, **options)
@@ -130,16 +126,12 @@ module SHACL::Algebra
     # @param  (see #iri)
     # @option (see #iri)
     # @return (see #iri)
-    def self.iri(value, **options)
-      # If we have a base URI, use that when constructing a new URI
-      base_uri = options[:base_uri]
+    def self.iri(value, vocab: true, **options)
+      # Context will have been pre-loaded
+      @context ||= JSON::LD::Context.parse("http://github.com/ruby-rdf/shacl/")
 
-      value = value['@id'] if value.is_a?(Hash)
-      if base_uri
-        base_uri.join(value)
-      else
-        RDF::URI(value)
-      end
+      value = value['id'] if value.is_a?(Hash)
+      @context.expand_iri(value, base: RDF::Vocab::SHACL.to_uri, vocab: vocab)
     end
 
     # Interpret a JSON-LD expanded value

@@ -17,6 +17,7 @@ group :development, :test do
   gem 'sparql',             git: 'https://github.com/ruby-rdf/sparql.git',              branch: 'develop'
   gem 'sxp',                git: 'https://github.com/dryruby/sxp.rb.git',               branch: 'develop'
 
+  gem 'rake'
   gem 'simplecov',      '~> 0.16', platforms: :mri
   gem 'coveralls',      '~> 0.8', '>= 0.8.23',  platforms: :mri
 end

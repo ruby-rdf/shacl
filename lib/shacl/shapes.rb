@@ -1,4 +1,6 @@
-$:.unshift(File.expand_path("../..", __FILE__))
+require_relative 'algebra'
+require_relative 'validation_result'
+require_relative 'context'
 require 'json/ld'
 
 module SHACL
@@ -122,7 +124,7 @@ module SHACL
         "targetClass": {"@type": "@id"},
         "targetNode": {"@type": "@none"}
       },
-      "@type": "NodeShape",
+      "@type": ["NodeShape", "PropertyShape"],
       "property": {},
       "targetClass": {},
       "targetNode": {},
