@@ -17,10 +17,10 @@ module SHACL::Algebra
       Array(@options[:targetClass]).map do |cls|
         graph.query(predicate: RDF.type, object: cls).subjects
       end +
-      Array(@options[:targetSubjectsOf]).map do |cls|
+      Array(@options[:targetSubjectsOf]).map do |pred|
         graph.query(predicate: pred).subjects
       end +
-      Array(@options[:targetObjectsOf]).map do |cls|
+      Array(@options[:targetObjectsOf]).map do |pred|
         graph.query(predicate: pred).objects
       end + (
         Array(type).include?(RDF::RDFS.Class) ?
