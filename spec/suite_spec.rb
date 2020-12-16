@@ -8,10 +8,13 @@ describe SHACL do
     require_relative 'suite_helper'
 
     %w(
-      core/misc
       core/node
       core/property
       core/targets
+      core/misc
+      core/path
+      core/complex
+      core/validation-reports
     ).each do |path|
       Fixtures::SuiteTest::Manifest.open("urn:x-shacl-test:/#{path}/manifest.ttl") do |m|
         describe m.label do

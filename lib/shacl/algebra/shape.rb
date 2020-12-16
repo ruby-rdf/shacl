@@ -373,7 +373,7 @@ module SHACL::Algebra
         compares = !n.node? && n.to_s.length >= term
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal at with length >= #{term.to_sxp}",
+          message: "should be a literal with length >= #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MinLengthConstraintComponent,
           **options)

@@ -35,14 +35,14 @@ def run_tc(t, **options)
   result = "untested"
 
   begin
-    puts t.inspect if options[:verbose]
+    STDERR.puts t.inspect if options[:verbose]
 
     shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
-    puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
-    puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
+    STDERR.puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
+    STDERR.puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
 
     results = shapes.execute(t.dataGraph, logger: t.logger)
-    puts "results: #{SXP::Generator.string results.to_sxp_bin}" if options[:verbose]
+    STDERR.puts "results: #{SXP::Generator.string results.to_sxp_bin}" if options[:verbose]
 
     conforms = results.all?(&:conform?)
 
@@ -51,27 +51,26 @@ def run_tc(t, **options)
     else
       result = conforms ? "failed" : "passed"
     end
-  rescue ArgumentError => e
-    puts "\nexception: " + e.inspect if options[:verbose]
-    result = if t.negative_test?
-      "passed"
-    else
-      "failed"
-    end
   rescue Interrupt
     exit(1)
-  rescue Exception => e
-    if options[:quiet] || !options[:verbose]
-      options[:results]['failed'] ||= 0
-      options[:results]['failed'] += 1
-    else
-      raise
-    end
+  rescue Exception, NoMethodError => e
     result = "exception"
+    unless options[:quiet]
+      STDERR.puts("Exception: #{e.message}")
+      if options[:verbose]
+        STDERR.puts e.backtrace
+        STDERR.puts options[:logger].to_s
+      else
+        STDERR.puts options[:logger].to_s
+      end
+    end
   end
+ensure
+  options[:results][result] ||= 0
+  options[:results][result] += 1
 
   if options[:debug]
-    puts "\ndebug: " + t.logger.to_s
+    STDERR.puts "\ndebug: " + t.logger.to_s
   end
 
   if options[:earl]
@@ -89,11 +88,8 @@ def run_tc(t, **options)
 }
   end
 
-  options[:result_count][result] ||= 0
-  options[:result_count][result] += 1
-
   if options[:quiet]
-    STDERR.write(result == "passed" ? '.' : 'F')
+    STDERR.write(result == 'passed' ? '.' : result[0,1])
   else
     STDERR.puts " #{result}"
   end
@@ -101,6 +97,7 @@ end
 
 options = {
   output:       STDOUT,
+  results: {},
   validate:     true,
   verbose:      false,
 }
@@ -139,23 +136,26 @@ earl_preamble(options) if options[:earl]
 result_count = {}
 
 %w(
-  core/misc
   core/node
   core/property
   core/targets
+  core/misc
+  core/path
+  core/complex
+  core/validation-reports
 ).each do |variant|
   manifest = TEST_BASE + variant + '/manifest.ttl'
 
   Fixtures::SuiteTest::Manifest.open(manifest) do |m|
     m.entries.each do |t|
       next unless ARGV.empty? || ARGV.any? {|n| "#{t.id}: #{t.label}".include?(n)}
-      run_tc(t, options.merge(result_count: result_count))
+      run_tc(t, **options)
     end
   end
 end
 
 STDERR.puts "" if options[:quiet]
 
-result_count.each do |result, count|
+options[:results].each do |result, count|
   puts "#{result}: #{count}"
 end

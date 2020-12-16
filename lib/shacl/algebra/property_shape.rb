@@ -18,27 +18,35 @@ module SHACL::Algebra
       options = id ? options.merge(shape: id) : options
       path = parse_path(@options[:path])
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
+      log_error(NAME, "no path", depth: depth)
 
       # Turn the `path` attribute into a SPARQL Property Path and evaluate to find related nodes.
-      if path.is_a?(RDF::URI)
-        value_nodes = graph.query(subject: node, predicate: path).objects
-
-        # Evaluate against builtins
-        builtin_results = @options.map do |k, v|
-          self.send("builtin_#{k}".to_sym, v, node, path, value_nodes, depth: depth + 1, **options) if self.respond_to?("builtin_#{k}".to_sym)
-        end.flatten.compact
-
-        # Evaluate against operands
-        op_results = operands.map do |op|
-          value_nodes.map do |n|
-            op.conforms(n, depth: depth + 1, **options)
-          end
-        end.flatten.compact
-
-        builtin_results + op_results
+      value_nodes = if path.is_a?(RDF::URI)
+        graph.query(subject: node, predicate: path).objects
+      elsif path.evaluatable?
+        path.execute(graph,
+          subject: node,
+          object: RDF::Query::Variable.new(:object)).map do
+            |soln| soln[:object]
+        end.compact.uniq
       else
         log_error(NAME, "Can't handle path", depth: depth) {path.to_sxp}
+        []
       end
+
+      # Evaluate against builtins
+      builtin_results = @options.map do |k, v|
+        self.send("builtin_#{k}".to_sym, v, node, path, value_nodes, depth: depth + 1, **options) if self.respond_to?("builtin_#{k}".to_sym)
+      end.flatten.compact
+
+      # Evaluate against operands
+      op_results = operands.map do |op|
+        value_nodes.map do |n|
+          op.conforms(n, depth: depth + 1, **options)
+        end
+      end.flatten.compact
+
+      builtin_results + op_results
     end
 
     ##
@@ -49,12 +57,33 @@ module SHACL::Algebra
     def parse_path(path)
       case path
       when String then iri(path, **@options)
-      else
-        if path.is_a?(Hash) && path['id']
+      when Hash
+        # Creates a SPARQL S-Expression resulting in a query which can be used to find corresponding
+        {
+          alternativePath: :alt,
+          inversePath: :reverse,
+          oneOrMorePath: :"path+",
+          "@list": :seq,
+          zeroOrMorePath: :"path*",
+          zeroOrOnePath: :"path?",
+        }.each do |prop, op_sym|
+          if path[prop.to_s]
+            value = path[prop.to_s]
+            value = value['@list'] if value.is_a?(Hash) && value.key?('@list')
+            value = [value] if !value.is_a?(Array)
+            value = value.map {|e| parse_path(e)}
+            op = SPARQL::Algebra::Operator.for(op_sym)
+            return op.new(*value)
+          end
+        end
+
+        if path['id']
           iri(path['id'], **@options)
         else
           log_error(NAME, "Can't handle path") {path.to_sxp}
         end
+      else
+        log_error(NAME, "Can't handle path") {path.to_sxp}
       end
     end
 
@@ -123,7 +152,7 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
-        message: "maxCount #{value_nodes.count} <= #{count}",
+        message: "#{value_nodes.count} <= maxCount #{count}",
         severity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.MaxCountConstraintComponent,
         **options)
@@ -145,7 +174,7 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
-        message: "minCount #{value_nodes.count} >= #{count}",
+        message: "#{value_nodes.count} >= minCount #{count}",
         severity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.MinCountConstraintComponent,
         **options)
