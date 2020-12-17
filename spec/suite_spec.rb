@@ -31,6 +31,8 @@ describe SHACL do
                 pending "non-strict boolean property values"
               when *%w{core/targets/targetClassImplicit-001}
                 pending "inferred classes in data"
+              when *%w{core/complex/shacl-shacl}
+                pending "Framing issue"
               end
 
               t.logger = logger

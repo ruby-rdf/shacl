@@ -51,7 +51,7 @@ module SHACL
 
       # Serialize the graph as framed JSON-LD and initialize patterns, recursively.
       shape_json = JSON::LD::API.fromRdf(graph, useNativeTypes: true) do |expanded|
-        JSON::LD::API.frame(expanded, SHAPES_FRAME, omitGraph: false, expanded: true)
+        JSON::LD::API.frame(expanded, SHAPES_FRAME, omitGraph: false, embed: '@always', expanded: true)
       end['@graph']
 
       # Create an array of the framed shapes
