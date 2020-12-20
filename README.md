@@ -2,12 +2,10 @@
 
 This is a pure-Ruby library for working with the [Shape Constraint Language][SHACL Spec] to validate the shape of [RDF][] graphs.
 
-<https://ruby-rdf.github.com/shacl>
-
 [![Gem Version](https://badge.fury.io/rb/shacl.png)](https://badge.fury.io/rb/shacl)
-[![Build Status](https://travis-ci.org/ruby-rdf/shacl.png?branch=master)](https://travis-ci.org/ruby-rdf/shacl)
-[![Coverage Status](https://coveralls.io/repos/ruby-rdf/shacl/badge.svg)](https://coveralls.io/r/ruby-rdf/shacl)
-[![Join the chat at https://gitter.im/ruby-rdf/rdf](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ruby-rdf/rdf?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://github.com/ruby-rdf/shacl/workflows/CI/badge.svg?branch=develop)](https://github.com/ruby-rdf/shacl/actions?query=workflow%3ACI)
+[![Coverage Status](https://coveralls.io/repos/ruby-rdf/shacl/badge.svg)](https://coveralls.io/github/ruby-rdf/shacl)
+[![Gitter chat](https://badges.gitter.im/ruby-rdf/rdf.png)](https://gitter.im/ruby-rdf/rdf)
 
 ## Features
 
