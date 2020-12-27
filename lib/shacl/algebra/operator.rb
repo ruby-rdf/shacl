@@ -131,7 +131,7 @@ module SHACL::Algebra
       @context ||= JSON::LD::Context.parse("http://github.com/ruby-rdf/shacl/")
 
       value = value['id'] || value['@id'] if value.is_a?(Hash)
-      @context.expand_iri(value, base: base, vocab: vocab)
+      RDF::URI(@context.expand_iri(value, base: base, vocab: vocab))
     end
 
     # Interpret a JSON-LD expanded value

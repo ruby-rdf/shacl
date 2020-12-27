@@ -5,7 +5,6 @@ require 'json/ld'
 class JSON::LD::Context
   add_preloaded("http://github.com/ruby-rdf/shacl/") do
     new(vocab: "http://www.w3.org/ns/shacl#", processingMode: "json-ld-1.1", term_definitions: {
-      "alternativePath" => TermDefinition.new("alternativePath", id: "http://www.w3.org/ns/shacl#alternativePath", type_mapping: "@id", container_mapping: "@list"),
       "and" => TermDefinition.new("and", id: "http://www.w3.org/ns/shacl#and", type_mapping: "@id", container_mapping: "@list"),
       "annotationProperty" => TermDefinition.new("annotationProperty", id: "http://www.w3.org/ns/shacl#annotationProperty", type_mapping: "@id"),
       "class" => TermDefinition.new("class", id: "http://www.w3.org/ns/shacl#class", type_mapping: "@id"),
@@ -24,11 +23,12 @@ class JSON::LD::Context
       "lessThan" => TermDefinition.new("lessThan", id: "http://www.w3.org/ns/shacl#lessThan", type_mapping: "@id"),
       "lessThanOrEquals" => TermDefinition.new("lessThanOrEquals", id: "http://www.w3.org/ns/shacl#lessThanOrEquals", type_mapping: "@id"),
       "nodeKind" => TermDefinition.new("nodeKind", id: "http://www.w3.org/ns/shacl#nodeKind", type_mapping: "@vocab"),
-      "oneOrMorePath" => TermDefinition.new("oneOrMorePath", id: "http://www.w3.org/ns/shacl#oneOrMorePath", type_mapping: "@id", container_mapping: "@list"),
       "or" => TermDefinition.new("or", id: "http://www.w3.org/ns/shacl#or", type_mapping: "@id", container_mapping: "@list"),
       "path" => TermDefinition.new("path", id: "http://www.w3.org/ns/shacl#path", type_mapping: "@none"),
       "property" => TermDefinition.new("property", id: "http://www.w3.org/ns/shacl#property", type_mapping: "@id"),
       "severity" => TermDefinition.new("severity", id: "http://www.w3.org/ns/shacl#severity", type_mapping: "@vocab"),
+      "sh" => TermDefinition.new("sh", id: "http://www.w3.org/ns/shacl#", simple: true, prefix: true),
+      "shacl" => TermDefinition.new("shacl", id: "http://www.w3.org/ns/shacl#", simple: true, prefix: true),
       "targetClass" => TermDefinition.new("targetClass", id: "http://www.w3.org/ns/shacl#targetClass", type_mapping: "@id"),
       "targetNode" => TermDefinition.new("targetNode", id: "http://www.w3.org/ns/shacl#targetNode", type_mapping: "@none"),
       "type" => TermDefinition.new("type", id: "@type", container_mapping: "@set")

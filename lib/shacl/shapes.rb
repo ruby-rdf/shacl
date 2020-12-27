@@ -99,6 +99,8 @@ module SHACL
         "id": "@id",
         "type": {"@id": "@type", "@container": "@set"},
         "@vocab": "http://www.w3.org/ns/shacl#",
+        "shacl": "http://www.w3.org/ns/shacl#",
+        "sh": "http://www.w3.org/ns/shacl#",
         "and": {"@type": "@id", "@container": "@list"},
         "annotationProperty": {"@type": "@id"},
         "class": {"@type": "@id"},
