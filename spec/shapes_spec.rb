@@ -19,7 +19,7 @@ describe SHACL::Shapes do
           sxp: %{(shapes (
             (NodeShape
               (id <http://example.org/nodeNode>)
-              (type <http://www.w3.org/ns/shacl#NodeShape> <http://www.w3.org/2000/01/rdf-schema#Class>)
+              (type shacl:NodeShape rdfs:Class)
               (label "Node")
             ))
           )},

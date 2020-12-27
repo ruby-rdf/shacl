@@ -1,6 +1,7 @@
 require 'sparql/algebra'
 require 'shacl/validation_result'
 require 'json/ld'
+require_relative 'property_path'
 
 module SHACL::Algebra
 
@@ -10,6 +11,7 @@ module SHACL::Algebra
   # @abstract
   class Operator < SPARQL::Algebra::Operator
     include RDF::Util::Logger
+    extend SHACL::Algebra::PropertyPath
     extend JSON::LD::Utils
 
     # All keys associated with shapes which are set in options
@@ -68,6 +70,7 @@ module SHACL::Algebra
         when 'or'
           elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
           operands << Or.new(*elements, **options.dup)
+        when 'path'               then node_opts[:path] = parse_path(v)
         when 'property'
           operands.push(*as_array(v).map {|vv| PropertyShape.from_json(vv, **options)})
         when 'qualifiedValueShape'
@@ -131,7 +134,12 @@ module SHACL::Algebra
       @context ||= JSON::LD::Context.parse("http://github.com/ruby-rdf/shacl/")
 
       value = value['id'] || value['@id'] if value.is_a?(Hash)
-      RDF::URI(@context.expand_iri(value, base: base, vocab: vocab))
+      result = RDF::URI(@context.expand_iri(value, base: base, vocab: vocab))
+      if result.respond_to?(:qname) && result.qname
+        result = RDF::URI.new(result.to_s) if result.frozen?
+        result.lexical = result.qname.join(':')
+      end
+      result
     end
 
     # Interpret a JSON-LD expanded value

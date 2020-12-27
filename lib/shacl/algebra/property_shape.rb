@@ -16,7 +16,7 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
-      path = parse_path(@options[:path])
+      path = @options[:path]
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
       log_error(NAME, "no path", depth: depth)
 
@@ -47,44 +47,6 @@ module SHACL::Algebra
       end.flatten.compact
 
       builtin_results + op_results
-    end
-
-    ##
-    # Parse the "patH" attribute into a SPARQL Property Path and evaluate to find related nodes.
-    #
-    # @param [Object] path
-    # @return [RDF::URI, SPARQL::Algebra::Expression]
-    def parse_path(path)
-      case path
-      when String then iri(path, **@options)
-      when Hash
-        # Creates a SPARQL S-Expression resulting in a query which can be used to find corresponding
-        {
-          alternativePath: :alt,
-          inversePath: :reverse,
-          oneOrMorePath: :"path+",
-          "@list": :seq,
-          zeroOrMorePath: :"path*",
-          zeroOrOnePath: :"path?",
-        }.each do |prop, op_sym|
-          if path[prop.to_s]
-            value = path[prop.to_s]
-            value = value['@list'] if value.is_a?(Hash) && value.key?('@list')
-            value = [value] if !value.is_a?(Array)
-            value = value.map {|e| parse_path(e)}
-            op = SPARQL::Algebra::Operator.for(op_sym)
-            return op.new(*value)
-          end
-        end
-
-        if path['id']
-          iri(path['id'], **@options)
-        else
-          log_error(NAME, "Can't handle path") {path.to_sxp}
-        end
-      else
-        log_error(NAME, "Can't handle path") {path.to_sxp}
-      end
     end
 
     def compare(method, property, node,path, value_nodes, **options)
