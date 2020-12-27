@@ -126,12 +126,12 @@ module SHACL::Algebra
     # @param  (see #iri)
     # @option (see #iri)
     # @return (see #iri)
-    def self.iri(value, vocab: true, **options)
+    def self.iri(value, base: RDF::Vocab::SHACL.to_uri, vocab: true, **options)
       # Context will have been pre-loaded
       @context ||= JSON::LD::Context.parse("http://github.com/ruby-rdf/shacl/")
 
-      value = value['id'] if value.is_a?(Hash)
-      @context.expand_iri(value, base: RDF::Vocab::SHACL.to_uri, vocab: vocab)
+      value = value['id'] || value['@id'] if value.is_a?(Hash)
+      @context.expand_iri(value, base: base, vocab: vocab)
     end
 
     # Interpret a JSON-LD expanded value
@@ -201,15 +201,8 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def satisfy(focus:, shape:, component:, severity: RDF::Vocab::SHACL.Info, path: nil, value: nil, details: nil, message: nil, **options)
       log_debug(self.class.const_get(:NAME), "satisfied#{': ' + message if message}", **options)
-      [SHACL::ValidationResult.new(
-        focus: focus,
-        path: path,
-        details: details,
-        severity: severity,
-        shape: shape,
-        component: component,
-        value: value,
-        message: message)]
+      [SHACL::ValidationResult.new(focus, path, shape, severity, component,
+                                   details, value, message)]
     end
 
     ##
@@ -226,15 +219,8 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def not_satisfied(focus:, shape:, component:, severity: RDF::Vocab::SHACL.Violation, path: nil, value: nil, details: nil, message: nil, **options)
       log_info(self.class.const_get(:NAME), "not satisfied#{': ' + message if message}", **options)
-      [SHACL::ValidationResult.new(
-        focus: focus,
-        path: path,
-        details: details,
-        severity: severity,
-        shape: shape,
-        component: component,
-        value: value,
-        message: message)]
+      [SHACL::ValidationResult.new(focus, path, shape, severity, component,
+                                   details, value, message)]
     end
   end
 end

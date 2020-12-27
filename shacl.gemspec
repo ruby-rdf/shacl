@@ -18,10 +18,10 @@ Gem::Specification.new do |gem|
   gem.files              = %w(README.md LICENSE VERSION etc/doap.ttl) + Dir.glob('lib/**/*.rb')
   gem.require_paths      = %w(lib)
 
-  gem.required_ruby_version      = '>= 2.5'
+  gem.required_ruby_version      = '>= 2.4'
   gem.requirements               = []
-  gem.add_runtime_dependency     'rdf',         '~> 3.1'
-  gem.add_runtime_dependency     'json-ld',     '~> 3.1'
+  gem.add_runtime_dependency     'rdf',         '~> 3.1', '>= 3.1.8'
+  gem.add_runtime_dependency     'json-ld',     '~> 3.1', '>= 3.1.7'
   gem.add_runtime_dependency     'json-ld-preloaded','~> 3.1'
   gem.add_runtime_dependency     'ebnf',        '~> 2.0'
   gem.add_runtime_dependency     'sxp',         '~> 1.1'
