@@ -35,7 +35,9 @@ task :vocab do
 end
 
 desc "Build cached context for interpreting IRIs from JSON representation"
-task context: "lib/shacl/shapes.rb" do
+task context: "lib/shacl/context.rb"
+
+file "lib/shacl/context.rb" => "lib/shacl/shapes.rb" do
   File.open("lib/shacl/context.rb", "w") do |f|
     require 'json/ld'
     require 'shacl'

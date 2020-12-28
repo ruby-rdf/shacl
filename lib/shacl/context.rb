@@ -17,6 +17,7 @@ class JSON::LD::Context
       "equals" => TermDefinition.new("equals", id: "http://www.w3.org/ns/shacl#equals", type_mapping: "@id"),
       "id" => TermDefinition.new("id", id: "@id", simple: true),
       "ignoredProperties" => TermDefinition.new("ignoredProperties", id: "http://www.w3.org/ns/shacl#ignoredProperties", type_mapping: "@id", container_mapping: "@list"),
+      "in" => TermDefinition.new("in", id: "http://www.w3.org/ns/shacl#in", type_mapping: "@none", container_mapping: "@list"),
       "inversePath" => TermDefinition.new("inversePath", id: "http://www.w3.org/ns/shacl#inversePath", type_mapping: "@id"),
       "label" => TermDefinition.new("label", id: "http://www.w3.org/2000/01/rdf-schema#label", simple: true),
       "languageIn" => TermDefinition.new("languageIn", id: "http://www.w3.org/ns/shacl#languageIn", container_mapping: "@list"),

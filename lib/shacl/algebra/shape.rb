@@ -296,7 +296,7 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxLength(term, node, path, value_nodes, **options)
       value_nodes.map do |n|
-        compares = !n.node? && n.to_s.length <= term
+        compares = !n.node? && n.to_s.length <= term.to_i
         satisfy(focus: node, path: path,
           value: n,
           message: "should be a literal at with length <= #{term.to_sxp}",
@@ -370,7 +370,7 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minLength(term, node, path, value_nodes, **options)
       value_nodes.map do |n|
-        compares = !n.node? && n.to_s.length >= term
+        compares = !n.node? && n.to_s.length >= term.to_i
         satisfy(focus: node, path: path,
           value: n,
           message: "should be a literal with length >= #{term.to_sxp}",

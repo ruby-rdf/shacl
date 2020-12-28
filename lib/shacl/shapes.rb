@@ -113,6 +113,7 @@ module SHACL
         "entailment": {"@type": "@id"},
         "equals": {"@type": "@id"},
         "ignoredProperties": {"@type": "@id", "@container": "@list"},
+        "in": {"@type": "@none", "@container": "@list"},
         "inversePath": {"@type": "@id"},
         "label": "http://www.w3.org/2000/01/rdf-schema#label",
         "languageIn": {"@container": "@list"},

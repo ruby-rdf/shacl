@@ -70,7 +70,7 @@ module SHACL::Algebra
         when 'or'
           elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
           operands << Or.new(*elements, **options.dup)
-        when 'path'               then node_opts[:path] = parse_path(v)
+        when 'path'               then node_opts[:path] = parse_path(v, **options)
         when 'property'
           operands.push(*as_array(v).map {|vv| PropertyShape.from_json(vv, **options)})
         when 'qualifiedValueShape'
@@ -89,7 +89,7 @@ module SHACL::Algebra
           operands << Xone.new(*elements, **options.dup)
         else
           # Add as a plain option if it is recognized
-          node_opts[k.to_sym] = v if ALL_KEYS.include?(k.to_sym)
+          node_opts[k.to_sym] = to_rdf(k.to_sym, v, **options) if ALL_KEYS.include?(k.to_sym)
         end
       end
 
@@ -110,7 +110,7 @@ module SHACL::Algebra
 
     # Is this shape deactivated?
     # @return [Boolean]
-    def deactivated?; !!@options[:deactivated]; end
+    def deactivated?; @options[:deactivated] == RDF::Literal::TRUE; end
 
     # Any comment associated with this operator
     # @return [RDF::Literal]
@@ -134,12 +134,53 @@ module SHACL::Algebra
       @context ||= JSON::LD::Context.parse("http://github.com/ruby-rdf/shacl/")
 
       value = value['id'] || value['@id'] if value.is_a?(Hash)
-      result = RDF::URI(@context.expand_iri(value, base: base, vocab: vocab))
+      result = @context.expand_iri(value, base: base, vocab: vocab)
+      result = RDF::URI(result) if result.is_a?(String)
       if result.respond_to?(:qname) && result.qname
         result = RDF::URI.new(result.to_s) if result.frozen?
         result.lexical = result.qname.join(':')
       end
       result
+    end
+
+    # Turn a JSON-LD value into its RDF representation
+    # @see JSON::LD::ToRDF.item_to_rdf
+    # @param [Symbol] term
+    # @param [Object] item
+    # @return RDF::Term
+    def self.to_rdf(term, item, **options)
+      @context ||= JSON::LD::Context.parse("http://github.com/ruby-rdf/shacl/")
+
+      return item.map {|v| to_rdf(term, v, **options)} if item.is_a?(Array)
+
+      case
+      when item.is_a?(TrueClass) || item.is_a?(FalseClass) || item.is_a?(Numeric)
+        return RDF::Literal(item)
+      when value?(item)
+        value, datatype = item.fetch('@value'), item.fetch('@type', nil)
+        case value
+        when TrueClass, FalseClass, Numeric
+          return RDF::Literal(value)
+        else
+          datatype ||= item.has_key?('@direction') ?
+            RDF::URI("https://www.w3.org/ns/i18n##{item.fetch('@language', '').downcase}_#{item['@direction']}") :
+            (item.has_key?('@language') ? RDF.langString : RDF::XSD.string)
+        end
+        datatype = RDF::URI(datatype) if datatype && !datatype.is_a?(RDF::URI)
+                  
+        # Initialize literal as an RDF literal using value and datatype. If element has the key @language and datatype is xsd:string, then add the value associated with the @language key as the language of the object.
+        language = item.fetch('@language', nil) if datatype == RDF.langString
+        return RDF::Literal.new(value, datatype: datatype, language: language)
+      when node?(item)
+        return iri(item, **options)
+      when list?(item)
+        RDF::List(*item['@list'].map {|v| to_rdf(term, v, **options)})
+      when item.is_a?(String)
+        RDF::Literal(item)
+      else
+        require 'byebug'; byebug
+        raise "Can't transform #{item.inspect} to RDF on property #{term}"
+      end
     end
 
     # Interpret a JSON-LD expanded value
