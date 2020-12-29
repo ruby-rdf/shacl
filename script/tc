@@ -6,11 +6,13 @@ $:.unshift(File.expand_path("../../spec", __FILE__))
 require 'rdf'
 require 'rdf/isomorphic'
 require 'rdf/ordered_repo'
+require 'rdf/reasoner'
 require 'rspec'
 require 'shacl'
 require 'suite_helper'
+require 'entailment'
 require 'getoptlong'
-require 'awesome_print'
+require 'amazing_print'
 
 ASSERTOR = "https://greggkellogg.net/foaf#me"
 RUN_TIME = Time.now
@@ -35,6 +37,8 @@ def earl_preamble(options)
 )
 end
 
+RDF::Reasoner.apply(:rdfs)
+
 def run_tc(t, **options)
   rel = t.id.sub('urn:x-shacl-test:/', '')
   STDERR.write "run #{rel}: #{t.label}" unless options[:quiet]
@@ -47,6 +51,9 @@ def run_tc(t, **options)
     STDERR.puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
     STDERR.puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
 
+    # Consider that the datagraph defines a vocabulary
+    t.dataGraph.extend(SHACL::Entailment)
+    t.dataGraph.entail!
     results = shapes.execute(t.dataGraph, logger: t.logger)
     STDERR.puts "results: #{SXP::Generator.string results.reject(&:conform?).to_sxp_bin}" if options[:verbose]
 

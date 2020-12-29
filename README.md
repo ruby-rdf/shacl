@@ -49,6 +49,19 @@ Evaluating the shapes against a graph results in a set of {SHACL::ValidationResu
 
 TODO: generate RDF from a set of `ValidationResults` to create a `sh:ValidationReport`.
 
+### Matching Entailed Triples
+Many tests check for entailed triples, such as entailed super-classes of explict `rdf:type` values. If this is required for a given application, the [RDF::Reasoner][] gem can be used to create such entailed triples.
+
+    require 'shacl'
+    require 'rdf/reasoner'
+    RDF::Reasoner.apply(:rdfs)
+    graph = RDF::Graph.load("etc/doap.ttl")
+    graph.entail!
+    shacl = SHACL.open("etc/doap.shacl")
+    results = shacl.execute(graph)
+    #=> [ValidationResult, ...]
+    
+
 ## Dependencies
 
 * [Ruby](https://ruby-lang.org/) (>= 2.4)
@@ -121,7 +134,8 @@ see <https://unlicense.org/> or the accompanying {file:LICENSE} file.
 [YARD-GS]:       https://rubydoc.info/docs/yard/file/docs/GettingStarted.md
 [PDD]:           https://unlicense.org/#unlicensing-contributions
 [S-Expressions]: https://en.wikipedia.org/wiki/S-expression
-[RDF.rb]:        https://rubydoc.info/github/ruby-rdf/rdf
+[RDF.rb]:        https://ruby-rdf.github.com/rdf
+[RDF::Reasoner]:        https://ruby-rdf.github.com/rdf-reasoner
 [SPARQL gem]:    https://ruby-rdf.github.com/sparql
 [SXP gem]:       https://ruby-rdf.github.com/sxp
 [ShEx gem]:      https://ruby-rdf.github.com/shex

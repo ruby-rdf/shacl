@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+require_relative 'entailment'
 
 describe SHACL do
   # W3C Test suite from https://w3c.github.io/data-shapes/data-shapes-test-suite/tests/core/node
@@ -42,6 +43,10 @@ describe SHACL do
               t.logger.info "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}"
               t.logger.info "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}"
 
+              # Consider that the datagraph defines a vocabulary
+              t.dataGraph.extend(SHACL::Entailment)
+              t.dataGraph.entail!
+
               results = shapes.execute(t.dataGraph, logger: t.logger)
               t.logger.info "results: #{SXP::Generator.string results.reject(&:conform?).to_sxp_bin}"
 
@@ -53,6 +58,7 @@ describe SHACL do
                 # Verify that the produced results are the same
                 expected_results = t.results
                 actual_results = results.reject(&:conform?)
+                expect(actual_results.count).to produce(expected_results.count, t.logger)
                 expect(actual_results).to include(*expected_results), t.logger.to_s
               end
             end
