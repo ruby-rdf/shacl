@@ -13,21 +13,27 @@ This is a pure-Ruby library for working with the [Shape Constraint Language][SHA
 * Fully compatible with [SHACL][SHACL Spec] specifications.
 * 100% free and unencumbered [public domain](https://unlicense.org/) software.
 
+[Implementation Report](https://ruby-rdf.github.io/shacl/etc/earl.html)
+
+Install with `gem install shacl`
+
 ## Description
 
 The SHACL gem implements a [SHACL][SHACL Spec] Shape Expression engine.
 
-### Implementation Strategy
-
-Similar to the [ShEx gem][] and to the general strategy for querying graphs in the [SPARQL gem][], the strategy is to parse SHACL shapes into executable operators, which are called recursively to create result sets corresponding to matched nodes and properties.
-
-The parsed shapes can be serialized as [S-Expressions][], which match the execution path. These [S-Expressions][] can be parsed to recreate the executable shape constraints.
-
 ## Examples
 
+    require 'linkeddata'
+    require 'shacl'
+
+    graph = RDF::Graph.load("etc/doap.ttl")
+    shacl = SHACL.open("etc/doap.shacl")
+    results = shacl.execute(graph)
+    #=> [ValidationResult, ...]
+
 ## Command Line
-When the `linkeddata` gem is installed, RDF.rb includes a `rdf` executable which acts as a wrapper to perform a number of different
-operations on RDF files, including ShEx. The commands specific to ShEx is 
+TODO: When the `linkeddata` gem is installed, RDF.rb includes a `rdf` executable which acts as a wrapper to perform a number of different
+operations on RDF files, including SHACL. The commands specific to SHACL is 
 
 ## Documentation
 
@@ -35,10 +41,21 @@ operations on RDF files, including ShEx. The commands specific to ShEx is
 
 ## Implementation Notes
 
+Similar to the [ShEx gem][] and to the general strategy for querying graphs in the [SPARQL gem][], the strategy is to parse SHACL shapes into executable operators, which are called recursively to create result sets corresponding to matched nodes and properties.
+
+The shape graph is parsed into JSON-LD, and then converted into [S-Expressions][], which match the execution path. These [S-Expressions][] can be parsed to recreate the executable shape constraints.
+
+Evaluating the shapes against a graph results in a set of {SHACL::ValidationResult} instances, which are most easily serialized as an s-expression. The results of all operations generates a `ValidationResult` which is considered to _conform_ unless the _severity_ is `sh:Violation`.
+
+TODO: generate RDF from a set of `ValidationResults` to create a `sh:ValidationReport`.
+
 ## Dependencies
 
-* [Ruby](https://ruby-lang.org/) (>= 2.5)
-* [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.1)
+* [Ruby](https://ruby-lang.org/) (>= 2.4)
+* [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.1, => 3.1.8)
+* [SPARQL](https://rubygems.org/gems/sparql) (~> 3.1, => 3.1.4)
+* [json-ld](https://rubygems.org/gems/sparql) (~> 3.1, => 3.1.7)
+* [sxp](https://rubygems.org/gems/sxp) (~> 1.1)
 
 ## Installation
 

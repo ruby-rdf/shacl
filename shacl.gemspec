@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.version            = File.read('VERSION').chomp
   gem.date               = File.mtime('VERSION').strftime('%Y-%m-%d')
 
-  gem.name               = 'shex'
+  gem.name               = 'shacl'
   gem.homepage           = 'https://ruby-rdf.github.com/shacl'
   gem.license            = 'Unlicense'
   gem.summary            = 'Implementation of Shapes Constraint Language (SHACL) for RDF.rb'
@@ -22,14 +22,12 @@ Gem::Specification.new do |gem|
   gem.requirements               = []
   gem.add_runtime_dependency     'rdf',         '~> 3.1', '>= 3.1.8'
   gem.add_runtime_dependency     'json-ld',     '~> 3.1', '>= 3.1.7'
-  gem.add_runtime_dependency     'json-ld-preloaded','~> 3.1'
-  gem.add_runtime_dependency     'ebnf',        '~> 2.0'
   gem.add_runtime_dependency     'sxp',         '~> 1.1'
-  gem.add_runtime_dependency     'rdf-xsd',     '~> 3.1'
   gem.add_runtime_dependency     'sparql',      '~> 3.1'
 
   gem.add_development_dependency 'rdf-spec',    '~> 3.1'
   gem.add_development_dependency 'rdf-turtle',  '~> 3.1'
+  gem.add_development_dependency 'rdf-xsd',     '~> 3.1'
   gem.add_development_dependency 'rspec',       '~> 3.10'
   gem.add_development_dependency 'rspec-its',   '~> 1.3'
   gem.add_development_dependency 'yard',        '~> 0.9'

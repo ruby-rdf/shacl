@@ -1,0 +1,824 @@
+
+@prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sht: <http://www.w3.org/ns/shacl-test#> .
+
+<urn:x-shacl-test:/core/node/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/core/node" ;
+  mf:entries (<urn:x-shacl-test:/core/node/and-001> <urn:x-shacl-test:/core/node/and-002> <urn:x-shacl-test:/core/node/class-001> <urn:x-shacl-test:/core/node/class-002> <urn:x-shacl-test:/core/node/class-003> <urn:x-shacl-test:/core/node/closed-001> <urn:x-shacl-test:/core/node/closed-002> <urn:x-shacl-test:/core/node/datatype-001> <urn:x-shacl-test:/core/node/datatype-002> <urn:x-shacl-test:/core/node/disjoint-001> <urn:x-shacl-test:/core/node/equals-001> <urn:x-shacl-test:/core/node/hasValue-001> <urn:x-shacl-test:/core/node/in-001> <urn:x-shacl-test:/core/node/languageIn-001> <urn:x-shacl-test:/core/node/maxExclusive-001> <urn:x-shacl-test:/core/node/maxInclusive-001> <urn:x-shacl-test:/core/node/maxLength-001> <urn:x-shacl-test:/core/node/minExclusive-001> <urn:x-shacl-test:/core/node/minInclusive-001> <urn:x-shacl-test:/core/node/minInclusive-002> <urn:x-shacl-test:/core/node/minInclusive-003> <urn:x-shacl-test:/core/node/minLength-001> <urn:x-shacl-test:/core/node/node-001> <urn:x-shacl-test:/core/node/nodeKind-001> <urn:x-shacl-test:/core/node/not-001> <urn:x-shacl-test:/core/node/not-002> <urn:x-shacl-test:/core/node/or-001> <urn:x-shacl-test:/core/node/pattern-001> <urn:x-shacl-test:/core/node/pattern-002> <urn:x-shacl-test:/core/node/qualified-001> <urn:x-shacl-test:/core/node/xone-001> <urn:x-shacl-test:/core/node/xone-duplicate>)
+  .
+
+<urn:x-shacl-test:/core/node/and-001> a sht:Validate ;
+  rdfs:label "Test of sh:and at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/and-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/and-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/and-002> a sht:Validate ;
+  rdfs:label "Test of sh:and at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/and-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/and-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/class-001> a sht:Validate ;
+  rdfs:label "Test of sh:class at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/class-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/class-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/class-002> a sht:Validate ;
+  rdfs:label "Test of sh:class at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/class-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/class-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/class-003> a sht:Validate ;
+  rdfs:label "Test of sh:class at node shape 003 multiple classes, overlapping target sets" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/class-003.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/class-003.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/closed-001> a sht:Validate ;
+  rdfs:label "Test of sh:closed at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/closed-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/closed-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/closed-002> a sht:Validate ;
+  rdfs:label "Test of sh:closed at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/closed-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/closed-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/datatype-001> a sht:Validate ;
+  rdfs:label "Test of sh:datatype at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/datatype-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/datatype-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/datatype-002> a sht:Validate ;
+  rdfs:label "Test of sh:datatype at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/datatype-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/datatype-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/disjoint-001> a sht:Validate ;
+  rdfs:label "Test of sh:disjoint at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/disjoint-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/disjoint-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/equals-001> a sht:Validate ;
+  rdfs:label "Test of sh:equals at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/equals-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/equals-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/hasValue-001> a sht:Validate ;
+  rdfs:label "Test of sh:hasValue at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/hasValue-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/hasValue-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/in-001> a sht:Validate ;
+  rdfs:label "Test of sh:in at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/in-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/in-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/languageIn-001> a sht:Validate ;
+  rdfs:label "Test of sh:languageIn at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/languageIn-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/languageIn-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/maxExclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxExclusive at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/maxExclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/maxExclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/maxInclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxInclusive at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/maxInclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/maxInclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/maxLength-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxLength at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/maxLength-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/maxLength-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/minExclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:minExclusive at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/minExclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/minExclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/minInclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:minInclusive at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/minInclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/minInclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/minInclusive-002> a sht:Validate ;
+  rdfs:label "Test of sh:minInclusive at node shape 002 - dateTime with timezone" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/minInclusive-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/minInclusive-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/minInclusive-003> a sht:Validate ;
+  rdfs:label "Test of sh:minInclusive at node shape 003 - dateTime without timezone" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/minInclusive-003.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/minInclusive-003.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/minLength-001> a sht:Validate ;
+  rdfs:label "Test of sh:minLength at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/minLength-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/minLength-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/node-001> a sht:Validate ;
+  rdfs:label "Test of sh:node at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/node-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/node-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/nodeKind-001> a sht:Validate ;
+  rdfs:label "Test of sh:nodeKind at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/nodeKind-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/nodeKind-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/not-001> a sht:Validate ;
+  rdfs:label "Test of sh:not at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/not-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/not-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/not-002> a sht:Validate ;
+  rdfs:label "Test of sh:not at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/not-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/not-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/or-001> a sht:Validate ;
+  rdfs:label "Test of sh:or at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/or-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/or-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/pattern-001> a sht:Validate ;
+  rdfs:label "Test of sh:pattern at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/pattern-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/pattern-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/pattern-002> a sht:Validate ;
+  rdfs:label "Test of sh:pattern at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/pattern-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/pattern-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/qualified-001> a sht:Validate ;
+  rdfs:label "Test of qualified parameters allowed in node shapes" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/qualified-001-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/qualified-001-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/xone-001> a sht:Validate ;
+  rdfs:label "Test of sh:xone at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/xone-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/xone-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/node/xone-duplicate> a sht:Validate ;
+  rdfs:label "Test of validation report for shape xone-duplicate by property constraints" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/node/xone-duplicate-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/node/xone-duplicate-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/core/property" ;
+  mf:entries (<urn:x-shacl-test:/core/property/and-001> <urn:x-shacl-test:/core/property/class-001> <urn:x-shacl-test:/core/property/datatype-001> <urn:x-shacl-test:/core/property/datatype-002> <urn:x-shacl-test:/core/property/datatype-003> <urn:x-shacl-test:/core/property/datatype-ill-formed> <urn:x-shacl-test:/core/property/disjoint-001> <urn:x-shacl-test:/core/property/equals-001> <urn:x-shacl-test:/core/property/hasValue-001> <urn:x-shacl-test:/core/property/in-001> <urn:x-shacl-test:/core/property/languageIn-001> <urn:x-shacl-test:/core/property/lessThan-001> <urn:x-shacl-test:/core/property/lessThan-002> <urn:x-shacl-test:/core/property/lessThanOrEquals-001> <urn:x-shacl-test:/core/property/maxCount-001> <urn:x-shacl-test:/core/property/maxCount-002> <urn:x-shacl-test:/core/property/maxExclusive-001> <urn:x-shacl-test:/core/property/maxInclusive-001> <urn:x-shacl-test:/core/property/maxLength-001> <urn:x-shacl-test:/core/property/minCount-001> <urn:x-shacl-test:/core/property/minCount-002> <urn:x-shacl-test:/core/property/minExclusive-001> <urn:x-shacl-test:/core/property/minExclusive-002> <urn:x-shacl-test:/core/property/minLength-001> <urn:x-shacl-test:/core/property/node-001> <urn:x-shacl-test:/core/property/node-002> <urn:x-shacl-test:/core/property/nodeKind-001> <urn:x-shacl-test:/core/property/not-001> <urn:x-shacl-test:/core/property/or-001> <urn:x-shacl-test:/core/property/or-datatypes-001> <urn:x-shacl-test:/core/property/pattern-001> <urn:x-shacl-test:/core/property/pattern-002> <urn:x-shacl-test:/core/property/property-001> <urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001> <urn:x-shacl-test:/core/property/qualifiedValueShape-001> <urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001> <urn:x-shacl-test:/core/property/uniqueLang-001> <urn:x-shacl-test:/core/property/uniqueLang-002>)
+  .
+
+<urn:x-shacl-test:/core/property/and-001> a sht:Validate ;
+  rdfs:label "Test of sh:and at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/and-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/and-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/class-001> a sht:Validate ;
+  rdfs:label "Test of sh:class at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/class-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/class-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/datatype-001> a sht:Validate ;
+  rdfs:label "Test of sh:datatype at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/datatype-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/datatype-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/datatype-002> a sht:Validate ;
+  rdfs:label "Test of sh:datatype at property shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/datatype-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/datatype-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/datatype-003> a sht:Validate ;
+  rdfs:label "Test of sh:datatype at property shape 003" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/datatype-003.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/datatype-003.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/datatype-ill-formed> a sht:Validate ;
+  rdfs:label "Test of validation report for ill-formed literals" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/datatype-ill-formed-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/datatype-ill-formed-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/disjoint-001> a sht:Validate ;
+  rdfs:label "Test of sh:disjoint at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/disjoint-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/disjoint-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/equals-001> a sht:Validate ;
+  rdfs:label "Test of sh:equals at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/equals-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/equals-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/hasValue-001> a sht:Validate ;
+  rdfs:label "Test of sh:hasValue at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/hasValue-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/hasValue-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/in-001> a sht:Validate ;
+  rdfs:label "Test of sh:in at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/in-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/in-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/languageIn-001> a sht:Validate ;
+  rdfs:label "Test of sh:languageIn at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/languageIn-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/languageIn-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/lessThan-001> a sht:Validate ;
+  rdfs:label "Test of sh:lessThan at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/lessThan-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/lessThan-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/lessThan-002> a sht:Validate ;
+  rdfs:label "Test of sh:lessThan at property shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/lessThan-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/lessThan-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/lessThanOrEquals-001> a sht:Validate ;
+  rdfs:label "Test of sh:lessThanOrEquals at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/lessThanOrEquals-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/lessThanOrEquals-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/maxCount-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxCount at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/maxCount-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/maxCount-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/maxCount-002> a sht:Validate ;
+  rdfs:label "Test of sh:maxCount at property shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/maxCount-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/maxCount-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/maxExclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxExclusive at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/maxExclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/maxExclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/maxInclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxInclusive at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/maxInclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/maxInclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/maxLength-001> a sht:Validate ;
+  rdfs:label "Test of sh:maxLength at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/maxLength-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/maxLength-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/minCount-001> a sht:Validate ;
+  rdfs:label "Test of sh:minCount at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/minCount-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/minCount-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/minCount-002> a sht:Validate ;
+  rdfs:label "Test of sh:minCount at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/minCount-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/minCount-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/minExclusive-001> a sht:Validate ;
+  rdfs:label "Test of sh:minExclusive at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/minExclusive-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/minExclusive-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/minExclusive-002> a sht:Validate ;
+  rdfs:label "Test of sh:minExclusive at property shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/minExclusive-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/minExclusive-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/minLength-001> a sht:Validate ;
+  rdfs:label "Test of sh:minLength at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/minLength-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/minLength-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/node-001> a sht:Validate ;
+  rdfs:label "Test of sh:node at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/node-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/node-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/node-002> a sht:Validate ;
+  rdfs:label "Test of sh:node at property shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/node-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/node-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/nodeKind-001> a sht:Validate ;
+  rdfs:label "Test of sh:nodeKind at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/nodeKind-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/nodeKind-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/not-001> a sht:Validate ;
+  rdfs:label "Test of sh:not at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/not-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/not-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/or-001> a sht:Validate ;
+  rdfs:label "Test of sh:or at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/or-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/or-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/or-datatypes-001> a sht:Validate ;
+  rdfs:label "Test of sh:or of sh:datatypes at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/or-datatypes-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/or-datatypes-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/pattern-001> a sht:Validate ;
+  rdfs:label "Test of sh:pattern at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/pattern-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/pattern-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/pattern-002> a sht:Validate ;
+  rdfs:label "Test of sh:pattern at property shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/pattern-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/pattern-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/property-001> a sht:Validate ;
+  rdfs:label "Test of sh:property at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/property-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/property-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001> a sht:Validate ;
+  rdfs:label "Test of sh:qualifiedMinCount with disjoint shapes at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/qualifiedValueShape-001> a sht:Validate ;
+  rdfs:label "Test of sh:qualifiedValueShape at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/qualifiedValueShape-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/qualifiedValueShape-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001> a sht:Validate ;
+  rdfs:label "Test of sh:qualifiedValueShapesDisjoint at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/uniqueLang-001> a sht:Validate ;
+  rdfs:label "Test of sh:uniqueLang at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/uniqueLang-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/uniqueLang-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/property/uniqueLang-002> a sht:Validate ;
+  rdfs:label "Test uniqueLang with other boolean literal for true" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/property/uniqueLang-002-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/property/uniqueLang-002-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/core/targets" ;
+  mf:entries (<urn:x-shacl-test:/core/targets/multipleTargets-001> <urn:x-shacl-test:/core/targets/targetClass-001> <urn:x-shacl-test:/core/targets/targetClassImplicit-001> <urn:x-shacl-test:/core/targets/targetNode-001> <urn:x-shacl-test:/core/targets/targetObjectsOf-001> <urn:x-shacl-test:/core/targets/targetSubjectsOf-001> <urn:x-shacl-test:/core/targets/targetSubjectsOf-002>)
+  .
+
+<urn:x-shacl-test:/core/targets/multipleTargets-001> a sht:Validate ;
+  rdfs:label "Test of multiple targets 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/multipleTargets-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/multipleTargets-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/targetClass-001> a sht:Validate ;
+  rdfs:label "Test of sh:targetClass 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/targetClass-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/targetClass-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/targetClassImplicit-001> a sht:Validate ;
+  rdfs:label "Test of implicit sh:targetClass 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/targetClassImplicit-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/targetClassImplicit-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/targetNode-001> a sht:Validate ;
+  rdfs:label "Test of sh:targetNode 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/targetNode-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/targetNode-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/targetObjectsOf-001> a sht:Validate ;
+  rdfs:label "Test of sh:targetObjectsOf 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/targetObjectsOf-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/targetObjectsOf-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/targetSubjectsOf-001> a sht:Validate ;
+  rdfs:label "Test of sh:targetSubjectsOf 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/targetSubjectsOf-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/targetSubjectsOf-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/targets/targetSubjectsOf-002> a sht:Validate ;
+  rdfs:label "Test of sh:targetSubjectsOf 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/targets/targetSubjectsOf-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/targets/targetSubjectsOf-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/misc/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/core/misc" ;
+  mf:entries (<urn:x-shacl-test:/core/misc/deactivated-001> <urn:x-shacl-test:/core/misc/deactivated-002> <urn:x-shacl-test:/core/misc/message-001> <urn:x-shacl-test:/core/misc/severity-001> <urn:x-shacl-test:/core/misc/severity-002>)
+  .
+
+<urn:x-shacl-test:/core/misc/deactivated-001> a sht:Validate ;
+  rdfs:label "Test of sh:deactivated 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/misc/deactivated-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/misc/deactivated-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/misc/deactivated-002> a sht:Validate ;
+  rdfs:label "Test of sh:deactivated 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/misc/deactivated-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/misc/deactivated-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/misc/message-001> a sht:Validate ;
+  rdfs:label "Test of custom sh:message 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/misc/message-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/misc/message-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/misc/severity-001> a sht:Validate ;
+  rdfs:label "Test of sh:severity 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/misc/severity-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/misc/severity-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/misc/severity-002> a sht:Validate ;
+  rdfs:label "Test of sh:severity 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/misc/severity-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/misc/severity-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/core/path" ;
+  mf:entries (<urn:x-shacl-test:/core/path/path-alternative-001> <urn:x-shacl-test:/core/path/path-complex-001> <urn:x-shacl-test:/core/path/path-complex-002> <urn:x-shacl-test:/core/path/path-inverse-001> <urn:x-shacl-test:/core/path/path-oneOrMore-001> <urn:x-shacl-test:/core/path/path-sequence-001> <urn:x-shacl-test:/core/path/path-sequence-002> <urn:x-shacl-test:/core/path/path-sequence-duplicate-001> <urn:x-shacl-test:/core/path/path-strange-001> <urn:x-shacl-test:/core/path/path-strange-002> <urn:x-shacl-test:/core/path/path-unused-001> <urn:x-shacl-test:/core/path/path-zeroOrMore-001> <urn:x-shacl-test:/core/path/path-zeroOrOne-001>)
+  .
+
+<urn:x-shacl-test:/core/path/path-alternative-001> a sht:Validate ;
+  rdfs:label "Test of path sh:alternativePath 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-alternative-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-alternative-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-complex-001> a sht:Validate ;
+  rdfs:label "Test of path complex (rdf:type/rdfs:subClassOf*) 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-complex-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-complex-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-complex-002> a sht:Validate ;
+  rdfs:label "Test of complex path validation results" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-complex-002-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-complex-002-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-inverse-001> a sht:Validate ;
+  rdfs:label "Test of path sh:inversePath 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-inverse-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-inverse-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-oneOrMore-001> a sht:Validate ;
+  rdfs:label "Test of path sh:oneOrMorePath 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-oneOrMore-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-oneOrMore-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-sequence-001> a sht:Validate ;
+  rdfs:label "Test of path sequence 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-sequence-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-sequence-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-sequence-002> a sht:Validate ;
+  rdfs:label "Test of path sequence 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-sequence-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-sequence-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-sequence-duplicate-001> a sht:Validate ;
+  rdfs:label "Test of path sequence with duplicate 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-sequence-duplicate-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-sequence-duplicate-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-strange-001> a sht:Validate ;
+  rdfs:label "Test of strange path 001 two valid paths together" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-strange-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-strange-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-strange-002> a sht:Validate ;
+  rdfs:label "Test of strange path 002 valid and invalid paths together" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-strange-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-strange-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-unused-001> a sht:Validate ;
+  rdfs:label "Test with unused ill-formed path" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-unused-001-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-unused-001-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-zeroOrMore-001> a sht:Validate ;
+  rdfs:label "Test of path sh:zeroOrMorePath 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-zeroOrMore-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-zeroOrMore-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/path/path-zeroOrOne-001> a sht:Validate ;
+  rdfs:label "Test of path sh:zeroOrOnePath 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/path/path-zeroOrOne-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/path/path-zeroOrOne-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/complex/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/core/complex" ;
+  mf:entries (<urn:x-shacl-test:/core/complex/personexample> <urn:x-shacl-test:/core/complex/shacl-shacl>)
+  .
+
+<urn:x-shacl-test:/core/complex/personexample> a sht:Validate ;
+  rdfs:label "Test of personexample" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/complex/personexample.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/complex/personexample.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/complex/shacl-shacl> a sht:Validate ;
+  rdfs:label "frozen eat your own ( eat your own frozen dogfood )" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/complex/shacl-shacl-data-shapes.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/complex/shacl-shacl-data-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/core/validation-reports/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests for validation reports" ;
+  mf:entries (<urn:x-shacl-test:/core/validation-reports/shared>)
+  .
+
+<urn:x-shacl-test:/core/validation-reports/shared> a sht:Validate ;
+  rdfs:label "Test of validation report for shape shared by property constraints" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/core/validation-reports/shared-data.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/core/validation-reports/shared-shapes.ttl> ;
+  ] ;
+  .

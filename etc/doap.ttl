@@ -9,11 +9,11 @@
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 <https://rubygems.org/gems/shacl> a doap:Project, earl:TestSubject, earl:Software ;
-  doap:name          "ShEx.rb" ;
+  doap:name          "Ruby SHACL" ;
   doap:homepage      <https://ruby-rdf.github.com/shacl> ;
   doap:license       <https://unlicense.org/1.0/> ;
-  doap:shortdesc     "SHACL is a Shapes Constraint engine for Ruby."@en ;
-  doap:description   "SHACL is an Shape Constraint engine for the RDF.rb library suite."@en ;
+  doap:shortdesc     "shacl is a Shapes Constraint engine for Ruby."@en ;
+  doap:description   "shacl is an Shape Constraint engine for the RDF.rb library suite."@en ;
   doap:created       "2020-11-26"^^xsd:date ;
   doap:programming-language "Ruby" ;
   doap:implements    <https://www.w3.org/TR/shacl/> ;
@@ -27,8 +27,8 @@
   doap:maintainer    <https://greggkellogg.net/foaf#me> ;
   doap:documenter    <https://greggkellogg.net/foaf#me> ;
   foaf:maker         <https://greggkellogg.net/foaf#me> ;
-  dc:title           "SHACL.rb" ;
-  dc:description     "SHACL is an Shape Constraint engine for the RDF.rb library suite."@en ;
+  dc:title           "Ruby SHACL" ;
+  dc:description     "shacl is an Shape Constraint engine for the RDF.rb library suite."@en ;
   dc:date            "2020-11-26"^^xsd:date ;
   dc:creator         <https://greggkellogg.net/foaf#me> ;
   dc:isPartOf        <https://rubygems.org/gems/rdf> .

@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path("../..", __FILE__))
 
+require 'sxp'
 require_relative 'context'
 
 module SHACL
@@ -71,6 +72,11 @@ module SHACL
         theirs = other.send(prop)
         ours.nil? || theirs.nil? || (ours.node? && theirs.node?) || ours.eql?(theirs)
       end
+    end
+
+    # Inspect as SXP
+    def inspect
+      SXP::Generator.string to_sxp_bin
     end
   end
 end

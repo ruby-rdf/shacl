@@ -1,0 +1,5 @@
+---
+:format: :json
+:manifest: manifests.ttl
+:bibRef: ! '[[shacl]]'
+:name: Shapes Constraint Language (SHACL)

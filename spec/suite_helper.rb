@@ -82,6 +82,7 @@ module Fixtures
           "sourceConstraintComponent": "sh:sourceConstraintComponent",
           "dataGraph": {"@id": "sht:dataGraph", "@type": "@id"},
           "name": "mf:name",
+          "label": "rdfs:label",
           "entries": {"@id": "mf:entries", "@container": "@list", "@type": "@id"},
           "filter": {"@id": "test:filter", "@type": "@id"},
           "focusNode": "sh:focusNode",
@@ -126,6 +127,7 @@ module Fixtures
 
           # Add Manifest back
           expanded << {
+            "@id" => file,
             "@type" => "http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#Manifest",
             RDF::RDFS.label.to_s => label,
             "http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#entries" => {
