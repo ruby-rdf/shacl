@@ -79,24 +79,23 @@ module Fixtures
           "approval": {"@id": "rdft:approval", "@type": "@vocab"},
           "comment": "rdfs:comment",
           "conclusions": {"@id": "test:conclusions", "@type": "xsd:boolean"},
+          "sourceConstraintComponent": "sh:sourceConstraintComponent",
           "dataGraph": {"@id": "sht:dataGraph", "@type": "@id"},
+          "name": "mf:name",
           "entries": {"@id": "mf:entries", "@container": "@list", "@type": "@id"},
           "filter": {"@id": "test:filter", "@type": "@id"},
-          "label": "rdfs:label",
+          "focusNode": "sh:focusNode",
+          "details": "rdfs:details",
           "name": "mf:name",
+          "message": "sh:message",
           "options": {"@id": "test:options", "@type": "@id"},
-          "result": {"@id": "mf:result", "@type": "@id",
-            "@context": {
-              "conforms": {"@id": "sh:conforms"},
-              "focusNode": {"@id": "sh:focusNode", "@type": "@id"},
-              "severity": {"@id": "sh:resultSeverity", "@type": "@vocab"},
-              "constraintComponent": {"@id": "sh:sourceConstraintComponent", "@type": "@vocab"},
-              "result": {"@id": "sh:result", "@type": "@id"},
-              "sourceShape": {"@id": "sh:sourceShape"}
-            }
-          },
+          "result": {"@id":"mf:result", "@type": "@id"},
+          "resultPath": "sh:resultPath",
+          "resultSeverity": "sh:resultSeverity",
           "shapesGraph": {"@id": "sht:shapesGraph", "@type": "@id"},
-          "status": {"@id": "mf:status", "@type": "@id"}
+          "sourceShape": "sh:sourceShape",
+          "status": {"@id": "mf:status", "@type": "@id"},
+          "value": "sh:value"
         },
         "@type": "mf:Manifest",
         "entries": {}
@@ -149,6 +148,10 @@ module Fixtures
     class Entry < JSON::LD::Resource
       attr_accessor :debug
 
+      def initialize(node_definition, **options)
+        super
+      end
+
       def dataGraphInput
         RDF::Util::File.open_file(action['dataGraph']).read
       end
@@ -163,6 +166,14 @@ module Fixtures
 
       def shapesGraph
         @shapesGraph ||= RDF::OrderedRepo.load(action['shapesGraph']) if action['shapesGraph']
+      end
+
+      def report
+        [:Report, result['sh:conforms'], results].to_sxp_bin
+      end
+
+      def results
+        result['sh:result'].map {|r|SHACL::ValidationResult.from_json(r, logger: logger)} if result['sh:result']
       end
 
       def positive_test?
@@ -184,10 +195,14 @@ module Fixtures
 
       def inspect
         "<Entry\n" + attributes.map do |k,v|
-          case v when Hash
-            "  #{k}: {\n" + v.map {|ak, av| "    #{ak}: #{av.inspect}"}.join(",\n") + "\n  }"
+          if k == 'result'
+            SXP::Generator.string(report.to_sxp_bin).gsub(/^/m, '  ')
           else
-            " #{k}: #{v.inspect}"
+            case v when Hash
+              "  #{k}: {\n" + v.map {|ak, av| "    #{ak}: #{av.inspect}"}.join(",\n") + "\n  }"
+            else
+              " #{k}: #{v.inspect}"
+            end
           end
         end.join("  \n") + ">"
       end

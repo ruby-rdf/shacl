@@ -43,13 +43,17 @@ describe SHACL do
               t.logger.info "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}"
 
               results = shapes.execute(t.dataGraph, logger: t.logger)
-              t.logger.info "results: #{SXP::Generator.string results.to_sxp_bin}"
+              t.logger.info "results: #{SXP::Generator.string results.reject(&:conform?).to_sxp_bin}"
 
               conforms = results.all?(&:conform?)
               if t.positive_test?
                 expect(conforms).to produce(true, t.logger)
               else
                 expect(conforms).to produce(false, t.logger)
+                # Verify that the produced results are the same
+                expected_results = t.results
+                actual_results = results.reject(&:conform?)
+                expect(actual_results).to include(*expected_results), t.logger.to_s
               end
             end
           end

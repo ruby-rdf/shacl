@@ -10,6 +10,7 @@ require 'rspec'
 require 'shacl'
 require 'suite_helper'
 require 'getoptlong'
+require 'awesome_print'
 
 ASSERTOR = "https://greggkellogg.net/foaf#me"
 RUN_TIME = Time.now
@@ -42,14 +43,30 @@ def run_tc(t, **options)
     STDERR.puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
 
     results = shapes.execute(t.dataGraph, logger: t.logger)
-    STDERR.puts "results: #{SXP::Generator.string results.to_sxp_bin}" if options[:verbose]
+    STDERR.puts "results: #{SXP::Generator.string results.reject(&:conform?).to_sxp_bin}" if options[:verbose]
 
     conforms = results.all?(&:conform?)
 
-    if t.positive_test?
-      result = conforms ? "passed" : "failed"
+    result = if t.positive_test? && conforms
+      "passed"
+    elsif t.positive_test?
+      STDERR.puts "results should conform" if options[:verbose]
+      "failed"
     else
-      result = conforms ? "failed" : "passed"
+      expected_results = t.results
+      actual_results = results.reject(&:conform?)
+      if conforms
+        STDERR.puts "results shouldn't conform" if options[:verbose]
+        "failed"
+      elsif actual_results.count != expected_results.count
+        STDERR.puts "expected #{expected_results.count} results, have #{actual_results.count}" if options[:verbose]
+        "failed"
+      elsif actual_results.all? {|ar| expected_results.include?(ar)}
+        "passed"
+      else
+        STDERR.puts "expected results don't compare" if options[:verbose]
+        "failed"
+      end
     end
   rescue Interrupt
     exit(1)
