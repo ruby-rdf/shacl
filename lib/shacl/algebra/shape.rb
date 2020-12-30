@@ -222,7 +222,7 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def builtin_languageIn(list, node, path, value_nodes, **options)
       value_nodes.map do |n|
-        has_language = n.literal? && list.include?(n.language)
+        has_language = n.literal? && list.any? {|l| n.language.to_s.start_with?(l)}
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_language} a literal with a language in #{list.to_sxp}",

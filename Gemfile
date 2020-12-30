@@ -20,6 +20,8 @@ group :development, :test do
   gem 'rake'
   gem 'simplecov',      '~> 0.16', platforms: :mri
   gem 'coveralls',      '~> 0.8', '>= 0.8.23',  platforms: :mri
+
+  gem 'earl-report'
 end
 
 group :debug do

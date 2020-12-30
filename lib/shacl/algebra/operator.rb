@@ -301,7 +301,7 @@ module SHACL::Algebra
     # @param [String] message
     # @return [Array<SHACL::ValidationResult>]
     def satisfy(focus:, shape:, component:, severity: RDF::Vocab::SHACL.Info, path: nil, value: nil, details: nil, message: nil, **options)
-      log_debug(self.class.const_get(:NAME), "satisfied #{value}#{': ' + message if message}", **options)
+      log_debug(self.class.const_get(:NAME), "#{'not ' unless [RDF::Vocab::SHACL.Info, RDF::Vocab::SHACL.Warning].include?(severity)}satisfied #{value}#{': ' + message if message}", **options)
       [SHACL::ValidationResult.new(focus, path, shape, severity, component,
                                    details, value, message)]
     end

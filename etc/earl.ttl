@@ -39,7 +39,7 @@
   doap:created "2020-12-29"^^xsd:date;
 ] .
 <> foaf:primaryTopic <https://rubygems.org/gems/shacl> ;
-  dc:issued "2020-12-29T12:59:14-08:00"^^xsd:dateTime ;
+  dc:issued "2020-12-29T16:39:40-08:00"^^xsd:dateTime ;
   foaf:maker <https://greggkellogg.net/foaf#me> .
 
 <https://greggkellogg.net/foaf#me> a foaf:Person, earl:Assertor;
@@ -54,7 +54,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -64,7 +64,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -73,8 +73,8 @@
   earl:test <urn:x-shacl-test:/core/node/class-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -84,7 +84,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -94,7 +94,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -104,7 +104,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -114,7 +114,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -124,7 +124,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -134,7 +134,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -143,8 +143,8 @@
   earl:test <urn:x-shacl-test:/core/node/disjoint-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -153,8 +153,8 @@
   earl:test <urn:x-shacl-test:/core/node/equals-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -163,8 +163,8 @@
   earl:test <urn:x-shacl-test:/core/node/hasValue-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -173,8 +173,8 @@
   earl:test <urn:x-shacl-test:/core/node/in-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -183,8 +183,8 @@
   earl:test <urn:x-shacl-test:/core/node/languageIn-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -194,7 +194,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -204,7 +204,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -214,7 +214,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -224,7 +224,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -234,7 +234,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -244,7 +244,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -254,7 +254,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -264,7 +264,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -274,7 +274,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -283,8 +283,8 @@
   earl:test <urn:x-shacl-test:/core/node/nodeKind-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -293,8 +293,8 @@
   earl:test <urn:x-shacl-test:/core/node/not-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -303,8 +303,8 @@
   earl:test <urn:x-shacl-test:/core/node/not-002>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -314,7 +314,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -324,7 +324,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -334,7 +334,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -343,8 +343,8 @@
   earl:test <urn:x-shacl-test:/core/node/qualified-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -354,7 +354,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -364,7 +364,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -374,7 +374,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -383,8 +383,8 @@
   earl:test <urn:x-shacl-test:/core/property/class-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -394,7 +394,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -404,7 +404,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -413,8 +413,8 @@
   earl:test <urn:x-shacl-test:/core/property/datatype-003>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -424,7 +424,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -434,7 +434,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -443,8 +443,8 @@
   earl:test <urn:x-shacl-test:/core/property/equals-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -453,8 +453,8 @@
   earl:test <urn:x-shacl-test:/core/property/hasValue-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -463,8 +463,8 @@
   earl:test <urn:x-shacl-test:/core/property/in-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -473,8 +473,8 @@
   earl:test <urn:x-shacl-test:/core/property/languageIn-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -483,8 +483,8 @@
   earl:test <urn:x-shacl-test:/core/property/lessThan-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:exception;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -494,7 +494,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -503,8 +503,8 @@
   earl:test <urn:x-shacl-test:/core/property/lessThanOrEquals-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:exception;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -513,8 +513,8 @@
   earl:test <urn:x-shacl-test:/core/property/maxCount-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -523,8 +523,8 @@
   earl:test <urn:x-shacl-test:/core/property/maxCount-002>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -534,7 +534,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -544,7 +544,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -553,8 +553,8 @@
   earl:test <urn:x-shacl-test:/core/property/maxLength-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -563,8 +563,8 @@
   earl:test <urn:x-shacl-test:/core/property/minCount-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -574,7 +574,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -584,7 +584,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -594,7 +594,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -603,8 +603,8 @@
   earl:test <urn:x-shacl-test:/core/property/minLength-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -614,7 +614,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -624,7 +624,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -634,7 +634,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -643,8 +643,8 @@
   earl:test <urn:x-shacl-test:/core/property/not-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -653,8 +653,8 @@
   earl:test <urn:x-shacl-test:/core/property/or-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -664,7 +664,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -674,7 +674,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -684,7 +684,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -694,7 +694,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -703,8 +703,8 @@
   earl:test <urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:failed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -714,7 +714,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -724,7 +724,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -734,7 +734,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -744,7 +744,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:exception;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -753,8 +753,8 @@
   earl:test <urn:x-shacl-test:/core/targets/multipleTargets-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -763,8 +763,8 @@
   earl:test <urn:x-shacl-test:/core/targets/targetClass-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -773,8 +773,8 @@
   earl:test <urn:x-shacl-test:/core/targets/targetClassImplicit-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -783,8 +783,8 @@
   earl:test <urn:x-shacl-test:/core/targets/targetNode-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -794,7 +794,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -803,8 +803,8 @@
   earl:test <urn:x-shacl-test:/core/targets/targetSubjectsOf-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -814,7 +814,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -824,7 +824,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -833,8 +833,8 @@
   earl:test <urn:x-shacl-test:/core/misc/deactivated-002>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -843,8 +843,8 @@
   earl:test <urn:x-shacl-test:/core/misc/message-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -854,7 +854,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -864,7 +864,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -874,7 +874,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -884,7 +884,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -894,7 +894,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -904,7 +904,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -914,7 +914,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -924,7 +924,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -934,7 +934,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -943,8 +943,8 @@
   earl:test <urn:x-shacl-test:/core/path/path-sequence-duplicate-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -954,7 +954,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -964,7 +964,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -973,8 +973,8 @@
   earl:test <urn:x-shacl-test:/core/path/path-unused-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -983,8 +983,8 @@
   earl:test <urn:x-shacl-test:/core/path/path-zeroOrMore-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -993,8 +993,8 @@
   earl:test <urn:x-shacl-test:/core/path/path-zeroOrOne-001>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    earl:outcome earl:passed;
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -1004,7 +1004,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -1014,7 +1014,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:exception;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -1024,5 +1024,5 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2020-12-29T12:59:14-08:00"^^xsd:dateTime];
+    dc:date "2020-12-29T16:39:40-08:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
