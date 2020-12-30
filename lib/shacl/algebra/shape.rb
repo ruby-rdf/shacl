@@ -144,7 +144,7 @@ module SHACL::Algebra
           **options)
       end +
       equal_nodes.map do |n|
-        value_nodes.include?(n) ?
+        !value_nodes.include?(n) ?
           not_satisfied(focus: node, path: path,
             value: n,
             message: "should have a value in #{value_nodes.to_sxp}",
