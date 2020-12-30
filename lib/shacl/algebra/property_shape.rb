@@ -65,7 +65,7 @@ module SHACL::Algebra
             conforms = left.send(method, right)
             satisfy(focus: node, path: path,
               value: left,
-              message: "should be #{method} than #{right.to_sxp}",
+              message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
               severity: (conforms ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
               component: RDF::Vocab::SHACL.LessThanConstraintComponent,
               **options)

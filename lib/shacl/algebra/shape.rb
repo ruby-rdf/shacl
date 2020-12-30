@@ -54,7 +54,7 @@ module SHACL::Algebra
         has_type = n.resource? && graph.query(subject: n, predicate: RDF.type, object:type)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be of class #{type}",
+          message: "is#{' not' unless has_type} of class #{type}",
           severity: (has_type ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.ClassConstraintComponent,
           **options)
@@ -82,7 +82,7 @@ module SHACL::Algebra
         has_datatype = n.literal? && n.datatype == datatype && n.valid?
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a valid literal with datatype #{datatype}",
+          message: "is#{' not' unless has_datatype} a valid literal with datatype #{datatype}",
           severity: (has_datatype ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.DatatypeConstraintComponent,
           **options)
@@ -110,7 +110,7 @@ module SHACL::Algebra
         has_value = disjoint_nodes.include?(n)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be disjoint with #{disjoint_nodes.to_sxp}",
+          message: "is#{' not' unless has_value} disjoint with #{disjoint_nodes.to_sxp}",
           severity: (has_value ? RDF::Vocab::SHACL.Violation : RDF::Vocab::SHACL.Info),
           component: RDF::Vocab::SHACL.DisjointConstraintComponent,
           **options)
@@ -138,7 +138,7 @@ module SHACL::Algebra
         has_value = equal_nodes.include?(n)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a value in #{equal_nodes.to_sxp}",
+          message: "is#{' not' unless has_value} a value in #{equal_nodes.to_sxp}",
           severity: (has_value ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.EqualsConstraintComponent,
           **options)
@@ -172,7 +172,7 @@ module SHACL::Algebra
     def builtin_hasValue(term, node, path, value_nodes, **options)
       has_value = value_nodes.include?(term)
       [satisfy(focus: node, path: path,
-        message: "should have the value #{term.to_sxp}",
+        message: "is#{' not' unless has_value} the value #{term.to_sxp}",
         severity: (has_value ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.HasValueConstraintComponent,
         **options)]
@@ -198,7 +198,7 @@ module SHACL::Algebra
         has_value = list.include?(n)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a value in #{list.to_sxp}",
+          message: "is#{' not' unless has_value} a value in #{list.to_sxp}",
           severity: (has_value ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.InConstraintComponent,
           **options)
@@ -225,7 +225,7 @@ module SHACL::Algebra
         has_language = n.literal? && list.include?(n.language)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal with a language in #{list.to_sxp}",
+          message: "is#{' not' unless has_language} a literal with a language in #{list.to_sxp}",
           severity: (has_language ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.LanguageInConstraintComponent,
           **options)
@@ -253,7 +253,7 @@ module SHACL::Algebra
         compares = n.literal? && n > term
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal > #{term.to_sxp}",
+          message: "is#{' not' unless compares} a literal > #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MaxExclusiveConstraintComponent,
           **options)
@@ -281,7 +281,7 @@ module SHACL::Algebra
         compares = n.literal? && n >= term
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal >= #{term.to_sxp}",
+          message: "is#{' not' unless compares} a literal >= #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MaxInclusiveConstraintComponent,
           **options)
@@ -299,7 +299,7 @@ module SHACL::Algebra
         compares = !n.node? && n.to_s.length <= term.to_i
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal at with length <= #{term.to_sxp}",
+          message: "is#{' not' unless compares} a literal at with length <= #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MaxLengthConstraintComponent,
           **options)
@@ -327,7 +327,7 @@ module SHACL::Algebra
         compares = n.literal? && n < term
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal < #{term.to_sxp}",
+          message: "is#{' not' unless compares} a literal < #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MinExclusiveConstraintComponent,
           **options)
@@ -355,7 +355,7 @@ module SHACL::Algebra
         compares = n.literal? && n <= term
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal <= #{term.to_sxp}",
+          message: "is#{' not' unless compares} a literal <= #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MinInclusiveConstraintComponent,
           **options)
@@ -373,7 +373,7 @@ module SHACL::Algebra
         compares = !n.node? && n.to_s.length >= term.to_i
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be a literal with length >= #{term.to_sxp}",
+          message: "is#{' not' unless compares} a literal with length >= #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.MinLengthConstraintComponent,
           **options)
@@ -417,7 +417,7 @@ module SHACL::Algebra
         compares = NODE_KIND_COMPARE.fetch(n.class, []).include?(term)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should be of a kind match of #{term.to_sxp}",
+          message: "is#{' not' unless compares} a node kind match of #{term.to_sxp}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.NodeKindConstraintComponent,
           **options)
@@ -452,7 +452,7 @@ module SHACL::Algebra
         compares = !n.node? && pat.match?(n.to_s)
         satisfy(focus: node, path: path,
           value: n,
-          message: "should match #{pat.inspect}",
+          message: "is#{' not' unless compares} a match #{pat.inspect}",
           severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.PatternConstraintComponent,
           **options)

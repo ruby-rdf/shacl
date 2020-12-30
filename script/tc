@@ -48,7 +48,7 @@ def run_tc(t, **options)
     STDERR.puts t.inspect if options[:verbose]
 
     shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
-    STDERR.puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
+    #STDERR.puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
     STDERR.puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
 
     # Consider that the datagraph defines a vocabulary
