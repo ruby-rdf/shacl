@@ -127,7 +127,8 @@ module SHACL
         "property": {"@type": "@id"},
         "severity": {"@type": "@vocab"},
         "targetClass": {"@type": "@id"},
-        "targetNode": {"@type": "@none"}
+        "targetNode": {"@type": "@none"},
+        "xone": {"@type": "@id", "@container": "@list"}
       },
       "@type": ["NodeShape", "PropertyShape"],
       "property": {},

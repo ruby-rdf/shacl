@@ -28,19 +28,18 @@ module SHACL::Algebra
       log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
       operands.each do |op|
         results = op.conforms(node, depth: depth + 1, **options)
-        if results.any?(&:conform?)
-          return satisfy(
-            focus: node,
-            value: node,
-            message: "node does not conform to any shape",
-            component: RDF::Vocab::SHACL.OrConstraintComponent,
-            depth: depth, **options)
-        end
+        next unless results.all?(&:conform?)
+        return satisfy(
+          focus: node,
+          value: node,
+          message: "node conforms to some shape",
+          component: RDF::Vocab::SHACL.OrConstraintComponent,
+          depth: depth, **options)
       end
       return not_satisfied(
         focus: node,
         value: node,
-        message: "node conforms to some shape",
+        message: "node does not conform to any shape",
         component: RDF::Vocab::SHACL.OrConstraintComponent,
         depth: depth, **options)
     end

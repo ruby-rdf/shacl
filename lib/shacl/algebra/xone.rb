@@ -34,33 +34,33 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, depth: 0, **options)
       log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
-      operands.each do |op|
+      num_conform = operands.inject(0) do |memo, op|
         results = op.conforms(node, depth: depth + 1, **options)
-        conforming = results.select(&:conform?).length
-        case conforming
-        when 0
-          return not_satisfied(
-            focus: node,
-            value: node,
-            message: "no shapes matches node",
-            component: RDF::Vocab::SHACL.XoneConstraintComponent,
-            depth: depth, **options)
-        when 1
-        else
-          return not_satisfied(
-            focus: node,
-            value: node,
-            message: "more than one shape matches node",
-            component: RDF::Vocab::SHACL.XoneConstraintComponent,
-            depth: depth, **options)
-        end
+        memo += (results.all?(&:conform?) ? 1 : 0)
       end
-      satisfy(
-        focus: node,
-        value: node,
-        message: "a single shape matches the node",
-        component: RDF::Vocab::SHACL.XoneConstraintComponent,
-        depth: depth, **options)
+      case num_conform
+      when 0
+        not_satisfied(
+          focus: node,
+          value: node,
+          message: "node does not conform to any shape",
+          component: RDF::Vocab::SHACL.XoneConstraintComponent,
+          depth: depth, **options)
+      when 1
+        satisfy(
+          focus: node,
+          value: node,
+          message: "node conforms to a single shape",
+          component: RDF::Vocab::SHACL.XoneConstraintComponent,
+          depth: depth, **options)
+      else
+        not_satisfied(
+          focus: node,
+          value: node,
+          message: "node conforms to #{num_conform} shapes",
+          component: RDF::Vocab::SHACL.XoneConstraintComponent,
+          depth: depth, **options)
+      end
     end
   end
 end
