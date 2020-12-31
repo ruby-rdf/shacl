@@ -30,13 +30,13 @@ describe SHACL::ValidationResult do
 
   describe :to_sxp do
     let(:expected) {%{(ValidationResult
+      (value <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2>)
       (focus <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1>)
       (path <http://datashapes.org/sh/tests/core/node/and-001.test#address>)
       (shape <http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle>)
       (severity shacl:Violation)
       (component shacl:AndConstraintComponent)
       (details "Test details")
-      (value <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2>)
       (message "Test message")
     )}}
     it "generates expected SXP" do
