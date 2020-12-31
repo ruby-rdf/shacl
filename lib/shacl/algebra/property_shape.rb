@@ -47,8 +47,18 @@ module SHACL::Algebra
 
       # Evaluate against operands
       op_results = operands.map do |op|
-        value_nodes.map do |n|
-          op.conforms(n, depth: depth + 1, **options)
+         value_nodes.map do |n|
+          res = op.conforms(n, depth: depth + 1, **options)
+          if op.is_a?(NodeShape) && !res.all?(&:conform?)
+            # Special case for embedded NodeShape
+            not_satisfied(focus: node, path: path,
+              value: n,
+              message: "node does not conform to #{op.id}",
+              component: RDF::Vocab::SHACL.NodeConstraintComponent,
+              **options)
+          else
+            res
+          end
         end
       end.flatten.compact
 
