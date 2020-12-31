@@ -232,7 +232,51 @@ module SHACL::Algebra
       end.flatten.compact
     end
 
-    # Compares value nodes to be > than the specified value.
+    # Common comparison logic for lessThan, lessThanOrEqual, max/minInclusive/Exclusive
+    def compare(method, terms, node, path, value_nodes, component, **options)
+      value_nodes.map do |left|
+        terms.map do |right|
+          case left
+          when RDF::Literal
+            unless right.literal? && (
+              (left.simple? && right.simple?) ||
+              (left.is_a?(RDF::Literal::Numeric) && right.is_a?(RDF::Literal::Numeric)) ||
+              (left.datatype == right.datatype && left.language == right.language))
+              not_satisfied(focus: node, path: path,
+                value: left,
+                message: "value is incomperable with #{right.to_sxp}",
+                component: component,
+                **options)
+            else
+              compares = left.send(method, right)
+              satisfy(focus: node, path: path,
+                value: left,
+                message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
+                severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+                component: component,
+                **options)
+            end
+          when RDF::URI
+            compares = right.uri? && left.send(method, right)
+            satisfy(focus: node, path: path,
+              value: left,
+              message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
+              severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+              component: component,
+              **options)
+          else
+            not_satisfied(focus: node, path: path,
+              value: left,
+              message: "value is incomperable with #{right.to_sxp}",
+              component: component,
+              **options)
+          end
+        end
+      end.flatten.compact
+    end
+    protected :compare
+
+    # Compares value nodes to be < than the specified value.
     #
     # @example
     #   ex:NumericRangeExampleShape
@@ -249,18 +293,11 @@ module SHACL::Algebra
     # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxExclusive(term, node, path, value_nodes, **options)
-      value_nodes.map do |n|
-        compares = n.literal? && n > term
-        satisfy(focus: node, path: path,
-          value: n,
-          message: "is#{' not' unless compares} a literal > #{term.to_sxp}",
-          severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
-          component: RDF::Vocab::SHACL.MaxExclusiveConstraintComponent,
-          **options)
-      end.flatten.compact
+      compare(:<, [term], node, path, value_nodes,
+              RDF::Vocab::SHACL.MaxExclusiveConstraintComponent, **options)
     end
 
-    # Compares value nodes to be >= than the specified value.
+    # Compares value nodes to be <= than the specified value.
     #
     # @example
     #   ex:NumericRangeExampleShape
@@ -277,15 +314,8 @@ module SHACL::Algebra
     # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxInclusive(term, node, path, value_nodes, **options)
-      value_nodes.map do |n|
-        compares = n.literal? && n >= term
-        satisfy(focus: node, path: path,
-          value: n,
-          message: "is#{' not' unless compares} a literal >= #{term.to_sxp}",
-          severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
-          component: RDF::Vocab::SHACL.MaxInclusiveConstraintComponent,
-          **options)
-      end.flatten.compact
+      compare(:<=, [term], node, path, value_nodes,
+              RDF::Vocab::SHACL.MaxInclusiveConstraintComponent, **options)
     end
 
     # Specifies the maximum string length of each value node that satisfies the condition. This can be applied to any literals and IRIs, but not to blank nodes.
@@ -323,15 +353,8 @@ module SHACL::Algebra
     # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minExclusive(term, node, path, value_nodes, **options)
-      value_nodes.map do |n|
-        compares = n.literal? && n < term
-        satisfy(focus: node, path: path,
-          value: n,
-          message: "is#{' not' unless compares} a literal < #{term.to_sxp}",
-          severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
-          component: RDF::Vocab::SHACL.MinExclusiveConstraintComponent,
-          **options)
-      end.flatten.compact
+      compare(:>, [term], node, path, value_nodes,
+              RDF::Vocab::SHACL.MinExclusiveConstraintComponent, **options)
     end
 
     # Compares value nodes to be >= than the specified value.
@@ -351,15 +374,8 @@ module SHACL::Algebra
     # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minInclusive(term, node, path, value_nodes, **options)
-      value_nodes.map do |n|
-        compares = n.literal? && n <= term
-        satisfy(focus: node, path: path,
-          value: n,
-          message: "is#{' not' unless compares} a literal <= #{term.to_sxp}",
-          severity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
-          component: RDF::Vocab::SHACL.MinInclusiveConstraintComponent,
-          **options)
-      end.flatten.compact
+      compare(:>=, [term], node, path, value_nodes,
+              RDF::Vocab::SHACL.MinInclusiveConstraintComponent, **options)
     end
 
     # Specifies the minimum string length of each value node that satisfies the condition. This can be applied to any literals and IRIs, but not to blank nodes.

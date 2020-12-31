@@ -30,8 +30,10 @@ describe SHACL do
                 pending "Custom severity."
               when *%w{core/property/uniqueLang-002}
                 pending "non-strict boolean property values"
-              when *%w{core/targets/targetClassImplicit-001}
-                pending "inferred classes in data"
+              when *%w{core/node/minInclusive-003}
+                pending "comparison of dates and times with and without timezone"
+              when *%w{core/node/class-003}
+                pending "in progress"
               when *%w{core/complex/shacl-shacl}
                 skip "Until later"
               end

@@ -49,31 +49,6 @@ module SHACL::Algebra
       builtin_results + op_results
     end
 
-    def compare(method, property, node,path, value_nodes, **options)
-      nodes = graph.query(subject: node, predicate: property).objects
-      value_nodes.map do |left|
-        nodes.map do |right|
-          unless (left.simple? && right.simple?) ||
-            (left.is_a?(RDF::Literal::Numeric) && right.is_a?(RDF::Literal::Numeric)) ||
-            (left.datatype == right.datatype && left.language == right.language)
-            not_satisfied(focus: node, path: path,
-              value: left,
-              message: "value is incomperable with #{right.to_sxp}",
-              component: RDF::Vocab::SHACL.LessThanConstraintComponent,
-              **options)
-          else
-            conforms = left.send(method, right)
-            satisfy(focus: node, path: path,
-              value: left,
-              message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
-              severity: (conforms ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
-              component: RDF::Vocab::SHACL.LessThanConstraintComponent,
-              **options)
-          end
-        end
-      end.flatten.compact
-    end
-
     # Specifies the condition that each value node is smaller than all the objects of the triples that have the focus node as subject and the value of sh:lessThan as predicate.
     #
     # @example
@@ -89,16 +64,21 @@ module SHACL::Algebra
     # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThan(property, node, path, value_nodes, **options)
-      compare(:<, property, node, path, value_nodes, **options)
+      terms = graph.query(subject: node, predicate: property).objects
+      compare(:<, terms, node, path, value_nodes,
+              RDF::Vocab::SHACL.LessThanConstraintComponent, **options)
     end
+
+    # Specifies the condition that each value node is smaller than or equal to all the objects of the triples that have the focus node as subject and the value of sh:lessThanOrEquals as predicate.
+    #
+    # @param [RDF::URI] property the property of the focus node whose values must be equal to some value node.
+    # @param [RDF::Term] node the focus node
+    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThanOrEquals(property, node, path, value_nodes, **options)
-      compare(:<=, property, node, path, value_nodes, **options)
-    end
-    def builtin_greaterThan(property, node, path, value_nodes, **options)
-      compare(:>, property, node, path, value_nodes, **options)
-    end
-    def builtin_greaterThanOrEquals(property, node, path, value_nodes, **options)
-      compare(:>=, property, node, path, value_nodes, **options)
+      terms = graph.query(subject: node, predicate: property).objects
+      compare(:<=, terms, node, path, value_nodes,
+              RDF::Vocab::SHACL.LessThanOrEqualsConstraintComponent, **options)
     end
 
     ##
