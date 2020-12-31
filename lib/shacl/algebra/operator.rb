@@ -128,7 +128,7 @@ module SHACL::Algebra
         when item.is_a?(TrueClass) || item.is_a?(FalseClass) || item.is_a?(Numeric)
           return RDF::Literal(item)
         when value?(item)
-          value, datatype = item.fetch('@value'), item.fetch('@type', nil)
+          value, datatype = item.fetch('@value'), item.fetch('type', nil)
           case value
           when TrueClass, FalseClass, Numeric
             return RDF::Literal(value)
@@ -137,7 +137,7 @@ module SHACL::Algebra
               RDF::URI("https://www.w3.org/ns/i18n##{item.fetch('@language', '').downcase}_#{item['@direction']}") :
               (item.has_key?('@language') ? RDF.langString : RDF::XSD.string)
           end
-          datatype = RDF::URI(datatype) if datatype && !datatype.is_a?(RDF::URI)
+          datatype = iri(datatype) if datatype
                   
           # Initialize literal as an RDF literal using value and datatype. If element has the key @language and datatype is xsd:string, then add the value associated with the @language key as the language of the object.
           language = item.fetch('@language', nil) if datatype == RDF.langString
@@ -158,7 +158,7 @@ module SHACL::Algebra
       # @return [RDF::Term]
       def from_expanded_value(item, **options)
         if item['@value']
-          value, datatype = item.fetch('@value'), item.fetch('@type', nil)
+          value, datatype = item.fetch('@value'), item.fetch('type', nil)
           case value
           when TrueClass, FalseClass
             value = value.to_s
@@ -177,7 +177,7 @@ module SHACL::Algebra
           else
             datatype ||= item.has_key?('@language') ? RDF.langString : RDF::XSD.string
           end
-          datatype = RDF::URI(datatype) if datatype && !datatype.is_a?(RDF::URI)
+          datatype = iri(datatype) if datatype
           language = item.fetch('@language', nil) if datatype == RDF.langString
           RDF::Literal.new(value, datatype: datatype, language: language)
         elsif item['id']

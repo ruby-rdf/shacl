@@ -181,11 +181,11 @@ module Fixtures
       end
 
       def positive_test?
-        result['conforms']
+        result['sh:conforms']
       end
 
       def negative_test?
-        !result['conforms']
+        !result['sh:conforms']
       end
 
       # Create a logger initialized with the content of `debug`

@@ -26,7 +26,7 @@ module SHACL
     alias_method :conforms?, :conform?
 
     def to_sxp_bin
-      [:focus, :path, :shape, :severity, :component, :details, :value, :message].inject([:ValidationResult]) do |memo, sym|
+      [:value, :focus, :path, :shape, :severity, :component, :details, :message].inject([:ValidationResult]) do |memo, sym|
         v = to_h[sym]
         if v.respond_to?(:qname) && !v.lexical && v.qname
           v = RDF::URI.new(v.to_s) if v.frozen?
