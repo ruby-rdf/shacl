@@ -18,6 +18,11 @@ module SHACL::Algebra
       options = id ? options.merge(shape: id) : options
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
+      # Special case `flags` option on a `pattern`
+      if @options[:flags] && @options[:pattern]
+        options = options.merge(flags: @options[:flags])
+      end
+
       # Evaluate against builtins
       builtin_results = @options.map do |k, v|
         self.send("builtin_#{k}".to_sym, v, node, nil, [node], depth: depth + 1, **options) if self.respond_to?("builtin_#{k}".to_sym)

@@ -16,6 +16,12 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
+
+      # Special case `flags` option on a `pattern`
+      if @options[:flags] && @options[:pattern]
+        options = options.merge(flags: @options[:flags])
+      end
+
       path = @options[:path]
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
       log_error(NAME, "no path", depth: depth)
