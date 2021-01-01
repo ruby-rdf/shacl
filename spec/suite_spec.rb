@@ -32,8 +32,10 @@ describe SHACL do
                 pending "non-strict boolean property values"
               when *%w{core/node/minInclusive-003}
                 pending "comparison of dates and times with and without timezone"
-              when *%w{core/node/class-003}
+              when *%w{core/node/class-003 core/property/nodeKind-001 core/property/property-001}
                 pending "in progress"
+              when *%w{core/property/qualifiedMinCountDisjoint-001 core/property/qualifiedValueShapesDisjoint-001}
+                pending "sh:qualifiedValueShapesDisjoint"
               when *%w{core/complex/shacl-shacl}
                 skip "Until later"
               end
@@ -44,7 +46,7 @@ describe SHACL do
               t.logger.info "shapesGraph:\n#{t.shapesGraphInput}"
 
               shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
-              t.logger.info "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}"
+              #t.logger.info "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}"
               t.logger.info "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}"
 
               # Consider that the datagraph defines a vocabulary

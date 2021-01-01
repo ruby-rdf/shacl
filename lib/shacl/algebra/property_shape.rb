@@ -17,14 +17,19 @@ module SHACL::Algebra
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
 
-      # Special case `flags` option on a `pattern`
-      if @options[:flags] && @options[:pattern]
-        options = options.merge(flags: @options[:flags])
+      # Add some instance options to the argument
+      options = %i{
+        flags
+        qualifiedMinCount
+        qualifiedMaxCount
+        qualifiedValueShapesDisjoint
+      }.inject(options) do |memo, sym|
+        @options[sym] ? memo.merge(sym => @options[sym]) : memo
       end
 
       path = @options[:path]
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
-      log_error(NAME, "no path", depth: depth)
+      log_error(NAME, "no path", depth: depth) unless path
 
       # Turn the `path` attribute into a SPARQL Property Path and evaluate to find related nodes.
       value_nodes = if path.is_a?(RDF::URI)
@@ -47,18 +52,23 @@ module SHACL::Algebra
 
       # Evaluate against operands
       op_results = operands.map do |op|
-         value_nodes.map do |n|
-          res = op.conforms(n, depth: depth + 1, **options)
-          if op.is_a?(NodeShape) && !res.all?(&:conform?)
-            # Special case for embedded NodeShape
-            not_satisfied(focus: node, path: path,
-              value: n,
-              message: "node does not conform to #{op.id}",
-              component: RDF::Vocab::SHACL.NodeConstraintComponent,
-              **options)
-          else
-            res
-          end
+        if op.is_a?(QualifiedValueShape)
+          # All value nodes are passed
+          op.conforms(node, value_nodes: value_nodes, path: path, depth: depth + 1, **options)
+        else
+          value_nodes.map do |n|
+           res = op.conforms(n, depth: depth + 1, **options)
+           if op.is_a?(NodeShape) && !res.all?(&:conform?)
+             # Special case for embedded NodeShape
+             not_satisfied(focus: node, path: path,
+               value: n,
+               message: "node does not conform to #{op.id}",
+               component: RDF::Vocab::SHACL.NodeConstraintComponent,
+               **options)
+           else
+             res
+           end
+         end
         end
       end.flatten.compact
 

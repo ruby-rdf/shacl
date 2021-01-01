@@ -177,7 +177,7 @@ module Fixtures
       def results
         res = result['sh:result']
         res = [res] unless res.is_a?(Array)
-        res.map {|r|SHACL::ValidationResult.from_json(r, logger: logger)} if result['sh:result']
+        res.map {|r| SHACL::ValidationResult.from_json(r, logger: logger)} if result['sh:result']
       end
 
       def positive_test?

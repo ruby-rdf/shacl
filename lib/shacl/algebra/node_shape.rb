@@ -18,9 +18,14 @@ module SHACL::Algebra
       options = id ? options.merge(shape: id) : options
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
-      # Special case `flags` option on a `pattern`
-      if @options[:flags] && @options[:pattern]
-        options = options.merge(flags: @options[:flags])
+      # Add some instance options to the argument
+      options = %i{
+        flags
+        qualifiedMinCount
+        qualifiedMaxCount
+        qualifiedValueShapesDisjoint
+      }.inject(options) do |memo, sym|
+        @options[sym] ? memo.merge(sym => @options[sym]) : memo
       end
 
       # Evaluate against builtins
