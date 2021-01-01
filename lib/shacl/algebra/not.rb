@@ -17,6 +17,7 @@ module SHACL::Algebra
           return not_satisfied(
             focus: node,
             message: "node does not conform to some shape",
+            resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.NotConstraintComponent,
             value: node, depth: depth, **options)
         end

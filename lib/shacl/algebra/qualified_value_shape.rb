@@ -26,11 +26,13 @@ module SHACL::Algebra
         if count < min_count
           not_satisfied(focus: node, path: path,
             message: "only #{count} conforming values, requires at least #{min_count}",
+            resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.QualifiedMinCountConstraintComponent,
             depth: depth, **options)
         elsif count > max_count
           not_satisfied(focus: node, path: path,
             message: "#{count} conforming values, requires at most #{max_count}",
+            resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.QualifiedMaxCountConstraintComponent,
             depth: depth, **options)
         else

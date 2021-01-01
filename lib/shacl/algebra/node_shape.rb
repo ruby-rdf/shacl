@@ -46,6 +46,7 @@ module SHACL::Algebra
           not_satisfied(focus: node,
             value: node,
             message: "node does not conform to #{op.id}",
+            resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.NodeConstraintComponent,
             **options)
         else

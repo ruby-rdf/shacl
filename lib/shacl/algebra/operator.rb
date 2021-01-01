@@ -16,7 +16,7 @@ module SHACL::Algebra
     #
     # @return [Array<Symbol>]
     ALL_KEYS = %w(
-      id type label name comment description deactivated
+      id type label name comment description deactivated severity
       order group defaultValue path
       targetNode targetClass targetSubjectsOf targetObjectsOf
       class datatype nodeKind
@@ -76,6 +76,7 @@ module SHACL::Algebra
           when 'qualifiedValueShape'
             elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
             operands << QualifiedValueShape.new(*elements, **options.dup)
+          when 'severity'           then node_opts[:severity] = iri(v, **options)
           when 'targetClass'        then node_opts[:targetClass] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'targetNode'
             node_opts[:targetNode] = as_array(v).map do |vv|

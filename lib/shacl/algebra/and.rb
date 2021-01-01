@@ -37,6 +37,7 @@ module SHACL::Algebra
             focus: node,
             value: node,
             message: "node does not conform to all shapes",
+            resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.AndConstraintComponent,
             depth: depth, **options)
         end

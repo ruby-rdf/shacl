@@ -26,8 +26,6 @@ describe SHACL do
               case rel
               when *%w{core/node/closed-001 core/node/closed-002}
                 pending "Closed nodes."
-              when *%w{core/misc/severity-002}
-                pending "Custom severity."
               when *%w{core/property/uniqueLang-002}
                 pending "non-strict boolean property values"
               when *%w{core/node/minInclusive-003}

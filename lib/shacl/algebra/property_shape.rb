@@ -65,6 +65,7 @@ module SHACL::Algebra
              not_satisfied(focus: node, path: path,
                value: n,
                message: "node does not conform to #{op.id}",
+               resultSeverity: options.fetch(:severity),
                component: RDF::Vocab::SHACL.NodeConstraintComponent,
                **options)
            else
@@ -123,7 +124,7 @@ module SHACL::Algebra
     def builtin_maxCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} <= maxCount #{count}",
-        resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+        resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
         component: RDF::Vocab::SHACL.MaxCountConstraintComponent,
         **options)
     end
@@ -145,7 +146,7 @@ module SHACL::Algebra
     def builtin_minCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} >= minCount #{count}",
-        resultSeverity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+        resultSeverity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
         component: RDF::Vocab::SHACL.MinCountConstraintComponent,
         **options)
     end
@@ -161,17 +162,19 @@ module SHACL::Algebra
       if !value_nodes.all?(&:literal?)
         not_satisfied(focus: node, path: path,
           message: "not all values are literals",
+          resultSeverity: options.fetch(:severity),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
       elsif value_nodes.map(&:language).length != value_nodes.map(&:language).uniq.length
         not_satisfied(focus: node, path: path,
           message: "not all values have unique language tags",
+          resultSeverity: options.fetch(:severity),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
       else
         satisfy(focus: node, path: path,
           message: "all literals have unique language tags",
-          resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
       end

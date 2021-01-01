@@ -55,7 +55,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_type} of class #{type}",
-          resultSeverity: (has_type ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (has_type ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.ClassConstraintComponent,
           **options)
       end.flatten.compact
@@ -83,7 +83,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_datatype} a valid literal with datatype #{datatype}",
-          resultSeverity: (has_datatype ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (has_datatype ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.DatatypeConstraintComponent,
           **options)
       end.flatten.compact
@@ -111,7 +111,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_value} disjoint with #{disjoint_nodes.to_sxp}",
-          resultSeverity: (has_value ? RDF::Vocab::SHACL.Violation : RDF::Vocab::SHACL.Info),
+          resultSeverity: (has_value ? options.fetch(:severity) : RDF::Vocab::SHACL.Info),
           component: RDF::Vocab::SHACL.DisjointConstraintComponent,
           **options)
       end.flatten.compact
@@ -139,7 +139,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_value} a value in #{equal_nodes.to_sxp}",
-          resultSeverity: (has_value ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (has_value ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.EqualsConstraintComponent,
           **options)
       end +
@@ -148,6 +148,7 @@ module SHACL::Algebra
           not_satisfied(focus: node, path: path,
             value: n,
             message: "should have a value in #{value_nodes.to_sxp}",
+            resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.EqualsConstraintComponent,
             **options) :
           nil
@@ -173,7 +174,7 @@ module SHACL::Algebra
       has_value = value_nodes.include?(term)
       [satisfy(focus: node, path: path,
         message: "is#{' not' unless has_value} the value #{term.to_sxp}",
-        resultSeverity: (has_value ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+        resultSeverity: (has_value ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
         component: RDF::Vocab::SHACL.HasValueConstraintComponent,
         **options)]
     end
@@ -199,7 +200,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_value} a value in #{list.to_sxp}",
-          resultSeverity: (has_value ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (has_value ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.InConstraintComponent,
           **options)
       end.flatten.compact
@@ -226,7 +227,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless has_language} a literal with a language in #{list.to_sxp}",
-          resultSeverity: (has_language ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (has_language ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.LanguageInConstraintComponent,
           **options)
       end.flatten.compact
@@ -245,6 +246,7 @@ module SHACL::Algebra
               not_satisfied(focus: node, path: path,
                 value: left,
                 message: "value is incomperable with #{right.to_sxp}",
+                resultSeverity: options.fetch(:severity),
                 component: component,
                 **options)
             else
@@ -252,7 +254,7 @@ module SHACL::Algebra
               satisfy(focus: node, path: path,
                 value: left,
                 message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
-                resultSeverity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+                resultSeverity: (compares ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
                 component: component,
                 **options)
             end
@@ -261,13 +263,14 @@ module SHACL::Algebra
             satisfy(focus: node, path: path,
               value: left,
               message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
-              resultSeverity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+              resultSeverity: (compares ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
               component: component,
               **options)
           else
             not_satisfied(focus: node, path: path,
               value: left,
               message: "value is incomperable with #{right.to_sxp}",
+              resultSeverity: options.fetch(:severity),
               component: component,
               **options)
           end
@@ -330,7 +333,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless compares} a literal at with length <= #{term.to_sxp}",
-          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.MaxLengthConstraintComponent,
           **options)
       end.flatten.compact
@@ -390,7 +393,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless compares} a literal with length >= #{term.to_sxp}",
-          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.MinLengthConstraintComponent,
           **options)
       end.flatten.compact
@@ -434,7 +437,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless compares} a node kind match of #{term.to_sxp}",
-          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.NodeKindConstraintComponent,
           **options)
       end.flatten.compact
@@ -469,7 +472,7 @@ module SHACL::Algebra
         satisfy(focus: node, path: path,
           value: n,
           message: "is#{' not' unless compares} a match #{pat.inspect}",
-          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (compares ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
           component: RDF::Vocab::SHACL.PatternConstraintComponent,
           **options)
       end.flatten.compact

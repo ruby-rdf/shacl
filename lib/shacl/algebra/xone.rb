@@ -44,6 +44,7 @@ module SHACL::Algebra
           focus: node,
           value: node,
           message: "node does not conform to any shape",
+          resultSeverity: options.fetch(:severity),
           component: RDF::Vocab::SHACL.XoneConstraintComponent,
           depth: depth, **options)
       when 1
@@ -58,6 +59,7 @@ module SHACL::Algebra
           focus: node,
           value: node,
           message: "node conforms to #{num_conform} shapes",
+          resultSeverity: options.fetch(:severity),
           component: RDF::Vocab::SHACL.XoneConstraintComponent,
           depth: depth, **options)
       end
