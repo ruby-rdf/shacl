@@ -53,7 +53,7 @@ module SHACL::Algebra
           when 'and'
             elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
             operands << And.new(*elements, **options.dup)
-          when 'class'              then node_opts[:class] = iri(v, **options)
+          when 'class'              then node_opts[:class] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'datatype'           then node_opts[:datatype] = iri(v, **options)
           when 'disjoint'           then node_opts[:disjoint] = iri(v, **options)
           when 'equals'             then node_opts[:equals] = iri(v, **options)

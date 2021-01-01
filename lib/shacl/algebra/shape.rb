@@ -44,17 +44,20 @@ module SHACL::Algebra
     #   		sh:class ex:PostalAddress ;
     #   	] .
     #
-    # @param [RDF::URI] type The type expected for each value node.
+    # @param [Array<RDF::URI>] types The type expected for each value node.
     # @param [RDF::Term] node the focus node
     # @param [RDF::URI] path (nil) the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
-    def builtin_class(type, node, path, value_nodes, **options)
+    def builtin_class(types, node, path, value_nodes, **options)
       value_nodes.map do |n|
-        has_type = n.resource? && graph.query(subject: n, predicate: RDF.type, object:type)
+        has_type = n.resource? && begin
+          objects = graph.query(subject: n, predicate: RDF.type).objects
+          types.all? {|t| objects.include?(t)}
+        end
         satisfy(focus: node, path: path,
           value: n,
-          message: "is#{' not' unless has_type} of class #{type}",
+          message: "is#{' not' unless has_type} of class #{type.to_sxp}",
           resultSeverity: (options.fetch(:severity) unless has_type),
           component: RDF::Vocab::SHACL.ClassConstraintComponent,
           **options)

@@ -31,7 +31,7 @@ describe SHACL do
                 pending "non-strict boolean property values"
               when *%w{core/node/minInclusive-003}
                 pending "comparison of dates and times with and without timezone"
-              when *%w{core/node/class-003 core/property/property-001}
+              when *%w{core/property/property-001}
                 pending "in progress"
               when *%w{core/property/qualifiedMinCountDisjoint-001 core/property/qualifiedValueShapesDisjoint-001}
                 pending "sh:qualifiedValueShapesDisjoint"
