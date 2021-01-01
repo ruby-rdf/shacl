@@ -103,12 +103,14 @@ module SHACL::Algebra
     #   		sh:disjoint ex:altLabel ;
     #   	] .
     #
-    # @param [RDF::URI] property the property of the focus node whose values must be disjoint with the value nodes.
+    # @param [Array<RDF::URI>] properties the properties of the focus node whose values must be disjoint with the value nodes.
     # @param [RDF::Term] node the focus node
     # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
-    def builtin_disjoint(property, node, path, value_nodes, **options)
-      disjoint_nodes = graph.query(subject: node, predicate: property).objects
+    def builtin_disjoint(properties, node, path, value_nodes, **options)
+      disjoint_nodes = properties.map do |prop|
+        graph.query(subject: node, predicate: prop).objects
+      end.flatten.compact
       value_nodes.map do |n|
         has_value = disjoint_nodes.include?(n)
         satisfy(focus: node, path: path,

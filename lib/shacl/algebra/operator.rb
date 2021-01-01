@@ -55,7 +55,7 @@ module SHACL::Algebra
             operands << And.new(*elements, **options.dup)
           when 'class'              then node_opts[:class] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'datatype'           then node_opts[:datatype] = iri(v, **options)
-          when 'disjoint'           then node_opts[:disjoint] = iri(v, **options)
+          when 'disjoint'           then node_opts[:disjoint] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'equals'             then node_opts[:equals] = iri(v, **options)
           when 'id'                 then node_opts[:id] = iri(v, vocab: false, **options)
           when 'ignoredProperties'  then node_opts[:ignoredPropertiese] = as_array(v).map {|vv| iri(vv, **options)} if v

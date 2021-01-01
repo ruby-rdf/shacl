@@ -31,14 +31,12 @@ describe SHACL do
                 pending "non-strict boolean property values"
               when *%w{core/node/minInclusive-003}
                 pending "comparison of dates and times with and without timezone"
-              when *%w{core/property/property-001}
-                pending "in progress"
               when *%w{core/property/qualifiedMinCountDisjoint-001 core/property/qualifiedValueShapesDisjoint-001}
                 pending "sh:qualifiedValueShapesDisjoint"
               when *%w{core/path/path-strange-001 core/path/path-strange-002}
                 pending "unparsable path"
-              when *%w{core/validation-reports/shared}
-                pending "maintining focus"
+              when *%w{core/property/property-001 core/validation-reports/shared}
+                pending "maintaining focus"
               when *%w{core/complex/shacl-shacl}
                 skip "Until later"
               end
