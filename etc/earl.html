@@ -59,7 +59,7 @@ Implementation Report
 </style>
 </head>
 <body>
-<section about='' typeof='doap:Project Software'>
+<section about='' typeof='Software doap:Project'>
 <h2>
 Ruby SHACL gem test results
 </h2>
@@ -73,7 +73,7 @@ This document reports conformance for for
 <span about='https://rubygems.org/gems/shacl' property='doap:name'>Ruby SHACL</span>
 </a>
 </dt>
-<dd property='earl:testSubjects' resource='https://rubygems.org/gems/shacl' typeof='TestSubject doap:Project Software'>
+<dd property='earl:testSubjects' resource='https://rubygems.org/gems/shacl' typeof='Software doap:Project TestSubject'>
 <dl>
 <dt>Description</dt>
 <dd lang='en' property='doap:description'>shacl is an Shape Constraint engine for the RDF.rb library suite.</dd>
@@ -89,7 +89,7 @@ https://ruby-rdf.github.com/shacl
 </dd>
 <dt>Developer</dt>
 <dd rel='doap:developer'>
-<div resource='https://greggkellogg.net/foaf#me' typeof='foaf:Person Assertor'>
+<div resource='https://greggkellogg.net/foaf#me' typeof='Assertor foaf:Person'>
 <a href='https://greggkellogg.net/foaf#me'>
 <span property='foaf:name'>Gregg Kellogg</span>
 </a>
@@ -130,8 +130,8 @@ Tests converted from http://datashapes.org/sh/tests/tests/core/misc
 Tests converted from http://datashapes.org/sh/tests/tests/core/node
 </a>
 </td>
-<td class='passed-some'>
-25/32 (78.1%)
+<td class='passed-most'>
+28/32 (87.5%)
 </td>
 </tr>
 <tr>
@@ -151,7 +151,7 @@ Tests converted from http://datashapes.org/sh/tests/tests/core/property
 </a>
 </td>
 <td class='passed-some'>
-28/38 (73.7%)
+32/38 (84.2%)
 </td>
 </tr>
 <tr>
@@ -160,8 +160,8 @@ Tests converted from http://datashapes.org/sh/tests/tests/core/property
 Tests converted from http://datashapes.org/sh/tests/tests/core/targets
 </a>
 </td>
-<td class='passed-most'>
-6/7 (85.7%)
+<td class='passed-all'>
+7/7 (100.0%)
 </td>
 </tr>
 <tr>
@@ -185,7 +185,7 @@ Untested
 <h2>
 Individual Test Results
 </h2>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/complex' resource='urn:x-shacl-test:/core/complex/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/complex' resource='urn:x-shacl-test:/core/complex/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/complex</h2>
 <table class='report'>
 <tr>
@@ -196,7 +196,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/complex/personexample' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/complex/personexample' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/complex/personexample: Test of personexample
 </td>
@@ -212,7 +212,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/complex/shacl-shacl' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/complex/shacl-shacl' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/complex/shacl-shacl: frozen eat your own ( eat your own frozen dogfood )
 </td>
@@ -238,7 +238,7 @@ Percentage passed out of 2 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/misc' resource='urn:x-shacl-test:/core/misc/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/misc' resource='urn:x-shacl-test:/core/misc/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/misc</h2>
 <table class='report'>
 <tr>
@@ -249,7 +249,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/deactivated-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/deactivated-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/misc/deactivated-001: Test of sh:deactivated 001
 </td>
@@ -265,7 +265,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/deactivated-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/deactivated-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/misc/deactivated-002: Test of sh:deactivated 002
 </td>
@@ -281,7 +281,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/message-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/message-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/misc/message-001: Test of custom sh:message 001
 </td>
@@ -297,7 +297,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/severity-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/severity-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/misc/severity-001: Test of sh:severity 001
 </td>
@@ -313,7 +313,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/severity-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/severity-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/misc/severity-002: Test of sh:severity 002
 </td>
@@ -339,7 +339,7 @@ Percentage passed out of 5 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/node' resource='urn:x-shacl-test:/core/node/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/node' resource='urn:x-shacl-test:/core/node/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/node</h2>
 <table class='report'>
 <tr>
@@ -350,7 +350,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/and-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/and-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/and-001: Test of sh:and at node shape 001
 </td>
@@ -366,7 +366,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/and-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/and-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/and-002: Test of sh:and at node shape 002
 </td>
@@ -382,7 +382,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/class-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/class-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/class-001: Test of sh:class at node shape 001
 </td>
@@ -398,7 +398,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/class-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/class-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/class-002: Test of sh:class at node shape 002
 </td>
@@ -414,7 +414,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/class-003' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/class-003' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/class-003: Test of sh:class at node shape 003 multiple classes, overlapping target sets
 </td>
@@ -430,7 +430,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/closed-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/closed-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/closed-001: Test of sh:closed at node shape 001
 </td>
@@ -446,7 +446,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/closed-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/closed-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/closed-002: Test of sh:closed at node shape 002
 </td>
@@ -462,7 +462,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/datatype-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/datatype-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/datatype-001: Test of sh:datatype at node shape 001
 </td>
@@ -478,7 +478,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/datatype-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/datatype-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/datatype-002: Test of sh:datatype at node shape 002
 </td>
@@ -494,7 +494,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/disjoint-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/disjoint-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/disjoint-001: Test of sh:disjoint at node shape 001
 </td>
@@ -510,7 +510,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/equals-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/equals-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/equals-001: Test of sh:equals at node shape 001
 </td>
@@ -526,7 +526,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/hasValue-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/hasValue-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/hasValue-001: Test of sh:hasValue at node shape 001
 </td>
@@ -542,7 +542,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/in-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/in-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/in-001: Test of sh:in at node shape 001
 </td>
@@ -558,7 +558,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/languageIn-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/languageIn-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/languageIn-001: Test of sh:languageIn at node shape 001
 </td>
@@ -574,7 +574,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/maxExclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/maxExclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/maxExclusive-001: Test of sh:maxExclusive at node shape 001
 </td>
@@ -590,7 +590,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/maxInclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/maxInclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/maxInclusive-001: Test of sh:maxInclusive at node shape 001
 </td>
@@ -606,7 +606,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/maxLength-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/maxLength-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/maxLength-001: Test of sh:maxLength at node shape 001
 </td>
@@ -622,7 +622,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minExclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minExclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/minExclusive-001: Test of sh:minExclusive at node shape 001
 </td>
@@ -638,7 +638,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minInclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minInclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/minInclusive-001: Test of sh:minInclusive at node shape 001
 </td>
@@ -654,7 +654,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minInclusive-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minInclusive-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/minInclusive-002: Test of sh:minInclusive at node shape 002 - dateTime with timezone
 </td>
@@ -670,7 +670,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minInclusive-003' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minInclusive-003' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/minInclusive-003: Test of sh:minInclusive at node shape 003 - dateTime without timezone
 </td>
@@ -686,7 +686,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minLength-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/minLength-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/minLength-001: Test of sh:minLength at node shape 001
 </td>
@@ -702,7 +702,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/node-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/node-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/node-001: Test of sh:node at node shape 001
 </td>
@@ -718,7 +718,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/nodeKind-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/nodeKind-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/nodeKind-001: Test of sh:nodeKind at node shape 001
 </td>
@@ -734,7 +734,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/not-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/not-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/not-001: Test of sh:not at node shape 001
 </td>
@@ -750,7 +750,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/not-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/not-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/not-002: Test of sh:not at node shape 002
 </td>
@@ -766,23 +766,23 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/or-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/or-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/or-001: Test of sh:or at node shape 001
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/node/or-001' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/pattern-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/pattern-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/pattern-001: Test of sh:pattern at node shape 001
 </td>
@@ -798,23 +798,23 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/pattern-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/pattern-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/pattern-002: Test of sh:pattern at node shape 002
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/node/pattern-002' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/qualified-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/qualified-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/qualified-001: Test of qualified parameters allowed in node shapes
 </td>
@@ -830,23 +830,23 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/xone-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/xone-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/xone-001: Test of sh:xone at node shape 001
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/node/xone-001' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/xone-duplicate' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/xone-duplicate' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/node/xone-duplicate: Test of validation report for shape xone-duplicate by property constraints
 </td>
@@ -867,12 +867,12 @@ PASS
 Percentage passed out of 32 Tests
 </td>
 <td class='passed-some'>
-78.1%
+87.5%
 </td>
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/path' resource='urn:x-shacl-test:/core/path/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/path' resource='urn:x-shacl-test:/core/path/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/path</h2>
 <table class='report'>
 <tr>
@@ -883,7 +883,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-alternative-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-alternative-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-alternative-001: Test of path sh:alternativePath 001
 </td>
@@ -899,7 +899,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-complex-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-complex-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-complex-001: Test of path complex (rdf:type/rdfs:subClassOf*) 001
 </td>
@@ -915,7 +915,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-complex-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-complex-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-complex-002: Test of complex path validation results
 </td>
@@ -931,7 +931,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-inverse-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-inverse-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-inverse-001: Test of path sh:inversePath 001
 </td>
@@ -947,7 +947,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-oneOrMore-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-oneOrMore-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-oneOrMore-001: Test of path sh:oneOrMorePath 001
 </td>
@@ -963,7 +963,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-sequence-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-sequence-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-sequence-001: Test of path sequence 001
 </td>
@@ -979,7 +979,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-sequence-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-sequence-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-sequence-002: Test of path sequence 002
 </td>
@@ -995,7 +995,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-sequence-duplicate-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-sequence-duplicate-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-sequence-duplicate-001: Test of path sequence with duplicate 001
 </td>
@@ -1011,7 +1011,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-strange-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-strange-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-strange-001: Test of strange path 001 two valid paths together
 </td>
@@ -1027,7 +1027,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-strange-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-strange-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-strange-002: Test of strange path 002 valid and invalid paths together
 </td>
@@ -1043,7 +1043,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-unused-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-unused-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-unused-001: Test with unused ill-formed path
 </td>
@@ -1059,7 +1059,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-zeroOrMore-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-zeroOrMore-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-zeroOrMore-001: Test of path sh:zeroOrMorePath 001
 </td>
@@ -1075,7 +1075,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-zeroOrOne-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-zeroOrOne-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/path/path-zeroOrOne-001: Test of path sh:zeroOrOnePath 001
 </td>
@@ -1101,7 +1101,7 @@ Percentage passed out of 13 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/property' resource='urn:x-shacl-test:/core/property/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/property' resource='urn:x-shacl-test:/core/property/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/property</h2>
 <table class='report'>
 <tr>
@@ -1112,7 +1112,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/and-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/and-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/and-001: Test of sh:and at property shape 001
 </td>
@@ -1128,7 +1128,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/class-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/class-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/class-001: Test of sh:class at property shape 001
 </td>
@@ -1144,7 +1144,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/datatype-001: Test of sh:datatype at property shape 001
 </td>
@@ -1160,7 +1160,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/datatype-002: Test of sh:datatype at property shape 002
 </td>
@@ -1176,7 +1176,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-003' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-003' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/datatype-003: Test of sh:datatype at property shape 003
 </td>
@@ -1192,7 +1192,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-ill-formed' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/datatype-ill-formed' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/datatype-ill-formed: Test of validation report for ill-formed literals
 </td>
@@ -1208,7 +1208,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/disjoint-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/disjoint-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/disjoint-001: Test of sh:disjoint at property shape 001
 </td>
@@ -1224,7 +1224,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/equals-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/equals-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/equals-001: Test of sh:equals at property shape 001
 </td>
@@ -1240,7 +1240,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/hasValue-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/hasValue-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/hasValue-001: Test of sh:hasValue at property shape 001
 </td>
@@ -1256,7 +1256,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/in-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/in-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/in-001: Test of sh:in at property shape 001
 </td>
@@ -1272,7 +1272,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/languageIn-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/languageIn-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/languageIn-001: Test of sh:languageIn at property shape 001
 </td>
@@ -1288,7 +1288,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/lessThan-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/lessThan-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/lessThan-001: Test of sh:lessThan at property shape 001
 </td>
@@ -1304,7 +1304,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/lessThan-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/lessThan-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/lessThan-002: Test of sh:lessThan at property shape 002
 </td>
@@ -1320,7 +1320,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/lessThanOrEquals-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/lessThanOrEquals-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/lessThanOrEquals-001: Test of sh:lessThanOrEquals at property shape 001
 </td>
@@ -1336,7 +1336,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxCount-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxCount-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/maxCount-001: Test of sh:maxCount at property shape 001
 </td>
@@ -1352,7 +1352,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxCount-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxCount-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/maxCount-002: Test of sh:maxCount at property shape 002
 </td>
@@ -1368,7 +1368,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxExclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxExclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/maxExclusive-001: Test of sh:maxExclusive at property shape 001
 </td>
@@ -1384,7 +1384,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxInclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxInclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/maxInclusive-001: Test of sh:maxInclusive at property shape 001
 </td>
@@ -1400,7 +1400,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxLength-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/maxLength-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/maxLength-001: Test of sh:maxLength at property shape 001
 </td>
@@ -1416,7 +1416,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minCount-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minCount-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/minCount-001: Test of sh:minCount at property shape 001
 </td>
@@ -1432,7 +1432,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minCount-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minCount-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/minCount-002: Test of sh:minCount at property shape 001
 </td>
@@ -1448,7 +1448,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minExclusive-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minExclusive-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/minExclusive-001: Test of sh:minExclusive at property shape 001
 </td>
@@ -1464,7 +1464,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minExclusive-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minExclusive-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/minExclusive-002: Test of sh:minExclusive at property shape 002
 </td>
@@ -1480,7 +1480,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minLength-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/minLength-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/minLength-001: Test of sh:minLength at property shape 001
 </td>
@@ -1496,39 +1496,39 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/node-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/node-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/node-001: Test of sh:node at property shape 001
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/property/node-001' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/node-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/node-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/node-002: Test of sh:node at property shape 002
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/property/node-002' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/nodeKind-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/nodeKind-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/nodeKind-001: Test of sh:nodeKind at property shape 001
 </td>
@@ -1544,7 +1544,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/not-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/not-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/not-001: Test of sh:not at property shape 001
 </td>
@@ -1560,7 +1560,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/or-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/or-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/or-001: Test of sh:or at property shape 001
 </td>
@@ -1576,7 +1576,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/or-datatypes-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/or-datatypes-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/or-datatypes-001: Test of sh:or of sh:datatypes at property shape 001
 </td>
@@ -1592,7 +1592,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/pattern-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/pattern-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/pattern-001: Test of sh:pattern at property shape 001
 </td>
@@ -1608,23 +1608,23 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/pattern-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/pattern-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/pattern-002: Test of sh:pattern at property shape 002
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/property/pattern-002' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/property-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/property-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/property-001: Test of sh:property at property shape 001
 </td>
@@ -1640,7 +1640,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/qualifiedMinCountDisjoint-001: Test of sh:qualifiedMinCount with disjoint shapes at property shape 001
 </td>
@@ -1656,23 +1656,23 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/qualifiedValueShape-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/qualifiedValueShape-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/qualifiedValueShape-001: Test of sh:qualifiedValueShape at property shape 001
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/property/qualifiedValueShape-001' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/qualifiedValueShapesDisjoint-001: Test of sh:qualifiedValueShapesDisjoint at property shape 001
 </td>
@@ -1688,7 +1688,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/uniqueLang-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/uniqueLang-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/uniqueLang-001: Test of sh:uniqueLang at property shape 001
 </td>
@@ -1704,7 +1704,7 @@ FAIL
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/uniqueLang-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/uniqueLang-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/property/uniqueLang-002: Test uniqueLang with other boolean literal for true
 </td>
@@ -1725,12 +1725,12 @@ FAIL
 Percentage passed out of 38 Tests
 </td>
 <td class='passed-some'>
-73.7%
+84.2%
 </td>
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/targets' resource='urn:x-shacl-test:/core/targets/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/targets' resource='urn:x-shacl-test:/core/targets/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/targets</h2>
 <table class='report'>
 <tr>
@@ -1741,7 +1741,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/multipleTargets-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/multipleTargets-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/multipleTargets-001: Test of multiple targets 001
 </td>
@@ -1757,7 +1757,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetClass-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetClass-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/targetClass-001: Test of sh:targetClass 001
 </td>
@@ -1773,7 +1773,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetClassImplicit-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetClassImplicit-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/targetClassImplicit-001: Test of implicit sh:targetClass 001
 </td>
@@ -1789,7 +1789,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetNode-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetNode-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/targetNode-001: Test of sh:targetNode 001
 </td>
@@ -1805,7 +1805,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetObjectsOf-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetObjectsOf-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/targetObjectsOf-001: Test of sh:targetObjectsOf 001
 </td>
@@ -1821,7 +1821,7 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetSubjectsOf-001' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetSubjectsOf-001' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/targetSubjectsOf-001: Test of sh:targetSubjectsOf 001
 </td>
@@ -1837,18 +1837,18 @@ PASS
 </span>
 </td>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetSubjectsOf-002' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/targetSubjectsOf-002' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/targets/targetSubjectsOf-002: Test of sh:targetSubjectsOf 002
 </td>
-<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/targets/targetSubjectsOf-002' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:failed'>
-FAIL
+<span property='earl:outcome' resource='earl:passed'>
+PASS
 </span>
 </span>
 </td>
@@ -1857,13 +1857,13 @@ FAIL
 <td>
 Percentage passed out of 7 Tests
 </td>
-<td class='passed-some'>
-85.7%
+<td class='passed-all'>
+100.0%
 </td>
 </tr>
 </table>
 </section>
-<section id='Tests-for-validation-reports' resource='urn:x-shacl-test:/core/validation-reports/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-for-validation-reports' resource='urn:x-shacl-test:/core/validation-reports/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests for validation reports</h2>
 <table class='report'>
 <tr>
@@ -1874,7 +1874,7 @@ Test
 <a href='#subj_0'>Ruby SHACL</a>
 </th>
 </tr>
-<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/validation-reports/shared' typeof='TestCase http://www.w3.org/ns/shacl-test#Validate TestCriterion'>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/validation-reports/shared' typeof='TestCase TestCriterion http://www.w3.org/ns/shacl-test#Validate'>
 <td>
 Test urn:x-shacl-test:/core/validation-reports/shared: Test of validation report for shape shared by property constraints
 </td>
@@ -1901,7 +1901,7 @@ Percentage passed out of 1 Tests
 </table>
 </section>
 </section>
-<section id='appendix' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='[&quot;doap:Project&quot;, &quot;Software&quot;]'>
+<section id='appendix' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='[&quot;Software&quot;, &quot;doap:Project&quot;]'>
 <h2>
 Report Generation Software
 </h2>
