@@ -26,7 +26,7 @@ module SHACL::Algebra
         Array(type).include?(RDF::RDFS.Class) ?
           graph.query(predicate: RDF.type, object: id).subjects :
           []
-      )).flatten
+      )).flatten.uniq
     end
 
     ##
