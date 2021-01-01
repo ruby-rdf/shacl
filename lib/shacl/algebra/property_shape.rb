@@ -78,6 +78,12 @@ module SHACL::Algebra
       builtin_results + op_results
     end
 
+    # The path defined on this property shape
+    # @return [RDF::URI, ]
+    def path
+      @options[:path]
+    end
+
     # Specifies the condition that each value node is smaller than all the objects of the triples that have the focus node as subject and the value of sh:lessThan as predicate.
     #
     # @example
@@ -90,7 +96,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] property the property of the focus node whose values must be equal to some value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThan(property, node, path, value_nodes, **options)
       terms = graph.query(subject: node, predicate: property).objects
@@ -102,7 +109,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] property the property of the focus node whose values must be equal to some value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThanOrEquals(property, node, path, value_nodes, **options)
       terms = graph.query(subject: node, predicate: property).objects
@@ -118,7 +126,7 @@ module SHACL::Algebra
     #
     # @param [Integer] count
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxCount(count, node, path, value_nodes, **options)
@@ -140,7 +148,7 @@ module SHACL::Algebra
     #
     # @param [Integer] count
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minCount(count, node, path, value_nodes, **options)
@@ -155,7 +163,7 @@ module SHACL::Algebra
     #
     # @param [Boolean] uniq
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_uniqueLang(uniq, node, path, value_nodes, **options)

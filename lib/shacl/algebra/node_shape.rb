@@ -35,6 +35,26 @@ module SHACL::Algebra
         self.send("builtin_#{k}".to_sym, v, node, nil, [node], depth: depth + 1, **options) if self.respond_to?("builtin_#{k}".to_sym)
       end.flatten.compact
 
+      # Handle closed shapes
+      # FIXME: this only considers URI paths, not property paths
+      closed_results = []
+      if @options[:closed]
+        shape_paths = operands.select {|o| o.is_a?(PropertyShape)}.map(&:path)
+        shape_properties = shape_paths.select {|p| p.is_a?(RDF::URI)}
+        shape_properties += Array(@options[:ignoredProperties])
+
+        closed_results = graph.query(subject: node).map do |statement|
+          next if shape_properties.include?(statement.predicate)
+          not_satisfied(focus: node,
+            value: statement.object,
+            path: statement.predicate,
+            message: "closed node has extra property",
+            resultSeverity: options.fetch(:severity),
+            component: RDF::Vocab::SHACL.ClosedConstraintComponent,
+            **options)
+        end.compact
+      end
+
       # Evaluate against operands
       op_results = operands.map do |op|
         res = op.conforms(node,
@@ -54,7 +74,7 @@ module SHACL::Algebra
         end
       end.flatten.compact
 
-      builtin_results + op_results
+      builtin_results + closed_results + op_results
     end
   end
 end

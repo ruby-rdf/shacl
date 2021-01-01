@@ -24,9 +24,9 @@ describe SHACL do
             rel = t.id.sub('urn:x-shacl-test:/', '')
             specify "#{rel}: #{t.label}" do
               case rel
-              when *%w{core/node/closed-001 core/node/closed-002
-                       core/complex/personexample}
-                pending "Closed nodes."
+              #when *%w{core/node/closed-001 core/node/closed-002
+              #         core/complex/personexample}
+              #  pending "Closed nodes."
               when *%w{core/property/uniqueLang-002}
                 pending "non-strict boolean property values"
               when *%w{core/node/minInclusive-003}

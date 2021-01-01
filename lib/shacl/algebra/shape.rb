@@ -46,7 +46,7 @@ module SHACL::Algebra
     #
     # @param [Array<RDF::URI>] types The type expected for each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the value nodes.
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_class(types, node, path, value_nodes, **options)
@@ -78,7 +78,7 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] datatype the expected datatype of each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the value nodes.
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @return [Array<SHACL::ValidationResult>]
     def builtin_datatype(datatype, node, path, value_nodes, **options)
       value_nodes.map do |n|
@@ -105,7 +105,8 @@ module SHACL::Algebra
     #
     # @param [Array<RDF::URI>] properties the properties of the focus node whose values must be disjoint with the value nodes.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_disjoint(properties, node, path, value_nodes, **options)
       disjoint_nodes = properties.map do |prop|
@@ -135,7 +136,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] property the property of the focus node whose values must be equal to some value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_equals(property, node, path, value_nodes, **options)
       equal_nodes = graph.query(subject: node, predicate: property).objects
@@ -173,7 +175,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term that must be a value of a value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_hasValue(term, node, path, value_nodes, **options)
       has_value = value_nodes.include?(term)
@@ -197,7 +200,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] list the list which must contain the value nodes..
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_in(list, node, path, value_nodes, **options)
       value_nodes.map do |n|
@@ -224,7 +228,7 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] datatype the expected datatype of each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the value nodes.
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @return [Array<SHACL::ValidationResult>]
     def builtin_languageIn(list, node, path, value_nodes, **options)
       value_nodes.map do |n|
@@ -252,7 +256,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxExclusive(term, node, path, value_nodes, **options)
       compare(:<, [term], node, path, value_nodes,
@@ -273,7 +278,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxInclusive(term, node, path, value_nodes, **options)
       compare(:<=, [term], node, path, value_nodes,
@@ -284,7 +290,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxLength(term, node, path, value_nodes, **options)
       value_nodes.map do |n|
@@ -312,7 +319,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minExclusive(term, node, path, value_nodes, **options)
       compare(:>, [term], node, path, value_nodes,
@@ -333,7 +341,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus nod to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minInclusive(term, node, path, value_nodes, **options)
       compare(:>=, [term], node, path, value_nodes,
@@ -344,7 +353,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minLength(term, node, path, value_nodes, **options)
       value_nodes.map do |n|
@@ -388,7 +398,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the kind of node to match each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the to the value nodes.
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_nodeKind(term, node, path, value_nodes, **options)
       value_nodes.map do |n|
@@ -416,7 +427,8 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] pattern A regular expression that all value nodes need to match.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI] path (nil) the property path from the focus node to the     # @param [Array<RDF::Term>] value_nodes
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes..
+    # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_pattern(pattern, node, path, value_nodes, **options)
       flags = options[:flags].to_s

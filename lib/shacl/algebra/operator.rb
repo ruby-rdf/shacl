@@ -58,7 +58,7 @@ module SHACL::Algebra
           when 'disjoint'           then node_opts[:disjoint] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'equals'             then node_opts[:equals] = iri(v, **options)
           when 'id'                 then node_opts[:id] = iri(v, vocab: false, **options)
-          when 'ignoredProperties'  then node_opts[:ignoredPropertiese] = as_array(v).map {|vv| iri(vv, **options)} if v
+          when 'ignoredProperties'  then node_opts[:ignoredProperties] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'lessThan'           then node_opts[:lessThan] = iri(v, **options)
           when 'lessThanOrEquals'   then node_opts[:lessThanOrEquals] = iri(v, **options)
           when 'node'
