@@ -295,14 +295,14 @@ module SHACL::Algebra
     # @param [RDF::Term] focus
     # @param [RDF::Resource] shape
     # @param [RDF::URI] component
-    # @param [RDF::URI] resultSeverity (RDF:::Vocab::SHACL.Info)
-    # @param [Array<RDF::URI>] path
-    # @param [RDF::Term] value
-    # @param [RDF::Term] details
-    # @param [String] message
+    # @param [RDF::URI] resultSeverity (nil)
+    # @param [Array<RDF::URI>] path (nil)
+    # @param [RDF::Term] value (nil)
+    # @param [RDF::Term] details (nil)
+    # @param [String] message (nil)
     # @return [Array<SHACL::ValidationResult>]
-    def satisfy(focus:, shape:, component:, resultSeverity: RDF::Vocab::SHACL.Info, path: nil, value: nil, details: nil, message: nil, **options)
-      log_debug(self.class.const_get(:NAME), "#{'not ' unless resultSeverity == RDF::Vocab::SHACL.Info}satisfied #{value}#{': ' + message if message}", **options)
+    def satisfy(focus:, shape:, component:, resultSeverity: nil, path: nil, value: nil, details: nil, message: nil, **options)
+      log_debug(self.class.const_get(:NAME), "#{'not ' if resultSeverity}satisfied #{value}#{': ' + message if message}", **options)
       [SHACL::ValidationResult.new(focus, path, shape, resultSeverity, component,
                                    details, value, message)]
     end
@@ -314,10 +314,10 @@ module SHACL::Algebra
     # @param [RDF::Resource] shape
     # @param [RDF::URI] component
     # @param [RDF::URI] resultSeverity (RDF:::Vocab::SHACL.Violation)
-    # @param [Array<RDF::URI>] path
-    # @param [RDF::Term] value
-    # @param [RDF::Term] details
-    # @param [String] message
+    # @param [Array<RDF::URI>] path (nil)
+    # @param [RDF::Term] value (nil)
+    # @param [RDF::Term] details (nil)
+    # @param [String] message (nil)
     # @return [Array<SHACL::ValidationResult>]
     def not_satisfied(focus:, shape:, component:, resultSeverity: RDF::Vocab::SHACL.Violation, path: nil, value: nil, details: nil, message: nil, **options)
       log_info(self.class.const_get(:NAME), "not satisfied #{value}#{': ' + message if message}", **options)

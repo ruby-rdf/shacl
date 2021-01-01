@@ -6,7 +6,7 @@ require_relative 'context'
 module SHACL
   # A SHACL [Validateion Result](https://www.w3.org/TR/shacl/#results-validation-result).
   #
-  # Also allows for a successful result, if the `resultSeverity` is sh:Info.
+  # Also allows for a successful result, if the `resultSeverity` `nil`.
   ValidationResult = Struct.new(
     :focus,
     :path,
@@ -21,7 +21,7 @@ module SHACL
     #
     # @return [Boolean]
     def conform?
-      resultSeverity == RDF::Vocab::SHACL.Info
+      resultSeverity.nil?
     end
     alias_method :conforms?, :conform?
 

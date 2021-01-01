@@ -124,7 +124,7 @@ module SHACL::Algebra
     def builtin_maxCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} <= maxCount #{count}",
-        resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
+        resultSeverity: (options.fetch(:severity) unless value_nodes.count <= count.to_i),
         component: RDF::Vocab::SHACL.MaxCountConstraintComponent,
         **options)
     end
@@ -146,7 +146,7 @@ module SHACL::Algebra
     def builtin_minCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} >= minCount #{count}",
-        resultSeverity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
+        resultSeverity: (options.fetch(:severity) unless value_nodes.count >= count.to_i),
         component: RDF::Vocab::SHACL.MinCountConstraintComponent,
         **options)
     end
@@ -174,7 +174,7 @@ module SHACL::Algebra
       else
         satisfy(focus: node, path: path,
           message: "all literals have unique language tags",
-          resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : options.fetch(:severity)),
+          resultSeverity: (options.fetch(:severity) unless value_nodes.count <= count.to_i),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
       end

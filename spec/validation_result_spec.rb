@@ -17,14 +17,18 @@ describe SHACL::ValidationResult do
   describe :conforms? do
     it {is_expected.not_to be_conform}
 
-    it "conforms if Info" do
-      subject.resultSeverity = RDF::Vocab::SHACL.Info
+    it "conforms if nil" do
+      subject.resultSeverity = nil
       is_expected.to be_conform
     end
 
-    it "does not conform if Warning" do
-      subject.resultSeverity = RDF::Vocab::SHACL.Warning
-      is_expected.not_to be_conform
+    [RDF::Vocab::SHACL.Info,
+     RDF::Vocab::SHACL.Warning,
+     RDF::Vocab::SHACL.Violation].each do |sev|
+       it "does not conform if #{sev}" do
+         subject.resultSeverity = sev
+         is_expected.not_to be_conform
+       end
     end
   end
 
