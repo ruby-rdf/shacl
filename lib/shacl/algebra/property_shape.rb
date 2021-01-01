@@ -165,7 +165,7 @@ module SHACL::Algebra
           resultSeverity: options.fetch(:severity),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
-      elsif value_nodes.map(&:language).length != value_nodes.map(&:language).uniq.length
+      elsif value_nodes.map(&:language).compact.length != value_nodes.map(&:language).compact.uniq.length
         not_satisfied(focus: node, path: path,
           message: "not all values have unique language tags",
           resultSeverity: options.fetch(:severity),
@@ -174,7 +174,6 @@ module SHACL::Algebra
       else
         satisfy(focus: node, path: path,
           message: "all literals have unique language tags",
-          resultSeverity: (options.fetch(:severity) unless value_nodes.count <= count.to_i),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
       end

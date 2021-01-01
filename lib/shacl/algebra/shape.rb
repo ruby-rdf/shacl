@@ -85,7 +85,7 @@ module SHACL::Algebra
         has_datatype = n.literal? && n.datatype == datatype && n.valid?
         satisfy(focus: node, path: path,
           value: n,
-          message: "is#{' not' unless has_datatype} a valid literal with datatype #{datatype}",
+          message: "is#{' not' unless has_datatype} a valid literal with datatype #{datatype.to_sxp}",
           resultSeverity: (options.fetch(:severity) unless has_datatype),
           component: RDF::Vocab::SHACL.DatatypeConstraintComponent,
           **options)
@@ -235,52 +235,6 @@ module SHACL::Algebra
           **options)
       end.flatten.compact
     end
-
-    # Common comparison logic for lessThan, lessThanOrEqual, max/minInclusive/Exclusive
-    def compare(method, terms, node, path, value_nodes, component, **options)
-      value_nodes.map do |left|
-        terms.map do |right|
-          case left
-          when RDF::Literal
-            unless right.literal? && (
-              (left.simple? && right.simple?) ||
-              (left.is_a?(RDF::Literal::Numeric) && right.is_a?(RDF::Literal::Numeric)) ||
-              (left.datatype == right.datatype && left.language == right.language))
-              not_satisfied(focus: node, path: path,
-                value: left,
-                message: "value is incomperable with #{right.to_sxp}",
-                resultSeverity: options.fetch(:severity),
-                component: component,
-                **options)
-            else
-              compares = left.send(method, right)
-              satisfy(focus: node, path: path,
-                value: left,
-                message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
-                resultSeverity: (options.fetch(:severity) unless compares),
-                component: component,
-                **options)
-            end
-          when RDF::URI
-            compares = right.uri? && left.send(method, right)
-            satisfy(focus: node, path: path,
-              value: left,
-              message: "is#{' not' unless compares} #{method} than #{right.to_sxp}",
-              resultSeverity: (options.fetch(:severity) unless compares),
-              component: component,
-              **options)
-          else
-            not_satisfied(focus: node, path: path,
-              value: left,
-              message: "value is incomperable with #{right.to_sxp}",
-              resultSeverity: options.fetch(:severity),
-              component: component,
-              **options)
-          end
-        end
-      end.flatten.compact
-    end
-    protected :compare
 
     # Compares value nodes to be < than the specified value.
     #
@@ -478,6 +432,53 @@ module SHACL::Algebra
           resultSeverity: (options.fetch(:severity) unless compares),
           component: RDF::Vocab::SHACL.PatternConstraintComponent,
           **options)
+      end.flatten.compact
+    end
+
+  protected
+
+    # Common comparison logic for lessThan, lessThanOrEqual, max/minInclusive/Exclusive
+    def compare(method, terms, node, path, value_nodes, component, **options)
+      value_nodes.map do |left|
+        results = terms.map do |right|
+          case left
+          when RDF::Literal
+            unless right.literal? && (
+              (left.simple? && right.simple?) ||
+              (left.is_a?(RDF::Literal::Numeric) && right.is_a?(RDF::Literal::Numeric)) ||
+              (left.datatype == right.datatype && left.language == right.language))
+              :incomperable
+            else
+              left.send(method, right)
+            end
+          when RDF::URI
+            right.uri? && left.send(method, right)
+          else
+            :incomperable
+          end
+        end
+
+        if results.include?(:incomperable)
+          not_satisfied(focus: node, path: path,
+            value: left,
+            message: "is incomperable with #{terms.to_sxp}",
+            resultSeverity: options.fetch(:severity),
+            component: component,
+            **options)
+        elsif results.include?(false)
+          not_satisfied(focus: node, path: path,
+            value: left,
+            message: "is not #{method} than #{terms.to_sxp}",
+            resultSeverity: options.fetch(:severity),
+            component: component,
+            **options)
+        else
+          satisfy(focus: node, path: path,
+            value: left,
+            message: "is #{method} than #{terms.to_sxp}",
+            component: component,
+            **options)
+        end
       end.flatten.compact
     end
   end
