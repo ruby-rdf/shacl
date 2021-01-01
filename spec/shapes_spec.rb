@@ -13,15 +13,19 @@ describe SHACL::Shapes do
 
             ex:Node
               rdf:type sh:NodeShape, rdfs:Class ;
-              rdfs:label "Node" ;
+              rdfs:label "Test class" ;
+              sh:node [ sh:class ex:OtherClass ] ;
               .
           ),
           sxp: %{(shapes (
-            (NodeShape
-              (id <http://example.org/nodeNode>)
-              (type shacl:NodeShape rdfs:Class)
-              (label "Node")
-            ))
+              (NodeShape
+                (id <http://example.org/nodeNode>)
+                (type shacl:NodeShape rdfs:Class)
+                (label "Test class")
+                (NodeShape (id _:b0) (class <http://example.org/nodeOtherClass>))
+              )
+              (NodeShape (id _:b0) (class <http://example.org/nodeOtherClass>))
+            )
           )},
           data: {
             "node with type matching shape": {
@@ -30,8 +34,10 @@ describe SHACL::Shapes do
                 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
                 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-                ex:Target rdf:type ex:Node;
-                  rdfs:label "Target Node" .
+                ex:ValidInstance
+                  rdf:type ex:OtherClass ;
+                  rdf:type ex:TestClass ;
+                  rdfs:label "Valid instance" .
               ),
               valid: true,
               sxp: %{()}

@@ -24,7 +24,8 @@ describe SHACL do
             rel = t.id.sub('urn:x-shacl-test:/', '')
             specify "#{rel}: #{t.label}" do
               case rel
-              when *%w{core/node/closed-001 core/node/closed-002}
+              when *%w{core/node/closed-001 core/node/closed-002
+                       core/complex/personexample}
                 pending "Closed nodes."
               when *%w{core/property/uniqueLang-002}
                 pending "non-strict boolean property values"
@@ -34,6 +35,10 @@ describe SHACL do
                 pending "in progress"
               when *%w{core/property/qualifiedMinCountDisjoint-001 core/property/qualifiedValueShapesDisjoint-001}
                 pending "sh:qualifiedValueShapesDisjoint"
+              when *%w{core/path/path-strange-001 core/path/path-strange-002}
+                pending "unparsable path"
+              when *%w{core/validation-reports/shared}
+                pending "maintining focus"
               when *%w{core/complex/shacl-shacl}
                 skip "Until later"
               end
@@ -44,7 +49,7 @@ describe SHACL do
               t.logger.info "shapesGraph:\n#{t.shapesGraphInput}"
 
               shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
-              #t.logger.info "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}"
+              t.logger.info "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}"
               t.logger.info "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}"
 
               # Consider that the datagraph defines a vocabulary
