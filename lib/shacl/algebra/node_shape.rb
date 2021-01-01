@@ -16,6 +16,7 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
+      options = options.merge(severity: RDF::Vocab::SHACL.Violation)
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
       # Add some instance options to the argument
@@ -24,6 +25,7 @@ module SHACL::Algebra
         qualifiedMinCount
         qualifiedMaxCount
         qualifiedValueShapesDisjoint
+        severity
       }.inject(options) do |memo, sym|
         @options[sym] ? memo.merge(sym => @options[sym]) : memo
       end

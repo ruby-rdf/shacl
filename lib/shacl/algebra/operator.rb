@@ -294,15 +294,15 @@ module SHACL::Algebra
     # @param [RDF::Term] focus
     # @param [RDF::Resource] shape
     # @param [RDF::URI] component
-    # @param [RDF::URI] severity (RDF:::Vocab::SHACL.Info)
+    # @param [RDF::URI] resultSeverity (RDF:::Vocab::SHACL.Info)
     # @param [Array<RDF::URI>] path
     # @param [RDF::Term] value
     # @param [RDF::Term] details
     # @param [String] message
     # @return [Array<SHACL::ValidationResult>]
-    def satisfy(focus:, shape:, component:, severity: RDF::Vocab::SHACL.Info, path: nil, value: nil, details: nil, message: nil, **options)
-      log_debug(self.class.const_get(:NAME), "#{'not ' unless [RDF::Vocab::SHACL.Info, RDF::Vocab::SHACL.Warning].include?(severity)}satisfied #{value}#{': ' + message if message}", **options)
-      [SHACL::ValidationResult.new(focus, path, shape, severity, component,
+    def satisfy(focus:, shape:, component:, resultSeverity: RDF::Vocab::SHACL.Info, path: nil, value: nil, details: nil, message: nil, **options)
+      log_debug(self.class.const_get(:NAME), "#{'not ' unless resultSeverity == RDF::Vocab::SHACL.Info}satisfied #{value}#{': ' + message if message}", **options)
+      [SHACL::ValidationResult.new(focus, path, shape, resultSeverity, component,
                                    details, value, message)]
     end
 
@@ -312,15 +312,15 @@ module SHACL::Algebra
     # @param [RDF::Term] focus
     # @param [RDF::Resource] shape
     # @param [RDF::URI] component
-    # @param [RDF::URI] severity (RDF:::Vocab::SHACL.Violation)
+    # @param [RDF::URI] resultSeverity (RDF:::Vocab::SHACL.Violation)
     # @param [Array<RDF::URI>] path
     # @param [RDF::Term] value
     # @param [RDF::Term] details
     # @param [String] message
     # @return [Array<SHACL::ValidationResult>]
-    def not_satisfied(focus:, shape:, component:, severity: RDF::Vocab::SHACL.Violation, path: nil, value: nil, details: nil, message: nil, **options)
+    def not_satisfied(focus:, shape:, component:, resultSeverity: RDF::Vocab::SHACL.Violation, path: nil, value: nil, details: nil, message: nil, **options)
       log_info(self.class.const_get(:NAME), "not satisfied #{value}#{': ' + message if message}", **options)
-      [SHACL::ValidationResult.new(focus, path, shape, severity, component,
+      [SHACL::ValidationResult.new(focus, path, shape, resultSeverity, component,
                                    details, value, message)]
     end
   end

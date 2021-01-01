@@ -6,12 +6,12 @@ require_relative 'context'
 module SHACL
   # A SHACL [Validateion Result](https://www.w3.org/TR/shacl/#results-validation-result).
   #
-  # Also allows for a successful result, if the `severity` is not set.
+  # Also allows for a successful result, if the `resultSeverity` is sh:Info.
   ValidationResult = Struct.new(
     :focus,
     :path,
     :shape,
-    :severity,
+    :resultSeverity,
     :component,
     :details,
     :value,
@@ -21,12 +21,12 @@ module SHACL
     #
     # @return [Boolean]
     def conform?
-      severity != RDF::Vocab::SHACL.Violation
+      resultSeverity == RDF::Vocab::SHACL.Info
     end
     alias_method :conforms?, :conform?
 
     def to_sxp_bin
-      [:value, :focus, :path, :shape, :severity, :component, :details, :message].inject([:ValidationResult]) do |memo, sym|
+      [:value, :focus, :path, :shape, :resultSeverity, :component, :details, :message].inject([:ValidationResult]) do |memo, sym|
         v = to_h[sym]
         if v.respond_to?(:qname) && !v.lexical && v.qname
           v = RDF::URI.new(v.to_s) if v.frozen?
@@ -53,7 +53,7 @@ module SHACL
 
       result.focus = Algebra::Operator.to_rdf(:focus, input['focusNode'], base: nil, vocab: false) if input['focusNode']
       result.path = Algebra::Operator.parse_path(input['resultPath'], **options) if input['resultPath']
-      result.severity = Algebra::Operator.iri(input['resultSeverity'], **options) if input['resultSeverity']
+      result.resultSeverity = Algebra::Operator.iri(input['resultSeverity'], **options) if input['resultSeverity']
       result.component = Algebra::Operator.iri(input['sourceConstraintComponent'], **options) if input['sourceConstraintComponent']
       result.shape = Algebra::Operator.iri(input['sourceShape'], **options) if input['sourceShape']
       result.value = Algebra::Operator.to_rdf(:value, input['value'], **options) if input['value']
@@ -67,7 +67,7 @@ module SHACL
     # @return [Boolean]
     def ==(other)
       return false unless other.is_a?(ValidationResult)
-      %w(focus path severity component shape value).map(&:to_sym).all? do |prop|
+      %w(focus path resultSeverity component shape value).map(&:to_sym).all? do |prop|
         ours = self.send(prop)
         theirs = other.send(prop)
         ours.nil? || theirs.nil? || (ours.node? && theirs.node?) || ours.eql?(theirs)

@@ -16,6 +16,7 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
+      options = options.merge(severity: RDF::Vocab::SHACL.Violation)
 
       # Add some instance options to the argument
       options = %i{
@@ -23,6 +24,7 @@ module SHACL::Algebra
         qualifiedMinCount
         qualifiedMaxCount
         qualifiedValueShapesDisjoint
+        severity
       }.inject(options) do |memo, sym|
         @options[sym] ? memo.merge(sym => @options[sym]) : memo
       end
@@ -121,7 +123,7 @@ module SHACL::Algebra
     def builtin_maxCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} <= maxCount #{count}",
-        severity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+        resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.MaxCountConstraintComponent,
         **options)
     end
@@ -143,7 +145,7 @@ module SHACL::Algebra
     def builtin_minCount(count, node, path, value_nodes, **options)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} >= minCount #{count}",
-        severity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+        resultSeverity: (value_nodes.count >= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
         component: RDF::Vocab::SHACL.MinCountConstraintComponent,
         **options)
     end
@@ -169,7 +171,7 @@ module SHACL::Algebra
       else
         satisfy(focus: node, path: path,
           message: "all literals have unique language tags",
-          severity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
+          resultSeverity: (value_nodes.count <= count.to_i ? RDF::Vocab::SHACL.Info : RDF::Vocab::SHACL.Violation),
           component: RDF::Vocab::SHACL.UniqueLangConstraintComponent,
           **options)
       end

@@ -18,13 +18,13 @@ describe SHACL::ValidationResult do
     it {is_expected.not_to be_conform}
 
     it "conforms if Info" do
-      subject.severity = RDF::Vocab::SHACL.Info
+      subject.resultSeverity = RDF::Vocab::SHACL.Info
       is_expected.to be_conform
     end
 
-    it "conforms if Warning" do
-      subject.severity = RDF::Vocab::SHACL.Warning
-      is_expected.to be_conform
+    it "does not conform if Warning" do
+      subject.resultSeverity = RDF::Vocab::SHACL.Warning
+      is_expected.not_to be_conform
     end
   end
 
@@ -34,7 +34,7 @@ describe SHACL::ValidationResult do
       (focus <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1>)
       (path <http://datashapes.org/sh/tests/core/node/and-001.test#address>)
       (shape <http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle>)
-      (severity shacl:Violation)
+      (resultSeverity shacl:Violation)
       (component shacl:AndConstraintComponent)
       (details "Test details")
       (message "Test message")
@@ -107,8 +107,8 @@ describe SHACL::ValidationResult do
       expect(native.shape).to eql(subject.shape)
     end
 
-    it "has severity" do
-      expect(native.severity).to eql(subject.severity)
+    it "has resultSeverity" do
+      expect(native.resultSeverity).to eql(subject.resultSeverity)
     end
 
     it "has component" do
