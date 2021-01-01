@@ -111,7 +111,6 @@ module SHACL
         "datatype": {"@type": "@vocab"},
         "declare": {"@type": "@id"},
         "disjoint": {"@type": "@id"},
-        "disjoint": {"@type": "@id"},
         "entailment": {"@type": "@id"},
         "equals": {"@type": "@id"},
         "ignoredProperties": {"@type": "@id", "@container": "@list"},
@@ -130,11 +129,19 @@ module SHACL
         "targetNode": {"@type": "@none"},
         "xone": {"@type": "@id", "@container": "@list"}
       },
-      "@type": ["NodeShape", "PropertyShape"],
+      "and": {},
+      "class": {},
+      "datatype": {},
+      "in": {},
+      "node": {},
+      "nodeKind": {},
+      "not": {},
+      "or": {},
       "property": {},
       "targetClass": {},
       "targetNode": {},
       "targetObjectsOf": {},
+      "xone": {},
       "targetSubjectsOf": {}
     })).freeze
   end
