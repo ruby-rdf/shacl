@@ -54,19 +54,16 @@ describe SHACL do
               t.dataGraph.extend(SHACL::Entailment)
               t.dataGraph.entail!
 
-              results = shapes.execute(t.dataGraph, logger: t.logger)
-              t.logger.info "results: #{SXP::Generator.string results.reject(&:conform?).to_sxp_bin}"
+              report = shapes.execute(t.dataGraph, logger: t.logger)
+              t.logger.info "report: #{SXP::Generator.string report.to_sxp_bin}"
 
-              conforms = results.all?(&:conform?)
               if t.positive_test?
-                expect(conforms).to produce(true, t.logger)
+                expect(report.conform?).to produce(true, t.logger)
               else
-                expect(conforms).to produce(false, t.logger)
+                expect(report.conform?).to produce(false, t.logger)
                 # Verify that the produced results are the same
-                expected_results = t.results
-                actual_results = results.reject(&:conform?)
-                expect(actual_results.count).to produce(expected_results.count, t.logger)
-                expect(actual_results).to include(*expected_results), t.logger.to_s
+                expect(report.results.count).to produce(t.report.results.count, t.logger)
+                expect(report).to produce(t.report, t.logger)
               end
             end
           end

@@ -54,26 +54,22 @@ def run_tc(t, **options)
     # Consider that the datagraph defines a vocabulary
     t.dataGraph.extend(SHACL::Entailment)
     t.dataGraph.entail!
-    results = shapes.execute(t.dataGraph, logger: t.logger)
-    STDERR.puts "results: #{SXP::Generator.string results.reject(&:conform?).to_sxp_bin}" if options[:verbose]
+    report = shapes.execute(t.dataGraph, logger: t.logger)
+    STDERR.puts "report: #{SXP::Generator.string report.to_sxp_bin}" if options[:verbose]
 
-    conforms = results.all?(&:conform?)
-
-    result = if t.positive_test? && conforms
+    result = if t.positive_test? && report.conform?
       "passed"
     elsif t.positive_test?
       STDERR.puts "results should conform" if options[:verbose]
       "failed"
     else
-      expected_results = t.results
-      actual_results = results.reject(&:conform?)
-      if conforms
+      if report.conform?
         STDERR.puts "results shouldn't conform" if options[:verbose]
         "failed"
-      elsif actual_results.count != expected_results.count
-        STDERR.puts "expected #{expected_results.count} results, have #{actual_results.count}" if options[:verbose]
+      elsif report.count != t.report.count
+        STDERR.puts "expected #{t.report.count} results, have #{report.count}" if options[:verbose]
         "failed"
-      elsif actual_results.all? {|ar| expected_results.include?(ar)}
+      elsif report == t.report
         "passed"
       else
         STDERR.puts "expected results don't compare" if options[:verbose]

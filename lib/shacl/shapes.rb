@@ -1,5 +1,5 @@
 require_relative 'algebra'
-require_relative 'validation_result'
+require_relative 'validation_report'
 require_relative 'context'
 require 'json/ld'
 
@@ -68,7 +68,7 @@ module SHACL
     # @param [Hash{Symbol => Object}] options
     # @option options [RDF::Term] :focus
     #   An explicit focus node, overriding any defined on the top-level shaps.
-    # @return [Array<SHACL::ValidationResult]
+    # @return [SHACL::ValidationReport]
     def execute(graph, depth: 0, **options)
       self.each do |shape|
         shape.graph = graph
@@ -78,12 +78,12 @@ module SHACL
       end
 
       # Execute all shapes against their target nodes
-      self.map do |shape|
+      ValidationReport.new(self.map do |shape|
         nodes = Array(options.fetch(:focus, shape.targetNodes))
         nodes.map do |node|
           shape.conforms(node, depth: depth + 1)
         end
-      end.flatten
+      end.flatten)
     end
 
     def to_sxp_bin

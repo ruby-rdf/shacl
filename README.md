@@ -28,8 +28,8 @@ The SHACL gem implements a [SHACL][SHACL Spec] Shape Expression engine.
 
     graph = RDF::Graph.load("etc/doap.ttl")
     shacl = SHACL.open("etc/doap.shacl")
-    results = shacl.execute(graph)
-    #=> [ValidationResult, ...]
+    report = shacl.execute(graph)
+    #=> ValidationReport(conform?, results*)
 
 ## Command Line
 TODO: When the `linkeddata` gem is installed, RDF.rb includes a `rdf` executable which acts as a wrapper to perform a number of different
@@ -45,9 +45,9 @@ Similar to the [ShEx gem][] and to the general strategy for querying graphs in t
 
 The shape graph is parsed into JSON-LD, and then converted into [S-Expressions][], which match the execution path. These [S-Expressions][] can be parsed to recreate the executable shape constraints.
 
-Evaluating the shapes against a graph results in a set of {SHACL::ValidationResult} instances, which are most easily serialized as an s-expression. The results of all operations generates a `ValidationResult` which is considered to _conform_ unless the _severity_ is `sh:Violation`.
+Evaluating the shapes against a graph results in a {SHACL::ValidationReport} indicating conformance, along with a set of individual {SHACL::ValidationResult} instances.
 
-TODO: generate RDF from a set of `ValidationResults` to create a `sh:ValidationReport`.
+The resulting validation report can be compared with other validation reports, used as native Ruby objects, serialized to s-expressions, or used as an RDF::Enumerable to retrieve the RDF representation of the report, as defined in [SHACL Spec][].
 
 ### Matching Entailed Triples
 Many tests check for entailed triples, such as entailed super-classes of explict `rdf:type` values. If this is required for a given application, the [RDF::Reasoner][] gem can be used to create such entailed triples.
@@ -128,7 +128,6 @@ This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange develo
 This is free and unencumbered public domain software. For more information,
 see <https://unlicense.org/> or the accompanying {file:LICENSE} file.
 
-[SHACL Spec]:    https://www.w3.org/TR/shacl/
 [RDF]:           https://www.w3.org/RDF/
 [YARD]:          https://yardoc.org/
 [YARD-GS]:       https://rubydoc.info/docs/yard/file/docs/GettingStarted.md
@@ -138,4 +137,5 @@ see <https://unlicense.org/> or the accompanying {file:LICENSE} file.
 [RDF::Reasoner]:        https://ruby-rdf.github.com/rdf-reasoner
 [SPARQL gem]:    https://ruby-rdf.github.com/sparql
 [SXP gem]:       https://ruby-rdf.github.com/sxp
+[SHACL Spec]:    https://www.w3.org/TR/shacl/
 [ShEx gem]:      https://ruby-rdf.github.com/shex

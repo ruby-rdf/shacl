@@ -40,7 +40,7 @@ describe SHACL::Shapes do
                   rdfs:label "Valid instance" .
               ),
               valid: true,
-              sxp: %{()}
+              sxp: [:ValidationReport, true, []].to_sxp
             }
           }
         }
@@ -59,11 +59,11 @@ describe SHACL::Shapes do
 
               if p[:valid]
                 it "conforms" do
-                  expect(report).to all(be_conform)
+                  expect(report).to be_conform
                 end
               else
                 it "does not conform" do
-                  expect(report).not_to all(be_conform)
+                  expect(report).not_to be_conform
                 end
               end
 

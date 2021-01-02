@@ -171,7 +171,7 @@ module Fixtures
       end
 
       def report
-        [:Report, result['sh:conforms'], results].to_sxp_bin
+        SHACL::ValidationReport.new(results)
       end
 
       def results
