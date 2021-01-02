@@ -74,4 +74,4 @@ describe SHACL do
       end
     end
   end
-end unless ENV['CI']
+end

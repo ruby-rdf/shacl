@@ -30,6 +30,11 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
+      - name: Clone Test Suite repository
+        uses: actions/checkout@v2
+        with:
+          repository: w3c/data-shapes
+          path: spec/w3c-data-shapes
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
