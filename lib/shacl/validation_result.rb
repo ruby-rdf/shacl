@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path("../..", __FILE__))
 
+require 'rdf'
 require 'sxp'
 require_relative 'context'
 
@@ -17,6 +18,8 @@ module SHACL
     :value,
     :message) do
 
+    include RDF::Enumerable
+
     # A result conforms if it is not a violation
     #
     # @return [Boolean]
@@ -27,7 +30,7 @@ module SHACL
 
     def to_sxp_bin
       [:value, :focus, :path, :shape, :resultSeverity, :component, :details, :message].inject([:ValidationResult]) do |memo, sym|
-        v = to_h[sym]
+        v = self.send(sym)
         if v.respond_to?(:qname) && !v.lexical && v.qname
           v = RDF::URI.new(v.to_s) if v.frozen?
           v.lexical = v.qname.join(':')
@@ -38,6 +41,33 @@ module SHACL
 
     def to_sxp
       self.to_sxp_bin.to_sxp
+    end
+
+    ##
+    # Yields statements for this result
+    #
+    # @yield  [statement]
+    #   each statement
+    # @yieldparam  [RDF::Statement] statement
+    # @yieldreturn [void] ignored
+    # @return [void]
+    def each(&block)
+      subject = RDF::Node.new
+      block.call(RDF::Statement(subject, RDF.type, RDF::Vocab::SHACL.ValidationResult))
+
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.focusNode, focus)) if focus
+      case path
+      when RDF::URI
+        block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultPath, path)) if path
+      when SPARQL::Algebra::Expression
+        # FIXME
+      end
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultSeverity, resultSeverity)) if resultSeverity
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.sourceConstraintComponent, component)) if component
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.sourceShape, shape)) if shape
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.value, value)) if value
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.detail, RDF::Literal(details))) if details
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultMessage, RDF::Literal(message))) if message
     end
 
     # Transform a JSON representation of a result, into a native representation

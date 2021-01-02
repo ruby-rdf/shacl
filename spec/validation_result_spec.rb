@@ -43,9 +43,38 @@ describe SHACL::ValidationResult do
       (details "Test details")
       (message "Test message")
     )}}
+
     it "generates expected SXP" do
       sxp = subject.to_sxp
       expect(sxp).to generate(expected)
+    end
+  end
+
+  describe "#each" do
+    let(:expected) {%(
+      @prefix sh: <http://www.w3.org/ns/shacl#> .
+      @prefix ex: <http://datashapes.org/sh/tests/core/node/and-001.test#> .
+
+      [ a sh:ValidationResult ;
+        sh:value ex:InvalidRectangle2 ;
+        sh:focusNode ex:InvalidRectangle1 ;
+        sh:resultPath ex:address ;
+        sh:sourceShape ex:Rectangle ;
+        sh:resultSeverity sh:Violation ;
+        sh:sourceConstraintComponent sh:AndConstraintComponent ;
+        sh:detail "Test details" ;
+        sh:resultMessage "Test message" ;
+      ] .
+    )}
+
+    it "enumerates statements" do
+      expect {|b| subject.each(&b)}.to yield_control.exactly(9).times
+    end
+
+    it "is isomorphic with expected result" do
+      g1 = RDF::OrderedRepo.new {|r| r << subject}
+      g2 = RDF::OrderedRepo.new {|r| r << RDF::Turtle::Reader.new(expected)}
+      expect(g1).to be_equivalent_graph(g2)
     end
   end
 

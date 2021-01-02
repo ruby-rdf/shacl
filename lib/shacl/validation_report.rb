@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path("../..", __FILE__))
 
+require 'rdf'
 require 'sxp'
 require_relative 'validation_report'
 
@@ -10,6 +11,8 @@ module SHACL
   #
   # Allows the report to be serialized as a set of RDF Statements
   class ValidationReport
+    include RDF::Enumerable
+
     ##
     # All results, both conforming and non-conforming
     attr_reader :all_results
@@ -58,12 +61,35 @@ module SHACL
       self.to_sxp_bin.to_sxp
     end
 
+    ##
     # To reports are eq if they have the same number of results and each result equals a result in the other report.
     # @param [ValidationReport] other
     # @return [Boolean]
     def ==(other)
       return false unless other.is_a?(ValidationReport)
       count == other.count && results.all? {|r| other.results.include?(r)}
+    end
+
+    ##
+    # Yields statements for this report
+    #
+    # @yield  [statement]
+    #   each statement
+    # @yieldparam  [RDF::Statement] statement
+    # @yieldreturn [void] ignored
+    # @return [void]
+    def each(&block)
+      subject = RDF::Node.new
+      block.call(RDF::Statement(subject, RDF.type, RDF::Vocab::SHACL.ValidationReport))
+      block.call(RDF::Statement(subject, RDF::Vocab::SHACL.conforms, RDF::Literal(conform?)))
+      results.each do |result|
+        result_subject = nil
+        result.each do |statement|
+          result_subject ||= statement.subject
+          yield(statement)
+        end
+        yield(RDF::Statement(subject, RDF::Vocab::SHACL.result, result_subject))
+      end
     end
   end
 end
