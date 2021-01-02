@@ -263,11 +263,12 @@ module SHACL::Algebra
 
     # Create URIs
     # @param [RDF::Value, String] value
+    # @param [RDF::URI] base Base IRI used for resolving relative values (RDF::Vocab::SHACL.to_uri).
     # @param [Boolean] vocab resolve vocabulary relative to the builtin context.
     # @param [Hash{Symbol => Object}] options
     # @return [RDF::Value]
-    def iri(value, options = @options)
-      self.class.iri(value, **options)
+    def iri(value, base: RDF::Vocab::SHACL.to_uri, vocab: true, **options)
+      self.class.iri(value, base: base, vocab: vocab, **options)
     end
 
     # Validates the specified `node` within `graph`, a list of {ValidationResult}.

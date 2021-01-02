@@ -226,16 +226,16 @@ module SHACL::Algebra
     #   		sh:languageIn ( "en" "mi" ) ;
     #   	] .
     #
-    # @param [RDF::URI] datatype the expected datatype of each value node.
+    # @param [Array<RDF::URI>] datatypes the expected datatype of each value node.
     # @param [RDF::Term] node the focus node
     # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @return [Array<SHACL::ValidationResult>]
-    def builtin_languageIn(list, node, path, value_nodes, **options)
+    def builtin_languageIn(datatypes, node, path, value_nodes, **options)
       value_nodes.map do |n|
-        has_language = n.literal? && list.any? {|l| n.language.to_s.start_with?(l)}
+        has_language = n.literal? && datatypes.any? {|l| n.language.to_s.start_with?(l)}
         satisfy(focus: node, path: path,
           value: n,
-          message: "is#{' not' unless has_language} a literal with a language in #{list.to_sxp}",
+          message: "is#{' not' unless has_language} a literal with a language in #{datatypes.to_sxp}",
           resultSeverity: (options.fetch(:severity) unless has_language),
           component: RDF::Vocab::SHACL.LanguageInConstraintComponent,
           **options)
