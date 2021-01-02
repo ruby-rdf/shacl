@@ -41,7 +41,7 @@ OPT_ARGS = [
   ["--info", GetoptLong::NO_ARGUMENT,                 "Shape matching information"],
   ["--shacl", GetoptLong::REQUIRED_ARGUMENT,          "Location of Shapes document"],
   ["--to-sxp", GetoptLong::NO_ARGUMENT,               "Generate SXP for schema instead of validating graph"],
-  ["--validate", GetoptLong::NO_ARGUMENT,             "Validate schema document"],
+  #["--validate", GetoptLong::NO_ARGUMENT,             "Validate shapes graph"],
   ["--verbose", GetoptLong::NO_ARGUMENT,              "Display details of processing"],
   ["--help", "-?", GetoptLong::NO_ARGUMENT,           "This message"]
 ]
@@ -84,15 +84,12 @@ opts.each do |opt, arg|
     logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity} #{msg}\n"}
     options[:logger] = logger
     options[:progress] = true
-  when '--to-json'      then options[:to_json] = true
   when '--to-sxp'       then options[:to_sxp] = true
   when '--validate'     then options[:validate] = true
   when '--verbose'      then options[:verbose] = true
   when "--help"         then usage
   end
 end
-
-raise "No shapes defined" unless shapes_graph
 
 if ARGV.empty?
   run(RDF::OrderedRepo.new, shapes_graph, **options)

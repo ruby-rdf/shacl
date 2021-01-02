@@ -78,6 +78,20 @@ describe SHACL::Shapes do
     end
   end
 
+  describe ".from_queryable" do
+    let(:dataGraph) {%(
+      @prefix sh: <http://www.w3.org/ns/shacl#> .
+
+      [ sh:shapesGraph <http://example/shapes>] .
+    )}
+
+    it "gets shapes from queryable" do
+      g = parse_ttl(dataGraph)
+      expect(RDF::Util::File).to receive(:open_file).with("http://example/shapes", any_args)
+      SHACL::Shapes.from_queryable(g)
+    end
+  end
+
   def parse_ttl(src)
     RDF::OrderedRepo.new do |r|
       r << RDF::Turtle::Reader.new(src)

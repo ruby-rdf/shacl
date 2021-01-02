@@ -14,11 +14,6 @@ module SHACL
     # @return [Array<RDF::URI>]
     attr_reader :loaded_graphs
 
-    # The framed shapes
-    #
-    # @return [Array<Object>]
-    attr_reader :loaded_shapes
-
     # The JSON used to instantiate shapes
     #
     # @return [Array<Hash>]
@@ -58,6 +53,23 @@ module SHACL
       shapes = self.new(shape_json.map {|o| Algebra.from_json(o, **options)})
       shapes.instance_variable_set(:@shape_json, shape_json)
       shapes
+    end
+
+    ##
+    # Retrieve shapes from a sh:shapesGraph reference within the queryable
+    #
+    # @param [RDF::Queryable] queryable
+    #   The data graph which may contain references to the shapes graph
+    # @param [Hash{Symbol => Object}] options
+    # @return [Shapes]
+    # @raise [SHACL::Error]
+    def self.from_queryable(queryable, **options)
+      # Query queryable to find one ore more shapes graphs
+      repo = RDF::OrderedRepo.new do |repo|
+        queryable.query(predicate: RDF::Vocab::SHACL.shapesGraph).
+          objects.
+          each {|iri| repo.load(iri)}
+      end
     end
 
     ##

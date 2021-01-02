@@ -18,6 +18,14 @@ describe SHACL do
     end
   end
 
+  describe ".from_queryable" do
+    it "gets shapes from queryable" do
+      g = RDF::Graph.new
+      expect(SHACL::Shapes).to receive(:from_queryable).with(g, any_args)
+      SHACL.from_queryable(g)
+    end
+  end
+
   describe ".execute" do
     it "opens input and queries against queryable" do
       g = RDF::Graph.new

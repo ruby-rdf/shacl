@@ -37,6 +37,17 @@ module SHACL
   end
 
   ##
+  # Retrieve shapes from a sh:shapesGraph reference within queryable
+  #
+  # @param  (see Shapes#from_queryable)
+  # @option (see Shapes#from_queryable)
+  # @return (see Shapes#from_queryable)
+  # @raise  (see Shapes#from_queryable)
+  def self.from_queryable(queryable, **options)
+    Shapes.from_queryable(queryable, **options)
+  end
+
+  ##
   # The _Shapes Graph_, is established similar to the _Data Graph_, but may be `nil`. If `nil`, the _Data Graph_ may reference a _Shapes Graph_ thorugh an `sh:shapesGraph` property.
   #
   # Additionally, a _Shapes Graph_ may contain an `owl:imports` property referencing additional _Shapes Graphs_, which are resolved until no more imports are found.
@@ -50,8 +61,12 @@ module SHACL
   # @return (see Shapes#execute)
   # @raise (see Shapes#execute)
   def self.execute(input, queryable = nil, **options)
-    shapes = self.open(input, **options)
     queryable = queryable || RDF::Graph.new
+    shapes = if input
+      self.open(input, **options)
+    else
+      Shapes.from_queryable(queryable)
+    end
 
     shapes.execute(queryable, **options)
   end
