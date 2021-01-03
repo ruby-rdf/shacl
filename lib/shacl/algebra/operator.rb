@@ -303,7 +303,7 @@ module SHACL::Algebra
     # @param [String] message (nil)
     # @return [Array<SHACL::ValidationResult>]
     def satisfy(focus:, shape:, component:, resultSeverity: nil, path: nil, value: nil, details: nil, message: nil, **options)
-      log_debug(self.class.const_get(:NAME), "#{'not ' if resultSeverity}satisfied #{value}#{': ' + message if message}", **options)
+      log_debug(self.class.const_get(:NAME), "#{'not ' if resultSeverity}satisfied #{value.to_sxp if value}#{': ' + message if message}", **options)
       [SHACL::ValidationResult.new(focus, path, shape, resultSeverity, component,
                                    details, value, message)]
     end
@@ -321,7 +321,7 @@ module SHACL::Algebra
     # @param [String] message (nil)
     # @return [Array<SHACL::ValidationResult>]
     def not_satisfied(focus:, shape:, component:, resultSeverity: RDF::Vocab::SHACL.Violation, path: nil, value: nil, details: nil, message: nil, **options)
-      log_info(self.class.const_get(:NAME), "not satisfied #{value}#{': ' + message if message}", **options)
+      log_info(self.class.const_get(:NAME), "not satisfied #{value.to_sxp if value}#{': ' + message if message}", **options)
       [SHACL::ValidationResult.new(focus, path, shape, resultSeverity, component,
                                    details, value, message)]
     end

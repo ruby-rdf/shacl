@@ -12,9 +12,9 @@ describe SHACL do
   describe ".open" do
     it "opens shapes graph and gets shapes" do
       g = RDF::Graph.new
-      expect(RDF::Graph).to receive(:load).with("http://example.org/shapes_graph", any_args).and_yield(g)
+      expect(RDF::Graph).to receive(:load).with("http://example.org/shapes_graph", any_args).and_return(g)
       expect(SHACL).to receive(:get_shapes).with(g, loaded_graphs: [RDF::URI("http://example.org/shapes_graph")])
-      SHACL.open("http://example.org/shapes_graph")
+      shacl = SHACL.open("http://example.org/shapes_graph")
     end
   end
 

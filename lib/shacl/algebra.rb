@@ -17,13 +17,13 @@ module SHACL
     autoload :Xone,                 'shacl/algebra/xone.rb'
 
     def self.from_json(operator, **options)
-      raise ArgumentError unless operator.is_a?(Hash)
+      raise ArgumentError, "from_json: operator not a Hash: #{operator.inspect}" unless operator.is_a?(Hash)
       type = operator.fetch('type', [])
       type << (operator["path"] ? 'PropertyShape' : 'NodeShape') if type.empty?
       klass = case
       when type.include?('NodeShape') then NodeShape
       when type.include?('PropertyShape') then PropertyShape
-      else raise ArgumentError, "unknown type #{type.inspect}"
+      else raise ArgumentError, "from_json: unknown type #{type.inspect}"
       end
 
       klass.from_json(operator, **options)

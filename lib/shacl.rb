@@ -1,3 +1,4 @@
+require 'shacl/format'
 require 'shacl/shapes'
 require 'shacl/refinements'
 require 'rdf/vocab/shacl'
@@ -32,9 +33,8 @@ module SHACL
   # @return (see Shapes#from_graph)
   # @raise  (see Shapes#from_graph)
   def self.open(input, **options)
-    RDF::Graph.load(input, **options) do |graph|
-      self.get_shapes(graph, loaded_graphs: [RDF::URI(input, canonicalize: true)], **options)
-    end
+    graph = RDF::Graph.load(input, **options)
+    self.get_shapes(graph, loaded_graphs: [RDF::URI(input, canonicalize: true)], **options)
   end
 
   ##

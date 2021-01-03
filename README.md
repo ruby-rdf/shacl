@@ -33,7 +33,18 @@ The SHACL gem implements a [SHACL][SHACL Spec] Shape Expression engine.
 
 ## Command Line
 TODO: When the `linkeddata` gem is installed, RDF.rb includes a `rdf` executable which acts as a wrapper to perform a number of different
-operations on RDF files, including SHACL. The commands specific to SHACL is 
+operations on RDF files, including SHACL. The commands specific to SHACL is
+
+*`shacl`: Validate repository given shape
+
+Using this command requires  `shacl`, which references a URI or file path to the SHACL shapes graph. Other options are `shape` and `focus`.
+
+Example usage:
+
+    rdf shacl https://ruby-rdf.github.io/shacl/etc/doap.ttl \
+      --shape https://ruby-rdf.github.io/shacl/etc/doap-shape.ttl
+
+The result will add the SHACL validation report to the output graph, optionally replacing the graph with the results, expressing the results as an s-expression, or adding the results as output messages.
 
 ## Documentation
 
@@ -50,7 +61,7 @@ Evaluating the shapes against a graph results in a {SHACL::ValidationReport} ind
 The resulting validation report can be compared with other validation reports, used as native Ruby objects, serialized to s-expressions, or used as an RDF::Enumerable to retrieve the RDF representation of the report, as defined in [SHACL Spec][].
 
 ### Matching Entailed Triples
-Many tests check for entailed triples, such as entailed super-classes of explict `rdf:type` values. If this is required for a given application, the [RDF::Reasoner][] gem can be used to create such entailed triples.
+Many tests check for entailed triples, such as entailed super-classes of explicit `rdf:type` values. If this is required for a given application, the [RDF::Reasoner][] gem can be used to create such entailed triples.
 
     require 'shacl'
     require 'rdf/reasoner'
@@ -61,6 +72,13 @@ Many tests check for entailed triples, such as entailed super-classes of explict
     results = shacl.execute(graph)
     #=> [ValidationResult, ...]
     
+### Future work
+This implementation is certainly not performant. Some things that can be be considered in future versions:
+
+* Support for SHACL-SPARQL
+* Index shapes on `targetNode` and `targetClass` and other targets to allow a more efficient query to find relevant resources in the data graph and not simply iterrate through each top-level shape.
+* Cache target nodes as JSON-LD to reduce the need to separately query for each constraint.
+* Reasoner should support limited RDFS/OWL entailment from the data graph, not just pre-defined vocabularies.
 
 ## Dependencies
 

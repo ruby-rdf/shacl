@@ -65,11 +65,11 @@ module SHACL
     # @raise [SHACL::Error]
     def self.from_queryable(queryable, **options)
       # Query queryable to find one ore more shapes graphs
-      repo = RDF::OrderedRepo.new do |repo|
-        queryable.query(predicate: RDF::Vocab::SHACL.shapesGraph).
-          objects.
-          each {|iri| repo.load(iri)}
+      graphs = queryable.query(predicate: RDF::Vocab::SHACL.shapesGraph).objects
+      graph = RDF::Graph.new do |g|
+        graphs.each {|iri| g.load(iri)}
       end
+      from_graph(graph, loaded_graphs: graphs, **options)
     end
 
     ##
