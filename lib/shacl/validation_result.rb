@@ -20,6 +20,19 @@ module SHACL
 
     include RDF::Enumerable
 
+    ##
+    # Initializer calculates lexical values for URIs
+    def initialize(*args)
+      args = args.map do |v|
+        if v.respond_to?(:qname) && !v.lexical && v.qname
+          v = RDF::URI.new(v.to_s) if v.frozen?
+          v.lexical = v.qname.join(':')
+        end
+        v
+      end
+      super(*args)
+    end
+
     # A result conforms if it is not a violation
     #
     # @return [Boolean]
@@ -29,18 +42,43 @@ module SHACL
     alias_method :conforms?, :conform?
 
     def to_sxp_bin
-      [:value, :focus, :path, :shape, :resultSeverity, :component, :details, :message].inject([:ValidationResult]) do |memo, sym|
+      %i(value focus path shape resultSeverity component details message).inject([:ValidationResult]) do |memo, sym|
         v = self.send(sym)
-        if v.respond_to?(:qname) && !v.lexical && v.qname
-          v = RDF::URI.new(v.to_s) if v.frozen?
-          v.lexical = v.qname.join(':')
-        end
         v ? (memo + [[sym, *v]]) : memo
       end.to_sxp_bin
     end
 
     def to_sxp
       self.to_sxp_bin.to_sxp
+    end
+
+    ##
+    # Create a hash of messages appropriate for linter-like output.
+    #
+    # @return [Hash{Symbol => Hash{Symbol => Array<String>}}]
+    def linter_message
+      case
+      when path then {path: {path.to_sxp => [to_s]}}
+      when focus then {focus: {focus.to_sxp => [to_s]}}
+      else {shape: {shape.to_sxp => [to_s]}}
+      end
+    end
+
+    ##
+    # Some humanized result for the report
+    def to_s
+      "Result for: " +
+      %i(value focus path shape resultSeverity component details message).map do |sym|
+        v = self.send(sym)
+        if v.respond_to?(:humanize)
+          v.humanize
+        elsif v.respond_to?(:lexical)
+          v.lexical
+        else
+          v.to_sxp
+        end
+        (sym == :value ? v.to_sxp : "#{sym}: #{v.to_sxp}") if v
+      end.compact.join("\n  ")
     end
 
     ##
@@ -60,7 +98,7 @@ module SHACL
       when RDF::URI
         block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultPath, path)) if path
       when SPARQL::Algebra::Expression
-        # FIXME
+        raise "No RDF for path #{path}"
       end
       block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultSeverity, resultSeverity)) if resultSeverity
       block.call(RDF::Statement(subject, RDF::Vocab::SHACL.sourceConstraintComponent, component)) if component

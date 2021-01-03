@@ -2,6 +2,7 @@ $:.unshift(File.expand_path("../..", __FILE__))
 
 require 'rdf'
 require 'sxp'
+require_relative 'refinements'
 require_relative 'validation_report'
 
 module SHACL
@@ -12,6 +13,7 @@ module SHACL
   # Allows the report to be serialized as a set of RDF Statements
   class ValidationReport
     include RDF::Enumerable
+    using SHACL::Refinements
 
     ##
     # All results, both conforming and non-conforming
@@ -61,6 +63,10 @@ module SHACL
       self.to_sxp_bin.to_sxp
     end
 
+    def to_s
+      results.map(&:to_s).join("\n")
+    end
+
     ##
     # To reports are eq if they have the same number of results and each result equals a result in the other report.
     # @param [ValidationReport] other
@@ -68,6 +74,14 @@ module SHACL
     def ==(other)
       return false unless other.is_a?(ValidationReport)
       count == other.count && results.all? {|r| other.results.include?(r)}
+    end
+
+    ##
+    # Create a hash of messages appropriate for linter-like output.
+    #
+    # @return [Hash{Symbol => Hash{Symbol => Array<String>}}]
+    def linter_messages
+      results.inject({}) {|memo, result| memo.deep_merge(result.linter_message)}
     end
 
     ##

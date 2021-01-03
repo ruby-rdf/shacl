@@ -3,13 +3,13 @@ require_relative "spec_helper"
 describe SHACL::ValidationResult do
   subject {
     SHACL::ValidationResult.new(
-      RDF::URI('http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1'),
-      RDF::URI('http://datashapes.org/sh/tests/core/node/and-001.test#address'),
-      RDF::URI('http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle'),
+      RDF::URI('http://example/#Focus'),
+      RDF::URI('http://example/#path'),
+      RDF::URI('http://example/#Rectangle'),
       SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.Violation),
       SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.AndConstraintComponent),
       RDF::Literal("Test details"),
-      RDF::URI('http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2'),
+      RDF::URI('http://example/#Focus2'),
       RDF::Literal("Test message")
     )
   }
@@ -34,10 +34,10 @@ describe SHACL::ValidationResult do
 
   describe :to_sxp do
     let(:expected) {%{(ValidationResult
-      (value <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2>)
-      (focus <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1>)
-      (path <http://datashapes.org/sh/tests/core/node/and-001.test#address>)
-      (shape <http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle>)
+      (value <http://example/#Focus2>)
+      (focus <http://example/#Focus>)
+      (path <http://example/#path>)
+      (shape <http://example/#Rectangle>)
       (resultSeverity shacl:Violation)
       (component shacl:AndConstraintComponent)
       (details "Test details")
@@ -50,52 +50,24 @@ describe SHACL::ValidationResult do
     end
   end
 
-  describe "#each" do
-    let(:expected) {%(
-      @prefix sh: <http://www.w3.org/ns/shacl#> .
-      @prefix ex: <http://datashapes.org/sh/tests/core/node/and-001.test#> .
-
-      [ a sh:ValidationResult ;
-        sh:value ex:InvalidRectangle2 ;
-        sh:focusNode ex:InvalidRectangle1 ;
-        sh:resultPath ex:address ;
-        sh:sourceShape ex:Rectangle ;
-        sh:resultSeverity sh:Violation ;
-        sh:sourceConstraintComponent sh:AndConstraintComponent ;
-        sh:detail "Test details" ;
-        sh:resultMessage "Test message" ;
-      ] .
-    )}
-
-    it "enumerates statements" do
-      expect {|b| subject.each(&b)}.to yield_control.exactly(9).times
-    end
-
-    it "is isomorphic with expected result" do
-      g1 = RDF::OrderedRepo.new {|r| r << subject}
-      g2 = RDF::OrderedRepo.new {|r| r << RDF::Turtle::Reader.new(expected)}
-      expect(g1).to be_equivalent_graph(g2)
-    end
-  end
-
   describe :from_json do
     let(:logger) {RDF::Spec.logger}
     let(:json) {%({
       "@type": "sh:ValidationResult",
       "focusNode": {
-        "@id": "http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1",
-        "@type": "http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle",
-        "http://datashapes.org/sh/tests/core/node/and-001.test#height": 3
+        "@id": "http://example/#Focus",
+        "@type": "http://example/#Rectangle",
+        "http://example/#height": 3
       },
       "resultPath": {
-        "@id": "http://datashapes.org/sh/tests/core/node/and-001.test#address"
+        "@id": "http://example/#path"
       },
       "resultSeverity": "sh:Violation",
       "sourceConstraintComponent": "sh:AndConstraintComponent",
       "details": "Test details",
       "message": "Test message",
       "sourceShape": {
-        "@id": "http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle",
+        "@id": "http://example/#Rectangle",
         "@type": [
           "rdfs:Class",
           "sh:NodeShape"
@@ -108,7 +80,7 @@ describe SHACL::ValidationResult do
             {
               "sh:property": {
                 "sh:path": {
-                  "@id": "http://datashapes.org/sh/tests/core/node/and-001.test#width"
+                  "@id": "http://example/#width"
                 },
                 "sh:minCount": 1
               }
@@ -116,7 +88,7 @@ describe SHACL::ValidationResult do
             {
               "sh:property": {
                 "sh:path": {
-                  "@id": "http://datashapes.org/sh/tests/core/node/and-001.test#height"
+                  "@id": "http://example/#height"
                 },
                 "sh:minCount": 1
               }
@@ -124,7 +96,7 @@ describe SHACL::ValidationResult do
           ]
         }
       },
-      "sh:value": {"@id": "http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2"}
+      "sh:value": {"@id": "http://example/#Focus2"}
     })}
     let!(:native) {SHACL::ValidationResult.from_json(json, logger: logger)}
 
@@ -158,6 +130,148 @@ describe SHACL::ValidationResult do
 
     it "has message" do
       expect(native.message).to eql(subject.message)
+    end
+  end
+
+  context "variations" do
+    {
+      basic: {
+        result: SHACL::ValidationResult.new(
+          RDF::URI('http://example/#Focus'),
+          RDF::URI('http://example/#path'),
+          RDF::URI('http://example/#Rectangle'),
+          SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.Violation),
+          SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.AndConstraintComponent),
+          RDF::Literal("Test details"),
+          RDF::URI('http://example/#Focus2'),
+          RDF::Literal("Test message")
+        ),
+        string: [
+          %r{Result for: <http://example/#Focus2>},
+          %r{focus: <http://example/#Focus>},
+          %r{path: <http://example/#path>},
+          %r{shape: <http://example/#Rectangle>},
+          %r{resultSeverity: shacl:Violation},
+          %r{component: shacl:AndConstraintComponent},
+          %r{details: "Test details"},
+          %r{message: "Test message"},
+        ],
+        message: {
+          path: {"<http://example/#path>" => [String]}
+        },
+        ttl: %(
+          @prefix sh: <http://www.w3.org/ns/shacl#> .
+          @prefix ex: <http://example/#> .
+
+          [ a sh:ValidationResult ;
+            sh:value ex:Focus2 ;
+            sh:focusNode ex:Focus ;
+            sh:resultPath ex:path ;
+            sh:sourceShape ex:Rectangle ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:AndConstraintComponent ;
+            sh:detail "Test details" ;
+            sh:resultMessage "Test message" ;
+          ] .
+        )
+      },
+      pathless: {
+        result: SHACL::ValidationResult.new(
+          RDF::URI('http://example/#Focus'),
+          nil,
+          RDF::URI('http://example/#Rectangle'),
+          SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.Violation),
+          SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.AndConstraintComponent),
+          RDF::Literal("Test details"),
+          RDF::URI('http://example/#Focus2'),
+          RDF::Literal("Test message")
+        ),
+        string: [
+          %r{Result for: <http://example/#Focus2>},
+          %r{focus: <http://example/#Focus>},
+          %r{shape: <http://example/#Rectangle>},
+          %r{resultSeverity: shacl:Violation},
+          %r{component: shacl:AndConstraintComponent},
+          %r{details: "Test details"},
+          %r{message: "Test message"},
+        ],
+        message: {
+          focus: {"<http://example/#Focus>" => [String]}
+        },
+        ttl: %(
+          @prefix sh: <http://www.w3.org/ns/shacl#> .
+          @prefix ex: <http://example/#> .
+
+          [ a sh:ValidationResult ;
+            sh:value ex:Focus2 ;
+            sh:focusNode ex:Focus ;
+            sh:sourceShape ex:Rectangle ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:AndConstraintComponent ;
+            sh:detail "Test details" ;
+            sh:resultMessage "Test message" ;
+          ] .
+        )
+      },
+      "path and focusless": {
+        result: SHACL::ValidationResult.new(
+          nil,
+          nil,
+          RDF::URI('http://example/#Rectangle'),
+          SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.Violation),
+          SHACL::Algebra::Operator.iri(RDF::Vocab::SHACL.AndConstraintComponent),
+          RDF::Literal("Test details"),
+          RDF::URI('http://example/#Focus2'),
+          RDF::Literal("Test message")
+        ),
+        string: [
+          %r{Result for: <http://example/#Focus2>},
+          %r{shape: <http://example/#Rectangle>},
+          %r{resultSeverity: shacl:Violation},
+          %r{component: shacl:AndConstraintComponent},
+          %r{details: "Test details"},
+          %r{message: "Test message"},
+        ],
+        message: {
+          shape: {"<http://example/#Rectangle>" => [String]}
+        },
+        ttl: %(
+          @prefix sh: <http://www.w3.org/ns/shacl#> .
+          @prefix ex: <http://example/#> .
+
+          [ a sh:ValidationResult ;
+            sh:value ex:Focus2 ;
+            sh:sourceShape ex:Rectangle ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:AndConstraintComponent ;
+            sh:detail "Test details" ;
+            sh:resultMessage "Test message" ;
+          ] .
+        )
+      },
+    }.each do |title, params|
+      context title do
+        subject {params[:result]}
+        its(:to_s) do
+          params[:string].each do |regexp|
+            is_expected.to match(regexp)
+          end
+        end
+
+        its(:linter_message) do
+          is_expected.to include(params[:message])
+        end
+
+        it "enumerates statements" do
+          expect {|b| subject.each(&b)}.to yield_control
+        end
+
+        it "is isomorphic with expected result" do
+          g1 = RDF::OrderedRepo.new {|r| r << subject}
+          g2 = RDF::OrderedRepo.new {|r| r << RDF::Turtle::Reader.new(params[:ttl])}
+          expect(g1).to be_equivalent_graph(g2)
+        end
+      end
     end
   end
 end

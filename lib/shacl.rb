@@ -1,4 +1,5 @@
 require 'shacl/shapes'
+require 'shacl/refinements'
 require 'rdf/vocab/shacl'
 
 ##
