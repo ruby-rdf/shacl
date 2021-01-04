@@ -15,7 +15,7 @@ module SHACL::Algebra
     # All keys associated with shapes which are set in options
     #
     # @return [Array<Symbol>]
-    ALL_KEYS = %w(
+    ALL_KEYS = %i(
       id type label name comment description deactivated severity
       order group defaultValue path
       targetNode targetClass targetSubjectsOf targetObjectsOf
@@ -27,7 +27,7 @@ module SHACL::Algebra
       qualifiedValueShapesDisjoint qualifiedMinCount qualifiedMaxCount
       equals disjoint lessThan lessThanOrEquals
       closed ignoredProperties hasValue in
-    ).map(&:to_sym).freeze
+    ).freeze
 
     # Initialization options
     attr_accessor :options

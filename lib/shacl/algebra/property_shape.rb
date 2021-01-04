@@ -59,7 +59,7 @@ module SHACL::Algebra
           op.conforms(node, value_nodes: value_nodes, path: path, depth: depth + 1, **options)
         else
           value_nodes.map do |n|
-           res = op.conforms(n, depth: depth + 1, **options)
+           res = op.conforms(n, path: path, depth: depth + 1, **options)
            if op.is_a?(NodeShape) && !res.all?(&:conform?)
              # Special case for embedded NodeShape
              not_satisfied(focus: node, path: path,

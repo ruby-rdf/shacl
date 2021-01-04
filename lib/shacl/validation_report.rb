@@ -68,12 +68,12 @@ module SHACL
     end
 
     ##
-    # To reports are eq if they have the same number of results and each result equals a result in the other report.
+    # Two reports are eq if they have the same number of results and each result equals a result in the other report.
     # @param [ValidationReport] other
     # @return [Boolean]
     def ==(other)
       return false unless other.is_a?(ValidationReport)
-      count == other.count && results.all? {|r| other.results.include?(r)}
+      count == other.count && other.results.all? {|r| results.include?(r)}
     end
 
     ##

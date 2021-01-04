@@ -32,7 +32,7 @@ module SHACL::Algebra
     # @param [RDF::Term] node
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
-    def conforms(node, depth: 0, **options)
+    def conforms(node, path: nil, depth: 0, **options)
       log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
       num_conform = operands.inject(0) do |memo, op|
         results = op.conforms(node, depth: depth + 1, **options)
@@ -40,23 +40,20 @@ module SHACL::Algebra
       end
       case num_conform
       when 0
-        not_satisfied(
-          focus: node,
+        not_satisfied(focus: node, path: path,
           value: node,
           message: "node does not conform to any shape",
           resultSeverity: options.fetch(:severity),
           component: RDF::Vocab::SHACL.XoneConstraintComponent,
           depth: depth, **options)
       when 1
-        satisfy(
-          focus: node,
+        satisfy(focus: node, path: path,
           value: node,
           message: "node conforms to a single shape",
           component: RDF::Vocab::SHACL.XoneConstraintComponent,
           depth: depth, **options)
       else
-        not_satisfied(
-          focus: node,
+        not_satisfied(focus: node, path: path,
           value: node,
           message: "node conforms to #{num_conform} shapes",
           resultSeverity: options.fetch(:severity),
