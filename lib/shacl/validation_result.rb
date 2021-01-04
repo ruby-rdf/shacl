@@ -3,6 +3,7 @@ $:.unshift(File.expand_path("../..", __FILE__))
 require 'rdf'
 require 'sxp'
 require_relative 'context'
+require_relative 'refinements'
 
 module SHACL
   # A SHACL [Validateion Result](https://www.w3.org/TR/shacl/#results-validation-result).
@@ -19,6 +20,7 @@ module SHACL
     :message) do
 
     include RDF::Enumerable
+    using SHACL::Refinements
 
     ##
     # Initializer calculates lexical values for URIs
@@ -96,9 +98,10 @@ module SHACL
       block.call(RDF::Statement(subject, RDF::Vocab::SHACL.focusNode, focus)) if focus
       case path
       when RDF::URI
-        block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultPath, path)) if path
+        block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultPath, path))
       when SPARQL::Algebra::Expression
-        raise "No RDF for path #{path}"
+        path.each_statement(&block)
+        block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultPath, path.subject))
       end
       block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultSeverity, resultSeverity)) if resultSeverity
       block.call(RDF::Statement(subject, RDF::Vocab::SHACL.sourceConstraintComponent, component)) if component
@@ -135,10 +138,10 @@ module SHACL
     # @return [Boolean]
     def ==(other)
       return false unless other.is_a?(ValidationResult)
-      %w(focus path resultSeverity component shape value).map(&:to_sym).all? do |prop|
+      %i(focus path resultSeverity component shape value).all? do |prop|
         ours = self.send(prop)
         theirs = other.send(prop)
-        ours.nil? || theirs.nil? || (ours.node? && theirs.node?) || ours.eql?(theirs)
+        theirs.nil? || (ours && ours.node? && theirs.node?) || ours && ours.eql?(theirs)
       end
     end
 

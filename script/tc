@@ -70,6 +70,8 @@ def run_tc(t, **options)
         STDERR.puts "expected #{t.report.count} results, have #{report.count}" if options[:verbose]
         "failed"
       elsif report == t.report
+        g = RDF::Graph.new << report
+        STDERR.puts "Report graph: " + g.dump(:ttl, standard_prefixes: true) if options[:verbose]
         "passed"
       else
         STDERR.puts "expected results don't compare" if options[:verbose]

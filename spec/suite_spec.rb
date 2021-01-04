@@ -64,6 +64,7 @@ describe SHACL do
                 # Verify that the produced results are the same
                 expect(report.results.count).to produce(t.report.results.count, t.logger)
                 expect(report).to produce(t.report, t.logger)
+                expect(RDF::Graph.new << report).to be_a(RDF::Enumerable)
               end
             end
           end
