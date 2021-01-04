@@ -1,0 +1,35 @@
+@base <https://rubygems.org/gems/shacl/> .
+@prefix : <> .
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix dc:    <http://purl.org/dc/terms/> .
+@prefix earl: <http://www.w3.org/ns/earl#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+
+:Project a sh:NodeShape;
+  sh:targetClass doap:Project;
+  sh:class earl:TestSubject, earl:Software;
+
+  # May have either or both of doap:name/doap:description or dc:title/dc:description
+  sh:or (
+    [
+      sh:property [sh:path doap:name; sh:nodeKind sh:Literal; sh:minCount 1];
+      sh:property [sh:path doap:description; sh:nodeKind sh:Literal; sh:minCount 1]
+    ]
+    [
+      sh:property [sh:path dc:title; sh:nodeKind sh:Literal; sh:minCount 1];
+      sh:property [sh:path dc:description; sh:nodeKind sh:Literal; sh:minCount 1];
+    ]
+  ) ;
+  #  # Good idea to use a category for what the project relates to
+  sh:property [sh:path doap:category; sh:nodeKind sh:IRI; sh:minCount 1];
+
+  # There must be at least one developer
+  sh:property [sh:path doap:developer; sh:nodeKind sh:IRI; sh:minCount 1];
+
+  # For our purposes, it MUST implement the SHACL specification.
+  sh:property [
+    sh:path doap:implements;
+    sh:minCount 1;
+    sh:hasValue <https://www.w3.org/TR/shacl/>
+  ]
+  .

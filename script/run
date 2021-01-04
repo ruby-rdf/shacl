@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+$:.unshift(File.expand_path("../../lib", __FILE__))
+require "bundler/setup"
+require 'shacl'
+begin
+  require 'linkeddata'
+rescue LoadError
+  require 'rdf/ntriples'
+  require 'rdf/turtle'
+end
+require 'rdf/ordered_repo'
+require 'getoptlong'
+
+def run(graph, shapes_graph, **options)
+  if options[:verbose]
+    STDERR.puts "target graph:\n#{graph.dump(:ttl, standard_prefixes: true)}\n"
+    STDERR.puts "shapes graph:\n#{shapes_graph.dump(:ttl, standard_prefixes: true)}\n" if shapes_graph
+  end
+
+  shapes =  SHACL.get_shapes(shapes_graph, **options)
+
+  STDERR.puts ("\nSXP:\n" + SXP::Generator.string(shapes.to_sxp_bin)) if options[:verbose]
+
+  if options[:to_sxp]
+    SXP::Generator.print(shapes.to_sxp_bin)
+  else
+    res = shapes.execute(graph, **options)
+    puts SXP::Generator.string(res.to_sxp_bin)
+  end
+rescue 
+  STDERR.puts $!
+  STDERR.puts $!.backtrace
+end
+
+OPT_ARGS = [
+  ["--base", GetoptLong::REQUIRED_ARGUMENT,           "Base URI of target graph, if different from graph location"],
+  ["--debug", GetoptLong::NO_ARGUMENT,                "Debug shape matching"],
+  ["--execute", "-e", GetoptLong::REQUIRED_ARGUMENT,  "Use option argument as the patch input"],
+  ["--focus", GetoptLong::REQUIRED_ARGUMENT,          "Starting point"],
+  ["--info", GetoptLong::NO_ARGUMENT,                 "Shape matching information"],
+  ["--shacl", GetoptLong::REQUIRED_ARGUMENT,          "Location of Shapes document"],
+  ["--to-sxp", GetoptLong::NO_ARGUMENT,               "Generate SXP for schema instead of validating graph"],
+  #["--validate", GetoptLong::NO_ARGUMENT,             "Validate shapes graph"],
+  ["--verbose", GetoptLong::NO_ARGUMENT,              "Display details of processing"],
+  ["--help", "-?", GetoptLong::NO_ARGUMENT,           "This message"]
+]
+def usage
+  STDERR.puts %{Usage: #{$0} [options] file ...}
+  width = OPT_ARGS.map do |o|
+    l = o.first.length
+    l += o[1].length + 2 if o[1].is_a?(String)
+    l
+  end.max
+  OPT_ARGS.each do |o|
+    s = "  %-*s  " % [width, (o[1].is_a?(String) ? "#{o[0,2].join(', ')}" : o[0])]
+    s += o.last
+    STDERR.puts s
+  end
+  exit(1)
+end
+
+opts = GetoptLong.new(*OPT_ARGS.map {|o| o[0..-2]})
+shapes_graph = nil
+
+options = {}
+
+opts.each do |opt, arg|
+  case opt
+  when '--base'         then options[:base_uri] = arg
+  when '--debug'
+    logger = Logger.new(STDERR)
+    logger.level = Logger::DEBUG
+    logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity} #{msg}\n"}
+    options[:logger] = logger
+    options[:debug] = true
+  when '--execute'      then options[:shacl] = arg
+    #when '--focus'        then options[:focus] = arg
+  when '--shacl'
+    shapes_graph = RDF::OrderedRepo.load(arg)
+  when '--info'
+    logger = Logger.new(STDERR)
+    logger.level = Logger::INFO
+    logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity} #{msg}\n"}
+    options[:logger] = logger
+    options[:progress] = true
+  when '--to-sxp'       then options[:to_sxp] = true
+  when '--validate'     then options[:validate] = true
+  when '--verbose'      then options[:verbose] = true
+  when "--help"         then usage
+  end
+end
+
+if ARGV.empty?
+  run(RDF::OrderedRepo.new, shapes_graph, **options)
+else
+  ARGV.each do |test_file|
+    puts "shacl #{test_file}"
+    run(RDF::OrderedRepo.load(test_file), shapes_graph, **options.merge(base_uri: RDF::URI(test_file)))
+  end
+end
+puts

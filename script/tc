@@ -1,0 +1,216 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require "bundler/setup"
+$:.unshift(File.expand_path("../../lib", __FILE__))
+$:.unshift(File.expand_path("../../spec", __FILE__))
+require 'rdf'
+require 'rdf/isomorphic'
+require 'rdf/ordered_repo'
+require 'rdf/reasoner'
+require 'rspec'
+require 'shacl'
+require 'suite_helper'
+require 'entailment'
+require 'getoptlong'
+require 'amazing_print'
+
+ASSERTOR = "https://greggkellogg.net/foaf#me"
+RUN_TIME = Time.now
+TEST_BASE = 'urn:x-shacl-test:/'
+
+def earl_preamble(options)
+  options[:output].write File.read(File.expand_path("../../etc/doap.ttl", __FILE__))
+  options[:output].puts %(
+<https://rubygems.org/gems/shacl> doap:release [
+  doap:name "shacl-#{SHACL::VERSION}";
+  doap:revision "#{SHACL::VERSION}";
+  doap:created "#{File.mtime(File.expand_path('../../VERSION', __FILE__)).strftime('%Y-%m-%d')}"^^xsd:date;
+] .
+<> foaf:primaryTopic <https://rubygems.org/gems/shacl> ;
+  dc:issued "#{RUN_TIME.xmlschema}"^^xsd:dateTime ;
+  foaf:maker <#{ASSERTOR}> .
+
+<#{ASSERTOR}> a foaf:Person, earl:Assertor;
+  foaf:name "Gregg Kellogg";
+  foaf:title "Implementor";
+  foaf:homepage <https://greggkellogg.net/> .
+)
+end
+
+RDF::Reasoner.apply(:rdfs)
+
+def run_tc(t, **options)
+  rel = t.id.sub('urn:x-shacl-test:/', '')
+  STDERR.write "run #{rel}: #{t.label}" unless options[:quiet]
+  result = "untested"
+
+  begin
+    STDERR.puts t.inspect if options[:verbose]
+
+    shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
+    #STDERR.puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
+    STDERR.puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
+
+    # Consider that the datagraph defines a vocabulary
+    t.dataGraph.extend(SHACL::Entailment)
+    t.dataGraph.entail!
+    report = shapes.execute(t.dataGraph, logger: t.logger)
+    STDERR.puts "report: #{SXP::Generator.string report.to_sxp_bin}" if options[:verbose]
+
+    result = if t.positive_test? && report.conform?
+      "passed"
+    elsif t.positive_test?
+      STDERR.puts "results should conform" if options[:verbose]
+      "failed"
+    else
+      if report.conform?
+        STDERR.puts "results shouldn't conform" if options[:verbose]
+        "failed"
+      elsif report.count != t.report.count
+        STDERR.puts "expected #{t.report.count} results, have #{report.count}" if options[:verbose]
+        "failed"
+      elsif report == t.report
+        g = RDF::Graph.new << report
+        STDERR.puts "Report graph: " + g.dump(:ttl, standard_prefixes: true) if options[:verbose]
+        "passed"
+      else
+        STDERR.puts "expected results don't compare" if options[:verbose]
+        "failed"
+      end
+    end
+  rescue Interrupt
+    exit(1)
+  rescue Exception, NoMethodError => e
+    result = "exception"
+    unless options[:quiet]
+      STDERR.puts("Exception: #{e.message}")
+      if options[:verbose]
+        STDERR.puts e.backtrace
+        STDERR.puts options[:logger].to_s
+      else
+        STDERR.puts options[:logger].to_s
+      end
+    end
+  end
+ensure
+  options[:results][result] ||= 0
+  options[:results][result] += 1
+
+  if options[:debug]
+    STDERR.puts "\ndebug: " + t.logger.to_s
+  end
+
+  if options[:earl]
+    test = t.id
+    options[:output].puts %{
+[ a earl:Assertion;
+  earl:assertedBy <#{ASSERTOR}>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <#{test}>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:#{result};
+    dc:date "#{RUN_TIME.xmlschema}"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+}
+  end
+
+  if options[:quiet]
+    STDERR.write(result == 'passed' ? '.' : result[0,1])
+  else
+    STDERR.puts " #{result}"
+  end
+end
+
+options = {
+  output:       STDOUT,
+  results: {},
+  validate:     true,
+  verbose:      false,
+}
+opts = GetoptLong.new(
+  ["--debug", GetoptLong::NO_ARGUMENT],
+  ["--earl", GetoptLong::NO_ARGUMENT],
+  ["--help", "-?", GetoptLong::NO_ARGUMENT],
+  ["--output", "-o", GetoptLong::REQUIRED_ARGUMENT],
+  ["--quiet", "-q", GetoptLong::NO_ARGUMENT],
+  ["--verbose", "-v", GetoptLong::NO_ARGUMENT],
+  ["--write-manifests", GetoptLong::NO_ARGUMENT],
+)
+
+def help(options)
+  puts "Usage: #{$0} [options] [test-number ...]"
+  puts "Options:"
+  puts "  -debug:             Display detailed debug output"
+  puts "  -earl:              Generate EARL report"
+  puts "  -quiet:             Minimal output"
+  puts "  -output:            Output to specified file"
+  puts "  -verbose:           Verbose processing"
+  puts "  --write-manifests   Write out the parsed manifests for earl reporting"
+  puts "  -help,-?: This message"
+  exit(0)
+end
+
+opts.each do |opt, arg|
+  case opt
+  when '--earl'            then options[:quiet] = options[:earl] = true
+  when '--debug'           then options[:debug] = true
+  when '--output'          then options[:output] = File.open(arg, "w")
+  when '--quiet'           then options[:quiet] = true
+  when '--verbose'         then options[:verbose] = true
+  when '--write-manifests' then options[:write_manifests] = true
+  end
+end
+
+earl_preamble(options) if options[:earl]
+
+if options[:write_manifests]
+  options[:output].puts %(
+  @prefix mf: <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+  @prefix sh: <http://www.w3.org/ns/shacl#> .
+  @prefix sht: <http://www.w3.org/ns/shacl-test#> .
+  ).gsub(/^  /, '')
+end
+result_count = {}
+
+%w(
+  core/node
+  core/property
+  core/targets
+  core/misc
+  core/path
+  core/complex
+  core/validation-reports
+).each do |variant|
+  manifest = TEST_BASE + variant + '/manifest.ttl'
+
+  Fixtures::SuiteTest::Manifest.open(manifest) do |m|
+    if options[:write_manifests]
+      options[:output].puts %(\n<#{m.id}> a mf:Manifest ;)
+      options[:output].puts %(  rdfs:label "#{m.label}" ;) if m.label
+      options[:output].puts %{  mf:entries (<#{m.entries.map(&:id).join('> <')}>)}
+      options[:output].puts %(  .)
+    end
+    m.entries.each do |t|
+      if options[:write_manifests]
+        options[:output].puts %(\n<#{t.id}> a sht:Validate ;)
+        options[:output].puts %(  rdfs:label "#{t.label}" ;) if t.label
+        options[:output].puts %(  mf:action [)
+        options[:output].puts %(    sht:dataGraph <#{t.action['dataGraph']}> ;)
+        options[:output].puts %(    sht:shapesGraph <#{t.action['shapesGraph']}> ;)
+        options[:output].puts %(  ] ;)
+        options[:output].puts %(  .)
+        next
+      end
+      next unless ARGV.empty? || ARGV.any? {|n| "#{t.id}: #{t.label}".include?(n)}
+      run_tc(t, **options)
+    end
+  end
+end
+
+STDERR.puts "" if options[:quiet]
+
+options[:results].each do |result, count|
+  puts "#{result}: #{count}"
+end
