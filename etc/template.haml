@@ -68,6 +68,11 @@
       %p
         This document reports conformance for for
         %a{property: "doap:name", href: "https://www.w3.org/TR/shacl/"}=tests['name']
+      %p
+        Alternate versions of the report are available in
+        %a{rel: :alternate, href: "earl.ttl"}="Turtle"
+        and
+        %a{rel: :alternate, href: "earl.jsonld"}="JSON-LD"
       %dl
         - subjects.each_with_index do |subject, index|
           - subject_refs[subject['@id']] = "subj_#{index}"

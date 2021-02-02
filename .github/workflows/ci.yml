@@ -24,8 +24,8 @@ jobs:
           - 2.5
           - 2.6
           - 2.7
-          #- 3.0 #  until net-http-persistent is updaated
-          #- ruby-head #  until net-http-persistent is updaated
+          - 3.0
+          - ruby-head
           - jruby
     steps:
       - name: Clone repository

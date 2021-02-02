@@ -35,7 +35,7 @@ module SHACL
       @loded_graphs = loaded_graphs
 
       import_count = 0
-      while (imports = graph.query(predicate: RDF::OWL.imports).map(&:object)).count > import_count
+      while (imports = graph.query({predicate: RDF::OWL.imports}).map(&:object)).count > import_count
         # Load each imported graph
         imports.each do |ref|
           graph.load(imports)
@@ -65,7 +65,7 @@ module SHACL
     # @raise [SHACL::Error]
     def self.from_queryable(queryable, **options)
       # Query queryable to find one ore more shapes graphs
-      graphs = queryable.query(predicate: RDF::Vocab::SHACL.shapesGraph).objects
+      graphs = queryable.query({predicate: RDF::Vocab::SHACL.shapesGraph}).objects
       graph = RDF::Graph.new do |g|
         graphs.each {|iri| g.load(iri)}
       end

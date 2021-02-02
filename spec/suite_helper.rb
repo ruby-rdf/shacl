@@ -110,7 +110,7 @@ module Fixtures
         g = RDF::OrderedRepo.load(file)
         label = g.first_object(predicate: RDF::RDFS.label).to_s
 
-        g.query(predicate: RDF::URI("http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#include")).objects.each do |f|
+        g.query({predicate: RDF::URI("http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#include")}).objects.each do |f|
           g.load(f)
         end
         JSON::LD::API.fromRDF(g, useNativeTypes: true) do |expanded|

@@ -15,16 +15,16 @@ module SHACL::Algebra
     def targetNodes
       (Array(@options[:targetNode]) +
       Array(@options[:targetClass]).map do |cls|
-        graph.query(predicate: RDF.type, object: cls).subjects
+        graph.query({predicate: RDF.type, object: cls}).subjects
       end +
       Array(@options[:targetSubjectsOf]).map do |pred|
-        graph.query(predicate: pred).subjects
+        graph.query({predicate: pred}).subjects
       end +
       Array(@options[:targetObjectsOf]).map do |pred|
-        graph.query(predicate: pred).objects
+        graph.query({predicate: pred}).objects
       end + (
         Array(type).include?(RDF::RDFS.Class) ?
-          graph.query(predicate: RDF.type, object: id).subjects :
+          graph.query({predicate: RDF.type, object: id}).subjects :
           []
       )).flatten.uniq
     end
@@ -52,7 +52,7 @@ module SHACL::Algebra
     def builtin_class(types, node, path, value_nodes, **options)
       value_nodes.map do |n|
         has_type = n.resource? && begin
-          objects = graph.query(subject: n, predicate: RDF.type).objects
+          objects = graph.query({subject: n, predicate: RDF.type}).objects
           types.all? {|t| objects.include?(t)}
         end
         satisfy(focus: node, path: path,
@@ -110,7 +110,7 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def builtin_disjoint(properties, node, path, value_nodes, **options)
       disjoint_nodes = properties.map do |prop|
-        graph.query(subject: node, predicate: prop).objects
+        graph.query({subject: node, predicate: prop}).objects
       end.flatten.compact
       value_nodes.map do |n|
         has_value = disjoint_nodes.include?(n)
@@ -140,7 +140,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_equals(property, node, path, value_nodes, **options)
-      equal_nodes = graph.query(subject: node, predicate: property).objects
+      equal_nodes = graph.query({subject: node, predicate: property}).objects
       (value_nodes.map do |n|
         has_value = equal_nodes.include?(n)
         satisfy(focus: node, path: path,
