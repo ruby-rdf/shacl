@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage           = 'https://ruby-rdf.github.com/shacl'
   gem.license            = 'Unlicense'
   gem.summary            = 'Implementation of Shapes Constraint Language (SHACL) for RDF.rb'
-  gem.description        = 'Implements SHACL Core and SHACL-SPARQL within the RDF.rb ecosystem.'
+  gem.description        = 'SHACL is an Shape Constraint engine for the Ruby RDF.rb library suite.'
 
   gem.authors            = ['Gregg Kellogg']
   gem.email              = 'public-rdf-ruby@w3.org'

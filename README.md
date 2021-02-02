@@ -4,7 +4,7 @@ This is a pure-Ruby library for working with the [Shape Constraint Language][SHA
 
 [![Gem Version](https://badge.fury.io/rb/shacl.png)](https://badge.fury.io/rb/shacl)
 [![Build Status](https://github.com/ruby-rdf/shacl/workflows/CI/badge.svg?branch=develop)](https://github.com/ruby-rdf/shacl/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/ruby-rdf/shacl/badge.svg)](https://coveralls.io/github/ruby-rdf/shacl)
+[![Coverage Status](https://coveralls.io/repos/github/ruby-rdf/shacl/badge.svg?branch=develop)](https://coveralls.io/github/ruby-rdf/shacl?branch=develop)
 [![Gitter chat](https://badges.gitter.im/ruby-rdf/rdf.png)](https://gitter.im/ruby-rdf/rdf)
 
 ## Features

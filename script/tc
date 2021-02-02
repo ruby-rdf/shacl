@@ -78,8 +78,8 @@ def run_tc(t, **options)
         "failed"
       end
     end
-  rescue Interrupt
-    exit(1)
+  rescue Interupt => e
+    raise e
   rescue Exception, NoMethodError => e
     result = "exception"
     unless options[:quiet]
@@ -123,40 +123,62 @@ ensure
 end
 
 options = {
+  level: Logger::WARN,
   output:       STDOUT,
   results: {},
   validate:     true,
   verbose:      false,
 }
-opts = GetoptLong.new(
-  ["--debug", GetoptLong::NO_ARGUMENT],
-  ["--earl", GetoptLong::NO_ARGUMENT],
-  ["--help", "-?", GetoptLong::NO_ARGUMENT],
-  ["--output", "-o", GetoptLong::REQUIRED_ARGUMENT],
-  ["--quiet", "-q", GetoptLong::NO_ARGUMENT],
-  ["--verbose", "-v", GetoptLong::NO_ARGUMENT],
-  ["--write-manifests", GetoptLong::NO_ARGUMENT],
-)
 
-def help(options)
-  puts "Usage: #{$0} [options] [test-number ...]"
-  puts "Options:"
-  puts "  -debug:             Display detailed debug output"
-  puts "  -earl:              Generate EARL report"
-  puts "  -quiet:             Minimal output"
-  puts "  -output:            Output to specified file"
-  puts "  -verbose:           Verbose processing"
-  puts "  --write-manifests   Write out the parsed manifests for earl reporting"
-  puts "  -help,-?: This message"
-  exit(0)
+OPT_ARGS = [
+  ["--debug",           GetoptLong::NO_ARGUMENT, "Debugging output"],
+  ["--earl",            GetoptLong::NO_ARGUMENT, "Generate EARL report"],
+  ["--help", "-?",      GetoptLong::NO_ARGUMENT, "print this message"],
+  ["--info",            GetoptLong::NO_ARGUMENT, "Show progress on execution"],
+  ["--live",            GetoptLong::NO_ARGUMENT, "Show live parsing results, not buffered"],
+  ["--output", "-o",    GetoptLong::REQUIRED_ARGUMENT, "Output to specified file"],
+  ["--quiet", "-q",     GetoptLong::NO_ARGUMENT, "Minimal output"],
+  ["--validate",        GetoptLong::NO_ARGUMENT, "Validate input"],
+  ["--verbose", "-v",   GetoptLong::NO_ARGUMENT, "Verbose output"],
+  ["--write-manifests", GetoptLong::NO_ARGUMENT, "Write out the parsed manifests for earl reporting"],
+]
+
+def usage
+  STDERR.puts %{
+    SHACL version #{SHACL::VERSION}
+    Run SHACL tests.
+    
+    Usage: #{$0} [options] [test-number ...]
+  }.gsub(/^    /, '')
+  width = OPT_ARGS.map do |o|
+    l = o.first.length
+    l += o[1].length + 2 if o[1].is_a?(String)
+    l
+  end.max
+  OPT_ARGS.each do |o|
+    s = "  %-*s  " % [width, (o[1].is_a?(String) ? "#{o[0,2].join(', ')}" : o[0])]
+    s += o.last
+    STDERR.puts s
+  end
+  exit(1)
 end
+
+opts = GetoptLong.new(*OPT_ARGS.map {|o| o[0..-2]})
 
 opts.each do |opt, arg|
   case opt
-  when '--earl'            then options[:quiet] = options[:earl] = true
-  when '--debug'           then options[:debug] = true
+  when '--debug'           then options[:level] = Logger::DEBUG
+  when '--earl'
+    options[:quiet] = options[:earl] = true
+    options[:level] = Logger::FATAL
+  when '--help'            then usage()
+  when '--info'            then options[:level] = Logger::INFO
+  when '--live'            then options[:live] = true
   when '--output'          then options[:output] = File.open(arg, "w")
-  when '--quiet'           then options[:quiet] = true
+  when '--quiet'
+    options[:quiet] = true
+    options[:level] = Logger::FATAL
+  when '--validate'        then options[:validate] = true
   when '--verbose'         then options[:verbose] = true
   when '--write-manifests' then options[:write_manifests] = true
   end
@@ -174,39 +196,47 @@ if options[:write_manifests]
 end
 result_count = {}
 
-%w(
-  core/node
-  core/property
-  core/targets
-  core/misc
-  core/path
-  core/complex
-  core/validation-reports
-).each do |variant|
-  manifest = TEST_BASE + variant + '/manifest.ttl'
+begin
+  %w(
+    core/node
+    core/property
+    core/targets
+    core/misc
+    core/path
+    core/complex
+    core/validation-reports
+  ).each do |variant|
+    manifest = TEST_BASE + variant + '/manifest.ttl'
 
-  Fixtures::SuiteTest::Manifest.open(manifest) do |m|
-    if options[:write_manifests]
-      options[:output].puts %(\n<#{m.id}> a mf:Manifest ;)
-      options[:output].puts %(  rdfs:label "#{m.label}" ;) if m.label
-      options[:output].puts %{  mf:entries (<#{m.entries.map(&:id).join('> <')}>)}
-      options[:output].puts %(  .)
-    end
-    m.entries.each do |t|
+    Fixtures::SuiteTest::Manifest.open(manifest) do |m|
       if options[:write_manifests]
-        options[:output].puts %(\n<#{t.id}> a sht:Validate ;)
-        options[:output].puts %(  rdfs:label "#{t.label}" ;) if t.label
-        options[:output].puts %(  mf:action [)
-        options[:output].puts %(    sht:dataGraph <#{t.action['dataGraph']}> ;)
-        options[:output].puts %(    sht:shapesGraph <#{t.action['shapesGraph']}> ;)
-        options[:output].puts %(  ] ;)
+        options[:output].puts %(\n<#{m.id}> a mf:Manifest ;)
+        options[:output].puts %(  rdfs:label "#{m.label}" ;) if m.label
+        options[:output].puts %(  rdfs:comment "#{m.comment}" ;) if m.comment
+        options[:output].puts %{  mf:entries (<#{m.entries.map(&:id).join('> <')}>)}
         options[:output].puts %(  .)
-        next
       end
-      next unless ARGV.empty? || ARGV.any? {|n| "#{t.id}: #{t.label}".include?(n)}
-      run_tc(t, **options)
+      m.entries.each do |t|
+        if options[:write_manifests]
+          options[:output].puts %(\n<#{t.id}> a sht:Validate ;)
+          options[:output].puts %(  rdfs:label "#{t.label}" ;) if t.label
+          options[:output].puts %(  rdfs:comment "#{t.label}" ;) if t.comment
+          options[:output].puts %(  mf:action [)
+          options[:output].puts %(    sht:dataGraph <#{t.action['dataGraph']}> ;)
+          options[:output].puts %(    sht:shapesGraph <#{t.action['shapesGraph']}> ;)
+          options[:output].puts %(  ] ;)
+          options[:output].puts %(  .)
+          next
+        end
+        next unless ARGV.empty? || ARGV.any? {|n| "#{t.id}: #{t.label}".include?(n)}
+        run_tc(t, **options)
+      end
     end
   end
+rescue Interrupt => e
+  STDERR.puts "(interrupt)"
+  STDERR.puts "Backtrace: " + e.backtrace.join("\n  ") if options[:verbose]
+  exit 1
 end
 
 STDERR.puts "" if options[:quiet]
