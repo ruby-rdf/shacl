@@ -35,7 +35,7 @@ module SHACL::Algebra
 
       # Turn the `path` attribute into a SPARQL Property Path and evaluate to find related nodes.
       value_nodes = if path.is_a?(RDF::URI)
-        graph.query(subject: node, predicate: path).objects
+        graph.query({subject: node, predicate: path}).objects
       elsif path.evaluatable?
         path.execute(graph,
           subject: node,
@@ -100,7 +100,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThan(property, node, path, value_nodes, **options)
-      terms = graph.query(subject: node, predicate: property).objects
+      terms = graph.query({subject: node, predicate: property}).objects
       compare(:<, terms, node, path, value_nodes,
               RDF::Vocab::SHACL.LessThanConstraintComponent, **options)
     end
@@ -113,7 +113,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThanOrEquals(property, node, path, value_nodes, **options)
-      terms = graph.query(subject: node, predicate: property).objects
+      terms = graph.query({subject: node, predicate: property}).objects
       compare(:<=, terms, node, path, value_nodes,
               RDF::Vocab::SHACL.LessThanOrEqualsConstraintComponent, **options)
     end

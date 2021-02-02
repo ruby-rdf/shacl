@@ -43,7 +43,7 @@ module SHACL::Algebra
         shape_properties = shape_paths.select {|p| p.is_a?(RDF::URI)}
         shape_properties += Array(@options[:ignoredProperties])
 
-        closed_results = graph.query(subject: node).map do |statement|
+        closed_results = graph.query({subject: node}).map do |statement|
           next if shape_properties.include?(statement.predicate)
           not_satisfied(focus: node,
             value: statement.object,

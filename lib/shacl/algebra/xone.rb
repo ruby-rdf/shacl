@@ -36,7 +36,7 @@ module SHACL::Algebra
       log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
       num_conform = operands.inject(0) do |memo, op|
         results = op.conforms(node, depth: depth + 1, **options)
-        memo += (results.all?(&:conform?) ? 1 : 0)
+        memo += (results.flatten.all?(&:conform?) ? 1 : 0)
       end
       case num_conform
       when 0
