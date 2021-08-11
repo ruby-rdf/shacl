@@ -7,6 +7,7 @@ gem 'rdf',
     branch: 'develop'
 
 group :development, :test do
+  gem 'earl-report',    platform: :mri
   gem 'json-ld',            git: 'https://github.com/ruby-rdf/json-ld.git',             branch: 'develop'
   gem 'rdf-isomorphic',     git: 'https://github.com/ruby-rdf/rdf-isomorphic.git',      branch: 'develop'
   gem 'rdf-ordered-repo',   git: 'https://github.com/ruby-rdf/rdf-ordered-repo.git',    branch: 'develop'
@@ -18,10 +19,8 @@ group :development, :test do
   gem 'sxp',                git: 'https://github.com/dryruby/sxp.rb.git',               branch: 'develop'
 
   gem 'rake'
-  gem 'simplecov',      '~> 0.16', platform: :mri
-  gem 'coveralls',      '~> 0.8', '>= 0.8.23',  platform: :mri
-
-  gem 'earl-report',    platform: :mri
+  gem 'simplecov',          '~> 0.21',  platforms: :mri
+  gem 'simplecov-lcov',     '~> 0.8',  platforms: :mri
 end
 
 group :debug do
