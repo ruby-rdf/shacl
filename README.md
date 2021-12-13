@@ -82,11 +82,11 @@ This implementation is certainly not performant. Some things that can be be cons
 
 ## Dependencies
 
-* [Ruby](https://ruby-lang.org/) (>= 2.4)
-* [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.1, => 3.1.8)
-* [SPARQL](https://rubygems.org/gems/sparql) (~> 3.1, => 3.1.4)
-* [json-ld](https://rubygems.org/gems/sparql) (~> 3.1, => 3.1.7)
-* [sxp](https://rubygems.org/gems/sxp) (~> 1.1)
+* [Ruby](https://ruby-lang.org/) (>= 2.6)
+* [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.2)
+* [SPARQL](https://rubygems.org/gems/sparql) (~> 3.2)
+* [json-ld](https://rubygems.org/gems/json-ld) (~> 3.2)
+* [sxp](https://rubygems.org/gems/sxp) (~> 1.2)
 
 ## Installation
 
