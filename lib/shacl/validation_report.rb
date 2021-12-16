@@ -59,8 +59,14 @@ module SHACL
       [:ValidationReport, conform?, results].to_sxp_bin
     end
 
-    def to_sxp
-      self.to_sxp_bin.to_sxp
+    ##
+    # Transform Report to SXP
+    #
+    # @param [Hash{Symbol => RDF::URI}] prefixes(nil)
+    # @param [RDF::URI] base_uri(nil)
+    # @return [String]
+    def to_sxp(prefixes: nil, base_uri: nil)
+      self.to_sxp_bin.to_sxp(prefixes: prefixes, base_uri: base_uri)
     end
 
     def to_s
