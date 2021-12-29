@@ -102,8 +102,12 @@ module SHACL
       [:shapes, super]
     end
 
-    def to_sxp
-      to_sxp_bin.to_sxp
+    ##
+    # Transform Shapes into an SXP.
+    #
+    # @return [String]
+    def to_sxp(**options)
+      to_sxp_bin.to_sxp(**options)
     end
 
     SHAPES_FRAME = JSON.parse(%({

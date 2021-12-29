@@ -59,8 +59,12 @@ module SHACL
       [:ValidationReport, conform?, results].to_sxp_bin
     end
 
-    def to_sxp
-      self.to_sxp_bin.to_sxp
+    ##
+    # Transform Report to SXP
+    #
+    # @return [String]
+    def to_sxp(**options)
+      self.to_sxp_bin.to_sxp(**options)
     end
 
     def to_s
