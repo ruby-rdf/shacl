@@ -105,7 +105,6 @@ module SHACL
     ##
     # Transform Shapes into an SXP.
     #
-    # @param [RDF::URI] base_uri(nil)
     # @return [String]
     def to_sxp(**options)
       to_sxp_bin.to_sxp(**options)
