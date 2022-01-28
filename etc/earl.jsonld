@@ -3425,7 +3425,7 @@
         "TestSubject",
         "Software"
       ],
-      "homepage": "https://ruby-rdf.github.com/shacl",
+      "homepage": "https://ruby-rdf.github.io/shacl",
       "doapDesc": "shacl is an Shape Constraint engine for the RDF.rb library suite.",
       "language": "Ruby",
       "developer": [

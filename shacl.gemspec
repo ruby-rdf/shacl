@@ -6,10 +6,17 @@ Gem::Specification.new do |gem|
   gem.date               = File.mtime('VERSION').strftime('%Y-%m-%d')
 
   gem.name               = 'shacl'
-  gem.homepage           = 'https://ruby-rdf.github.com/shacl'
+  gem.homepage           = 'https://github.com/ruby-rdf/shacl'
   gem.license            = 'Unlicense'
   gem.summary            = 'Implementation of Shapes Constraint Language (SHACL) for RDF.rb'
   gem.description        = 'SHACL is an Shape Constraint engine for the Ruby RDF.rb library suite.'
+  gem.metadata           = {
+    "documentation_uri" => "https://ruby-rdf.github.io/shacl",
+    "bug_tracker_uri"   => "https://github.com/ruby-rdf/shacl/issues",
+    "homepage_uri"      => "https://github.com/ruby-rdf/shacl",
+    "mailing_list_uri"  => "https://lists.w3.org/Archives/Public/public-rdf-ruby/",
+    "source_code_uri"   => "https://github.com/ruby-rdf/shacl",
+  }
 
   gem.authors            = ['Gregg Kellogg']
   gem.email              = 'public-rdf-ruby@w3.org'

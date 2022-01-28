@@ -11,7 +11,7 @@
 <https://rubygems.org/gems/shacl> a doap:Project, earl:TestSubject, earl:Software ;
   sh:shapesGraph     <doap-shacl.ttl>;
   doap:name          "SHACL" ;
-  doap:homepage      <https://ruby-rdf.github.com/shacl> ;
+  doap:homepage      <https://ruby-rdf.github.io/shacl> ;
   doap:license       <https://unlicense.org/1.0/> ;
   doap:shortdesc     "SHACL is a Shapes Constraint engine for Ruby."@en ;
   doap:description   "SHACL is a Shape Constraint engine for the Ruby RDF.rb library suite."@en ;

@@ -48,7 +48,7 @@ The result will add the SHACL validation report to the output graph, optionally 
 
 ## Documentation
 
-<https://rubydoc.info/github/ruby-rdf/shacl>
+<https://ruby-rdf.github.io/shacl>
 
 ## Implementation Notes
 
@@ -108,7 +108,7 @@ follows:
 
 ## Resources
 
-* <https://rubydoc.info/github/ruby-rdf/shacl>
+* <https://ruby-rdf.github.io/shacl>
 * <https://github.com/ruby-rdf/shacl>
 * <https://rubygems.org/gems/shacl>
 
@@ -151,9 +151,9 @@ see <https://unlicense.org/> or the accompanying {file:LICENSE} file.
 [YARD-GS]:       https://rubydoc.info/docs/yard/file/docs/GettingStarted.md
 [PDD]:           https://unlicense.org/#unlicensing-contributions
 [S-Expressions]: https://en.wikipedia.org/wiki/S-expression
-[RDF.rb]:        https://ruby-rdf.github.com/rdf
-[RDF::Reasoner]:        https://ruby-rdf.github.com/rdf-reasoner
-[SPARQL gem]:    https://ruby-rdf.github.com/sparql
-[SXP gem]:       https://ruby-rdf.github.com/sxp
+[RDF.rb]:        https://ruby-rdf.github.io/rdf
+[RDF::Reasoner]:        https://ruby-rdf.github.io/rdf-reasoner
+[SPARQL gem]:    https://ruby-rdf.github.io/sparql
+[SXP gem]:       https://ruby-rdf.github.io/sxp
 [SHACL Spec]:    https://www.w3.org/TR/shacl/
-[ShEx gem]:      https://ruby-rdf.github.com/shex
+[ShEx gem]:      https://ruby-rdf.github.io/shex
