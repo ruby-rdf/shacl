@@ -10,7 +10,7 @@ This is a pure-Ruby library for working with the [Shape Constraint Language][SHA
 ## Features
 
 * 100% pure Ruby with minimal dependencies and no bloat.
-* Fully compatible with [SHACL][SHACL Spec] specifications.
+* Fully compatible with [SHACL][SHACL Spec] (SHACL Core and SHACL-SPARQL) specifications.
 * 100% free and unencumbered [public domain](https://unlicense.org/) software.
 
 [Implementation Report](https://ruby-rdf.github.io/shacl/etc/earl.html)
@@ -60,6 +60,8 @@ Evaluating the shapes against a graph results in a {SHACL::ValidationReport} ind
 
 The resulting validation report can be compared with other validation reports, used as native Ruby objects, serialized to s-expressions, or used as an RDF::Enumerable to retrieve the RDF representation of the report, as defined in [SHACL Spec][].
 
+SHACL-SPARQL variable bindings pass a solution to the query composed of the necessary bindings rather than rewrite the query.
+
 ### Matching Entailed Triples
 Many tests check for entailed triples, such as entailed super-classes of explicit `rdf:type` values. If this is required for a given application, the [RDF::Reasoner][] gem can be used to create such entailed triples.
 
@@ -75,10 +77,11 @@ Many tests check for entailed triples, such as entailed super-classes of explici
 ### Future work
 This implementation is certainly not performant. Some things that can be be considered in future versions:
 
-* Support for SHACL-SPARQL
 * Index shapes on `targetNode` and `targetClass` and other targets to allow a more efficient query to find relevant resources in the data graph and not simply iterrate through each top-level shape.
 * Cache target nodes as JSON-LD to reduce the need to separately query for each constraint.
 * Reasoner should support limited RDFS/OWL entailment from the data graph, not just pre-defined vocabularies.
+* More [SHACL Advanced Features](https://w3c.github.io/shacl/shacl-af/).
+* Support the [SHACL Compact Syntax](https://w3c.github.io/shacl/shacl-compact-syntax/).
 
 ## Dependencies
 

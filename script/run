@@ -11,6 +11,7 @@ rescue LoadError
 end
 require 'rdf/ordered_repo'
 require 'getoptlong'
+require 'amazing_print'
 
 def run(graph, shapes_graph, **options)
   if options[:verbose]

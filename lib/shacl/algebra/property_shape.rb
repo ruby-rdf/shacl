@@ -16,7 +16,7 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
-      options = options.merge(severity: RDF::Vocab::SHACL.Violation)
+      options = {severity: RDF::Vocab::SHACL.Violation}.merge(options)
 
       # Add some instance options to the argument
       options = %i{

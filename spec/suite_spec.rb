@@ -16,6 +16,7 @@ describe SHACL do
       core/path
       core/complex
       core/validation-reports
+      sparql/node
     ).each do |path|
       Fixtures::SuiteTest::Manifest.open("urn:x-shacl-test:/#{path}/manifest.ttl") do |m|
         describe m.label do

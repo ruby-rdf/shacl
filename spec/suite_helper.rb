@@ -6,6 +6,7 @@ require 'json/ld'
 module RDF::Util
   module File
     REMOTE_PATH = "urn:x-shacl-test:/"
+    REMOTE_PATH2 = "http://datashapes.org/sh/tests/"
     LOCAL_PATH = ::File.expand_path("../w3c-data-shapes/data-shapes-test-suite/tests", __FILE__) + '/'
 
     class << self
@@ -29,6 +30,38 @@ module RDF::Util
       when (filename_or_url.to_s =~ %r{^#{REMOTE_PATH}} && Dir.exist?(LOCAL_PATH))
         #puts "attempt to open #{filename_or_url} locally"
         localpath = filename_or_url.to_s.sub(REMOTE_PATH, LOCAL_PATH)
+        response = begin
+          ::File.open(localpath)
+        rescue Errno::ENOENT => e
+          raise IOError, e.message
+        end
+        document_options = {
+          base_uri:     RDF::URI(filename_or_url),
+          charset:      Encoding::UTF_8,
+          code:         200,
+          headers:      {}
+        }
+        #puts "use #{filename_or_url} locally"
+        document_options[:headers][:content_type] = case filename_or_url.to_s
+        when /\.ttl$/    then 'text/turtle'
+        when /\.nt$/     then 'application/n-triples'
+        when /\.jsonld$/ then 'application/ld+json'
+        else                  'unknown'
+        end
+
+        document_options[:headers][:content_type] = response.content_type if response.respond_to?(:content_type)
+        # For overriding content type from test data
+        document_options[:headers][:content_type] = options[:contentType] if options[:contentType]
+
+        remote_document = RDF::Util::File::RemoteDocument.new(response.read, document_options)
+        if block_given?
+          yield remote_document
+        else
+          remote_document
+        end
+      when (filename_or_url.to_s =~ %r{^#{REMOTE_PATH2}} && Dir.exist?(LOCAL_PATH))
+        #puts "attempt to open #{filename_or_url} locally"
+        localpath = filename_or_url.to_s.sub(REMOTE_PATH2, LOCAL_PATH)
         response = begin
           ::File.open(localpath)
         rescue Errno::ENOENT => e

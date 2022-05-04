@@ -78,7 +78,7 @@ def run_tc(t, **options)
         "failed"
       end
     end
-  rescue Interupt => e
+  rescue Interrupt => e
     raise e
   rescue Exception, NoMethodError => e
     result = "exception"
@@ -205,6 +205,7 @@ begin
     core/path
     core/complex
     core/validation-reports
+    sparql/node
   ).each do |variant|
     manifest = TEST_BASE + variant + '/manifest.ttl'
 

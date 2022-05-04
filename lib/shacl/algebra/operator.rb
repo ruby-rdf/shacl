@@ -17,6 +17,7 @@ module SHACL::Algebra
     # @return [Array<Symbol>]
     ALL_KEYS = %i(
       id type label name comment description deactivated severity
+      message
       order group defaultValue path
       targetNode targetClass targetSubjectsOf targetObjectsOf
       class datatype nodeKind
@@ -27,6 +28,7 @@ module SHACL::Algebra
       qualifiedValueShapesDisjoint qualifiedMinCount qualifiedMaxCount
       equals disjoint lessThan lessThanOrEquals
       closed ignoredProperties hasValue in
+      declare namespace prefix
     ).freeze
 
     # Initialization options
@@ -77,6 +79,8 @@ module SHACL::Algebra
             elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
             operands << QualifiedValueShape.new(*elements, **options.dup)
           when 'severity'           then node_opts[:severity] = iri(v, **options)
+          when 'sparql'
+            operands.push(*as_array(v).map {|vv| SPARQLConstraint.from_json(vv, **options.merge(shape: node_opts[:id]))})
           when 'targetClass'        then node_opts[:targetClass] = as_array(v).map {|vv| iri(vv, **options)} if v
           when 'targetNode'
             node_opts[:targetNode] = as_array(v).map do |vv|

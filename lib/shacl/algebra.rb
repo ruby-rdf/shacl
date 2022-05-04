@@ -14,6 +14,7 @@ module SHACL
     autoload :PropertyShape,        'shacl/algebra/property_shape.rb'
     autoload :QualifiedValueShape,  'shacl/algebra/qualified_value_shape.rb'
     autoload :Shape,                'shacl/algebra/shape.rb'
+    autoload :SPARQLConstraint,     'shacl/algebra/sparql_constraint.rb'
     autoload :Xone,                 'shacl/algebra/xone.rb'
 
     def self.from_json(operator, **options)

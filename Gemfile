@@ -2,9 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'rdf',
-    git: 'https://github.com/ruby-rdf/rdf.git',
-    branch: 'develop'
+gem 'rdf',                git: 'https://github.com/ruby-rdf/rdf.git',                 branch: 'develop'
 gem 'json-ld',            git: 'https://github.com/ruby-rdf/json-ld.git',             branch: 'develop'
 gem 'sparql',             git: 'https://github.com/ruby-rdf/sparql.git',              branch: 'develop'
 gem 'sxp',                git: 'https://github.com/dryruby/sxp.rb.git',               branch: 'develop'
