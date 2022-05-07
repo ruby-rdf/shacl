@@ -206,6 +206,7 @@ begin
     core/complex
     core/validation-reports
     sparql/node
+    sparql/property
   ).each do |variant|
     manifest = TEST_BASE + variant + '/manifest.ttl'
 

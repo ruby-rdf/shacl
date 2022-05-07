@@ -12,27 +12,29 @@ module SHACL::Algebra
     #
     # Last operand is the parsed query. Bound variables are added as a table entry joined to the query.
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path the property path from the focus node to the value nodes.
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     #   Returns a validation result for each value node.
-    def conforms(node, depth: 0, **options)
+    def conforms(node, path: nil, depth: 0, **options)
       return [] if deactivated?
       options = {severity: RDF::Vocab::SHACL.Violation}.merge(options)
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
       bindings = RDF::Query::Solution.new({
-        this: [node]
+        this: node,
+        PATH: path,
       })
       solutions = operands.last.execute(graph, bindings: bindings, depth: depth + 1, **options)
       if solutions.empty?
-        satisfy(focus: node,
-          message: "node conforms to SPARQL shape",
+        satisfy(focus: node, path: path,
+          message: @options.fetch(:message, "node conforms to SPARQL component"),
           component: RDF::Vocab::SHACL.SPARQLConstraintComponent,
           depth: depth, **options)
       else
         solutions.map do |solution|
-          not_satisfied(focus: node, path: solution[:path],
+          not_satisfied(focus: node, path: (path || solution[:path]),
             value: (solution[:value] || node),
             message: @options.fetch(:message, "node does not coform to SPARQL component"),
             resultSeverity: options.fetch(:severity),

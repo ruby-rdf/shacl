@@ -54,7 +54,7 @@ module SHACL::Algebra
 
       # Evaluate against operands
       op_results = operands.map do |op|
-        if op.is_a?(QualifiedValueShape)
+        if op.is_a?(QualifiedValueShape) || op.is_a?(SPARQLConstraint)
           # All value nodes are passed
           op.conforms(node, value_nodes: value_nodes, path: path, depth: depth + 1, **options)
         else
