@@ -10,7 +10,8 @@ This is a pure-Ruby library for working with the [Shape Constraint Language][SHA
 ## Features
 
 * 100% pure Ruby with minimal dependencies and no bloat.
-* Fully compatible with [SHACL][SHACL Spec] (SHACL Core and SHACL-SPARQL) specifications.
+* Fully compatible with SHACL Core [SHACL][SHACL Spec].
+* Partially compatible with SHACL-SPARQL [SHACL][SHACL Spec].
 * 100% free and unencumbered [public domain](https://unlicense.org/) software.
 
 [Implementation Report](https://ruby-rdf.github.io/shacl/etc/earl.html)
@@ -80,6 +81,7 @@ This implementation is certainly not performant. Some things that can be be cons
 * Index shapes on `targetNode` and `targetClass` and other targets to allow a more efficient query to find relevant resources in the data graph and not simply iterrate through each top-level shape.
 * Cache target nodes as JSON-LD to reduce the need to separately query for each constraint.
 * Reasoner should support limited RDFS/OWL entailment from the data graph, not just pre-defined vocabularies.
+* [SHACL-based Constraint Components](https://www.w3.org/TR/shacl/#sparql-constraint-components).
 * More [SHACL Advanced Features](https://w3c.github.io/shacl/shacl-af/).
 * Support the [SHACL Compact Syntax](https://w3c.github.io/shacl/shacl-compact-syntax/).
 

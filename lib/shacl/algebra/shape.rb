@@ -341,7 +341,7 @@ module SHACL::Algebra
     #
     # @param [RDF::URI] term the term is used to compare each value node.
     # @param [RDF::Term] node the focus node
-    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus nod to the value nodes.
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minInclusive(term, node, path, value_nodes, **options)

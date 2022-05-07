@@ -9,7 +9,7 @@ module SHACL::Algebra
     #
     # A property conforms the nodes found by evaluating it's `path` all conform.
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     #   Returns a validation result for each value node.
@@ -79,7 +79,7 @@ module SHACL::Algebra
     end
 
     # The path defined on this property shape
-    # @return [RDF::URI, ]
+    # @return [RDF::URI, SPARQL::Algebra::Expression]
     def path
       @options[:path]
     end

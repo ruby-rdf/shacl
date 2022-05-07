@@ -6,6 +6,8 @@ module SHACL::Algebra
     ##
     # Specifies the condition that a specified number of value nodes conforms to the given shape. Each `sh:qualifiedValueShape` can have: one value for `sh:qualifiedMinCount`, one value for s`h:qualifiedMaxCount` or, one value for each, at the same subject.
     #
+    # @param [RDF::Term] node focus node
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path the property path from the focus node to the value nodes.
     # @param [Array<RDF::Term>] value_nodes
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]

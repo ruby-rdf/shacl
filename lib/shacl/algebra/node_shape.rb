@@ -9,7 +9,7 @@ module SHACL::Algebra
     #
     # A node conforms if it is not deactivated and all of its operands conform.
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     #   Returns one or more validation results for each operand.
