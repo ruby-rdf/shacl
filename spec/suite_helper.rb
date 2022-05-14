@@ -140,7 +140,7 @@ module Fixtures
         #puts "open: #{file}"
         @file = file
 
-        g = RDF::OrderedRepo.load(file)
+        g = RDF::Repository.load(file)
         label = g.first_object(predicate: RDF::RDFS.label).to_s
 
         g.query({predicate: RDF::URI("http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#include")}).objects.each do |f|
@@ -192,7 +192,7 @@ module Fixtures
       end
 
       def dataGraph
-        @dataGraph ||= RDF::OrderedRepo.load(action['dataGraph'])
+        @dataGraph ||= RDF::Graph.load(action['dataGraph'])
       end
 
       def shapesGraphInput
@@ -200,11 +200,11 @@ module Fixtures
       end
 
       def shapesGraph
-        @shapesGraph ||= RDF::OrderedRepo.load(action['shapesGraph']) if action['shapesGraph']
+        @shapesGraph ||= RDF::URI(action['shapesGraph']) if action['shapesGraph']
       end
 
       def report
-        SHACL::ValidationReport.new(results)
+        SHACL::ValidationReport.new(results) if results
       end
 
       def results

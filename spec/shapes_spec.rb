@@ -93,7 +93,7 @@ describe SHACL::Shapes do
   end
 
   def parse_ttl(src)
-    RDF::OrderedRepo.new do |r|
+    RDF::Repository.new do |r|
       r << RDF::Turtle::Reader.new(src)
     end
   end

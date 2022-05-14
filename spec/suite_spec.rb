@@ -48,7 +48,7 @@ describe SHACL do
               t.logger.info "dataGraph:\n#{t.dataGraphInput}"
               t.logger.info "shapesGraph:\n#{t.shapesGraphInput}"
 
-              shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
+              shapes = SHACL.open(t.shapesGraph, logger: t.logger)
               t.logger.info "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}"
               t.logger.info "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}"
 
@@ -64,8 +64,10 @@ describe SHACL do
               else
                 expect(report.conform?).to produce(false, t.logger)
                 # Verify that the produced results are the same
-                expect(report.results.count).to produce(t.report.results.count, t.logger)
-                expect(report).to produce(t.report, t.logger)
+                if t.report
+                  expect(report.results.count).to produce(t.report.results.count, t.logger)
+                  expect(report).to produce(t.report, t.logger)
+                end
                 expect(RDF::Graph.new << report).to be_a(RDF::Enumerable)
               end
             end

@@ -9,6 +9,12 @@ module SHACL
   class Shapes < Array
     include RDF::Util::Logger
 
+    # The original shapes graph
+    #
+    # @return [RDF::Graph]
+    attr_reader :shapes_graph
+
+
     # The graphs which have been loaded as shapes
     #
     # @return [Array<RDF::URI>]
@@ -28,6 +34,7 @@ module SHACL
     #
     # @param [RDF::Graph] graph
     # @param [Array<RDF::URI>] loaded_graphs = []
+    #   The graphs which have been loaded as shapes
     # @param [Hash{Symbol => Object}] options
     # @return [Shapes]
     # @raise [SHACL::Error]
@@ -61,6 +68,7 @@ module SHACL
       # Create an array of the framed shapes
       shapes = self.new(shape_json.map {|o| Algebra.from_json(o, **options)})
       shapes.instance_variable_set(:@shape_json, shape_json)
+      shapes.instance_variable_set(:@shapes_graph, graph)
       shapes
     end
 
@@ -74,11 +82,11 @@ module SHACL
     # @raise [SHACL::Error]
     def self.from_queryable(queryable, **options)
       # Query queryable to find one ore more shapes graphs
-      graphs = queryable.query({predicate: RDF::Vocab::SHACL.shapesGraph}).objects
-      graph = RDF::Graph.new do |g|
-        graphs.each {|iri| g.load(iri)}
+      graph_names = queryable.query({predicate: RDF::Vocab::SHACL.shapesGraph}).objects
+      graph = RDF::Graph.new(graph_name: graph_names.first, data: RDF::Repository.new) do |g|
+        graph_names.each {|iri| g.load(iri, graph_name: graph_names.first)}
       end
-      from_graph(graph, loaded_graphs: graphs, **options)
+      from_graph(graph, loaded_graphs: graph_names, **options)
     end
 
     ##
@@ -93,8 +101,10 @@ module SHACL
     def execute(graph, depth: 0, **options)
       self.each do |shape|
         shape.graph = graph
+        shape.shapes_graph = shapes_graph
         shape.each_descendant do |op|
           op.graph = graph if op.respond_to?(:graph=)
+          op.shapes_graph = shapes_graph if op.respond_to?(:shapes_graph=)
         end
       end
 

@@ -1,5 +1,6 @@
 require_relative "shape"
 require 'sparql'
+require 'rdf/aggregate_repo'
 
 module SHACL::Algebra
   ##
@@ -22,11 +23,23 @@ module SHACL::Algebra
       options = {severity: RDF::Vocab::SHACL.Violation}.merge(options)
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
+      # Aggregate repo containing both data-graph (as the default) and shapes-graph, named by it's IRI
+      aggregate = RDF::AggregateRepo.new(graph.data, shapes_graph.data) do |ag|
+        ag.default false
+        ag.named shapes_graph.graph_name if shapes_graph.graph_name
+      end
+
       bindings = RDF::Query::Solution.new({
-        this: node,
+        currentShape: options[:shape],
+        shapesGraph: shapes_graph.graph_name,
         PATH: path,
-      })
-      solutions = operands.last.execute(graph, bindings: bindings, depth: depth + 1, **options)
+        this: node,
+      }.compact)
+      solutions = operands.last.execute(aggregate,
+        bindings: bindings,
+        depth: depth + 1,
+        logger: @options[:logger],
+        **options)
       if solutions.empty?
         satisfy(focus: node, path: path,
           message: @options.fetch(:message, "node conforms to SPARQL component"),

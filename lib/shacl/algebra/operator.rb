@@ -34,8 +34,14 @@ module SHACL::Algebra
     # Initialization options
     attr_accessor :options
 
-    # Graph against which shapes are validaed
+    # Graph against which shapes are validated.
+    # @return [RDF::Queryable]
     attr_accessor :graph
+
+    # Graph from which original shapes were loaded.
+    # @return [RDF::Graph]
+    attr_accessor :shapes_graph
+
 
     ## Class methods
     class << self

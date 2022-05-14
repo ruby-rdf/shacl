@@ -267,8 +267,8 @@ describe SHACL::ValidationResult do
         end
 
         it "is isomorphic with expected result" do
-          g1 = RDF::OrderedRepo.new {|r| r << subject}
-          g2 = RDF::OrderedRepo.new {|r| r << RDF::Turtle::Reader.new(params[:ttl])}
+          g1 = RDF::Repository.new {|r| r << subject}
+          g2 = RDF::Repository.new {|r| r << RDF::Turtle::Reader.new(params[:ttl])}
           expect(g1).to be_equivalent_graph(g2)
         end
       end

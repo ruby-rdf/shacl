@@ -9,7 +9,6 @@ rescue LoadError
   require 'rdf/ntriples'
   require 'rdf/turtle'
 end
-require 'rdf/ordered_repo'
 require 'getoptlong'
 require 'amazing_print'
 
@@ -78,7 +77,10 @@ opts.each do |opt, arg|
   when '--execute'      then options[:shacl] = arg
     #when '--focus'        then options[:focus] = arg
   when '--shacl'
-    shapes_graph = RDF::OrderedRepo.load(arg)
+    shapes_graph = RDF::Graph.load(arg,
+                            graph_name: RDF::URI(arg),
+                            data: RDF::Repository.new,
+                            **options)
   when '--info'
     logger = Logger.new(STDERR)
     logger.level = Logger::INFO
@@ -93,11 +95,11 @@ opts.each do |opt, arg|
 end
 
 if ARGV.empty?
-  run(RDF::OrderedRepo.new, shapes_graph, **options)
+  run(RDF::Repository.new, shapes_graph, **options)
 else
   ARGV.each do |test_file|
     puts "shacl #{test_file}"
-    run(RDF::OrderedRepo.load(test_file), shapes_graph, **options.merge(base_uri: RDF::URI(test_file)))
+    run(RDF::Repository.load(test_file), shapes_graph, **options.merge(base_uri: RDF::URI(test_file)))
   end
 end
 puts

@@ -5,7 +5,6 @@ $:.unshift(File.expand_path("../../lib", __FILE__))
 $:.unshift(File.expand_path("../../spec", __FILE__))
 require 'rdf'
 require 'rdf/isomorphic'
-require 'rdf/ordered_repo'
 require 'rdf/reasoner'
 require 'rspec'
 require 'shacl'
@@ -47,7 +46,7 @@ def run_tc(t, **options)
   begin
     STDERR.puts t.inspect if options[:verbose]
 
-    shapes = SHACL.get_shapes(t.shapesGraph, logger: t.logger)
+    shapes = SHACL.open(t.shapesGraph, logger: t.logger)
     #STDERR.puts  "shape JSON:\n#{shapes.shape_json.to_json(JSON::LD::JSON_STATE)}" if options[:verbose]
     STDERR.puts  "shapes SXP:\n#{SXP::Generator.string(shapes.to_sxp_bin)}" if options[:verbose]
 
@@ -66,10 +65,10 @@ def run_tc(t, **options)
       if report.conform?
         STDERR.puts "results shouldn't conform" if options[:verbose]
         "failed"
-      elsif report.count != t.report.count
+      elsif t.report && report.count != t.report.count
         STDERR.puts "expected #{t.report.count} results, have #{report.count}" if options[:verbose]
         "failed"
-      elsif report == t.report
+      elsif t.report && report == t.report
         g = RDF::Graph.new << report
         STDERR.puts "Report graph: " + g.dump(:ttl, standard_prefixes: true) if options[:verbose]
         "passed"
@@ -80,6 +79,22 @@ def run_tc(t, **options)
     end
   rescue Interrupt => e
     raise e
+  rescue ArgumentError => e
+    STDERR.puts  "ArgumentError: #{e.message}" if options[:verbose]
+    if t.negative_test?
+      result = "passed"
+    else
+      result = "exception"
+      unless options[:quiet]
+        STDERR.puts("Exception: #{e.message}")
+        if options[:verbose]
+          STDERR.puts e.backtrace
+          STDERR.puts options[:logger].to_s
+        else
+          STDERR.puts options[:logger].to_s
+        end
+      end
+    end
   rescue Exception, NoMethodError => e
     result = "exception"
     unless options[:quiet]
@@ -96,7 +111,7 @@ ensure
   options[:results][result] ||= 0
   options[:results][result] += 1
 
-  if options[:debug]
+  if options[:level] == Logger::DEBUG
     STDERR.puts "\ndebug: " + t.logger.to_s
   end
 
@@ -207,6 +222,7 @@ begin
     core/validation-reports
     sparql/node
     sparql/property
+    sparql/pre-binding
   ).each do |variant|
     manifest = TEST_BASE + variant + '/manifest.ttl'
 
