@@ -7,6 +7,16 @@ module SHACL::Algebra
   class SPARQLConstraint < Operator
     NAME = :sparql
 
+    # SPARQL Operators prohibited from being used in expression.
+    UNSUPPORTED_SPARQL_OPERATORS = [
+      SPARQL::Algebra::Operator::Minus,
+      SPARQL::Algebra::Operator::Service,
+      SPARQL::Algebra::Operator::Table,
+    ]
+
+    # Potentially pre-bound variables.
+    PRE_BOUND = %i(currentShape shapesGraph PATH this value)
+
     # Validates the specified `property` within `graph`, a list of {ValidationResult}.
     #
     # A property conforms the nodes found by evaluating it's `path` all conform.
@@ -29,6 +39,7 @@ module SHACL::Algebra
         ag.named shapes_graph.graph_name if shapes_graph.graph_name
       end
 
+      aggregate.default_graph
       bindings = RDF::Query::Solution.new({
         currentShape: options[:shape],
         shapesGraph: shapes_graph.graph_name,
@@ -95,7 +106,33 @@ module SHACL::Algebra
       end
 
       query_string = prefixes.join("\n") + node_opts[:select] || node_opts[:ask]
-      operands << SPARQL.parse(query_string)
+      query = SPARQL.parse(query_string)
+
+      options[:logger].info("#{NAME} SXP: #{query.to_sxp}") if options[:logger]
+
+      # Queries have restrictions
+      operators = query.descendants.to_a.unshift(query)
+
+      if node_opts[:ask] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Ask)}
+        raise ArgumentError, "Ask query must have askk operator"
+      elsif node_opts[:select] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Project)}
+        raise ArgumentError, "Select query must have project operator"
+      end
+
+      uh_oh = (operators.map(&:class) & UNSUPPORTED_SPARQL_OPERATORS).map {|c| c.const_get(:NAME)}
+
+      unless uh_oh.empty?
+        raise ArgumentError, "Query must not include operators #{uh_oh.to_sxp}: #{query_string}"
+      end
+
+      # Additionally, queries must not bind to special variables
+      operators.select {|op| op.is_a?(SPARQL::Algebra::Operator::Extend)}.each do |extend|
+        if extend.operands.first.any? {|v, e| PRE_BOUND.include?(v.to_sym)}
+          raise ArgumentError, "Query must not bind pre-bound variables: #{query_string}"
+        end
+      end
+
+      operands << query
       new(*operands, **node_opts)
     end
 
