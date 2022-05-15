@@ -20,6 +20,11 @@ module SHACL
 
     def self.from_json(operator, **options)
       raise ArgumentError, "from_json: operator not a Hash: #{operator.inspect}" unless operator.is_a?(Hash)
+
+      # If operator is a hash containing @list, it is a single array value.
+      # Note: context does not use @container: @list on this terms to preserve cardinality expectations
+      return operator['@list'].map {|e| from_json(e, **options)} if operator.key?('@list')
+
       type = operator.fetch('type', [])
       type << (operator["path"] ? 'PropertyShape' : 'NodeShape') if type.empty?
       klass = case

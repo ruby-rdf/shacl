@@ -3,17 +3,6 @@ module SHACL::Algebra
   class XoneConstraintComponent < ConstraintComponent
     NAME = :xone
 
-    @mandatoryParameters = [:xone]
-    @optionalParameters = []
-
-    ## Class methods
-    class << self
-      # @see ConstraintComponent.simple
-      def simple?; true; end
-      # @see ConstraintComponent.builtin?
-      def builtin?; false; end
-    end
-
     ##
     # Specifies the condition that each value node conforms to exactly one of the provided shapes.
     #

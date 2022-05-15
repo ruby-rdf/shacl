@@ -243,7 +243,7 @@ module SHACL::Algebra
                 node_opts[k.to_sym] = elements
               else
                 klass = SHACL::Algebra.const_get(param_props[:class])
-                operands << klass.new(*elements, **options.dup)
+                operands.push(*elements.map {|e| klass.new(*e, **options.dup)})
               end
             else
               # Add as a plain option otherwise

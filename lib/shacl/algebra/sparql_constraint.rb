@@ -7,17 +7,6 @@ module SHACL::Algebra
   class SPARQLConstraintComponent < ConstraintComponent
     NAME = :sparql
 
-    @mandatoryParameters = [:sparql]
-    @optionalParameters = []
-
-    ## Class methods
-    class << self
-      # @see ConstraintComponent.simple
-      def simple?; true; end
-      # @see ConstraintComponent.builtin?
-      def builtin?; false; end
-    end
-
     # SPARQL Operators prohibited from being used in expression.
     UNSUPPORTED_SPARQL_OPERATORS = [
       SPARQL::Algebra::Operator::Minus,

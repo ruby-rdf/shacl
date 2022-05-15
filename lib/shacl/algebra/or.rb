@@ -3,17 +3,6 @@ module SHACL::Algebra
   class OrConstraintComponent < ConstraintComponent
     NAME = :or
 
-    @mandatoryParameters = [:or]
-    @optionalParameters = []
-
-    ## Class methods
-    class << self
-      # @see ConstraintComponent.simple
-      def simple?; true; end
-      # @see ConstraintComponent.builtin?
-      def builtin?; false; end
-    end
-
     ##
     # Specifies the condition that each value node conforms to at least one of the provided shapes. This is comparable to disjunction and the logical "or" operator.
     #
