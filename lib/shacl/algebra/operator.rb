@@ -154,13 +154,9 @@ module SHACL::Algebra
         class: :QualifiedMaxCountConstraintComponent,
         datatype: RDF::XSD.integer,
       },
-      qualifiedValueShape: {
-        class: %i(QualifiedMaxCountConstraintComponent QualifiedMinCountConstraintComponent),
-        datatype: RDF::XSD.boolean,
-        optional: true,
-      },
+      qualifiedValueShape: {class: :QualifiedValueShape},
       qualifiedValueShapesDisjoint: {
-        class: %i(QualifiedMaxCountConstraintComponent QualifiedMinCountConstraintComponent),
+        class: :QualifiedValueShape,
         datatype: RDF::XSD.boolean,
         optional: true,
       },
@@ -198,9 +194,6 @@ module SHACL::Algebra
           when 'path'               then node_opts[:path] = parse_path(v, **options)
           when 'property'
             operands.push(*as_array(v).map {|vv| PropertyShape.from_json(vv, **options)})
-          when 'qualifiedValueShape'
-            elements = as_array(v).map {|vv| SHACL::Algebra.from_json(vv, **options)}
-            operands << QualifiedValueShape.new(*elements, **options.dup)
           when 'severity'           then node_opts[:severity] = iri(v, **options)
           when 'sparql'
             operands.push(*as_array(v).map {|vv| SPARQLConstraintComponent.from_json(vv, **options.merge(shape: node_opts[:id]))})
@@ -213,12 +206,15 @@ module SHACL::Algebra
           when 'targetSubjectsOf'   then node_opts[:targetSubjectsOf] = as_array(v).map {|vv| iri(vv, **options)}
           when 'type'               then node_opts[:type] = as_array(v).map {|vv| iri(vv, **options)}
           else
+            # If it's a defined parameter, add it to the operator.
             if PARAMETERS.keys.include?(k.to_sym)
               param_props = PARAMETERS[k.to_sym]
               v = as_array(v)
               if param_props[:maxCount] && v.length > param_props[:maxCount]
                 raise ArgumentError, "Property #{k} on #{self.const_get(:NAME)} is too many values: #{v.inspect}"
               end
+
+              # Process parameter values based on nodeKind, in, and datatype.
               elements = if param_props[:nodeKind]
                 case param_props[:nodeKind]
                 when :IRI
@@ -242,6 +238,7 @@ module SHACL::Algebra
                 v.map {|vv| SHACL::Algebra.from_json(vv, **options)}
               end
 
+              # Builtins are added as options to the operator, otherwise, they are class instances of constraint components added as operators.
               if BUILTIN_KEYS.include?(k.to_sym)
                 node_opts[k.to_sym] = elements
               else
