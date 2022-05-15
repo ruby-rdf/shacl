@@ -1,7 +1,18 @@
 module SHACL::Algebra
   ##
-  class Xone < Operator
+  class XoneConstraintComponent < ConstraintComponent
     NAME = :xone
+
+    @mandatoryParameters = [:xone]
+    @optionalParameters = []
+
+    ## Class methods
+    class << self
+      # @see ConstraintComponent.simple
+      def simple?; true; end
+      # @see ConstraintComponent.builtin?
+      def builtin?; false; end
+    end
 
     ##
     # Specifies the condition that each value node conforms to exactly one of the provided shapes.
@@ -30,7 +41,8 @@ module SHACL::Algebra
     #   	) .
     #
     # @param [RDF::Term] node focus node
-    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property     # @param [Hash{Symbol => Object}] options
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property   
+    # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, path: nil, depth: 0, **options)
       log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}

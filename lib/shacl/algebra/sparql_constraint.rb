@@ -4,8 +4,19 @@ require 'rdf/aggregate_repo'
 
 module SHACL::Algebra
   ##
-  class SPARQLConstraint < Operator
+  class SPARQLConstraintComponent < ConstraintComponent
     NAME = :sparql
+
+    @mandatoryParameters = [:sparql]
+    @optionalParameters = []
+
+    ## Class methods
+    class << self
+      # @see ConstraintComponent.simple
+      def simple?; true; end
+      # @see ConstraintComponent.builtin?
+      def builtin?; false; end
+    end
 
     # SPARQL Operators prohibited from being used in expression.
     UNSUPPORTED_SPARQL_OPERATORS = [
@@ -71,69 +82,72 @@ module SHACL::Algebra
     # All keys associated with shapes which are set in options
     #
     # @return [Array<Symbol>]
-    ALL_KEYS = %i(
+    BUILTIN_KEYS = %i(
       type label name comment description deactivated severity
       message path
       ask select
       declare namespace prefix prefixes select ask
     ).freeze
 
-    ##
-    # Creates an operator instance from a parsed SHACL representation.
-    #
-    # Special case for SPARQLComponenet due to general recursion.
-    #
-    # @param [Hash] operator
-    # @param [Hash] options ({})
-    # @option options [Hash{String => RDF::URI}] :prefixes
-    # @return [Operator]
-    def self.from_json(operator, **options)
-      prefixes, query = [], ""
-      operands = []
-      node_opts = options.dup
-      operator.each do |k, v|
-        next if v.nil?
-        case k
-        # List properties
-        when 'path'               then node_opts[:path] = parse_path(v, **options)
-        when 'prefixes'
-          prefixes = extract_prefixes(v)
-        when 'severity'           then node_opts[:severity] = iri(v, **options)
-        when 'type'               then node_opts[:type] = as_array(v).map {|vv| iri(vv, **options)} if v
-        else
-          node_opts[k.to_sym] = to_rdf(k.to_sym, v, **options) if ALL_KEYS.include?(k.to_sym)
+    # Class Methods
+    class << self
+      ##
+      # Creates an operator instance from a parsed SHACL representation.
+      #
+      # Special case for SPARQLComponenet due to general recursion.
+      #
+      # @param [Hash] operator
+      # @param [Hash] options ({})
+      # @option options [Hash{String => RDF::URI}] :prefixes
+      # @return [Operator]
+      def from_json(operator, **options)
+        prefixes, query = [], ""
+        operands = []
+        node_opts = options.dup
+        operator.each do |k, v|
+          next if v.nil?
+          case k
+          # List properties
+          when 'path'               then node_opts[:path] = parse_path(v, **options)
+          when 'prefixes'
+            prefixes = extract_prefixes(v)
+          when 'severity'           then node_opts[:severity] = iri(v, **options)
+          when 'type'               then node_opts[:type] = as_array(v).map {|vv| iri(vv, **options)} if v
+          else
+            node_opts[k.to_sym] = to_rdf(k.to_sym, v, **options) if BUILTIN_KEYS.include?(k.to_sym)
+          end
         end
-      end
 
-      query_string = prefixes.join("\n") + node_opts[:select] || node_opts[:ask]
-      query = SPARQL.parse(query_string)
+        query_string = prefixes.join("\n") + node_opts[:select] || node_opts[:ask]
+        query = SPARQL.parse(query_string)
 
-      options[:logger].info("#{NAME} SXP: #{query.to_sxp}") if options[:logger]
+        options[:logger].info("#{NAME} SXP: #{query.to_sxp}") if options[:logger]
 
-      # Queries have restrictions
-      operators = query.descendants.to_a.unshift(query)
+        # Queries have restrictions
+        operators = query.descendants.to_a.unshift(query)
 
-      if node_opts[:ask] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Ask)}
-        raise ArgumentError, "Ask query must have askk operator"
-      elsif node_opts[:select] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Project)}
-        raise ArgumentError, "Select query must have project operator"
-      end
-
-      uh_oh = (operators.map(&:class) & UNSUPPORTED_SPARQL_OPERATORS).map {|c| c.const_get(:NAME)}
-
-      unless uh_oh.empty?
-        raise ArgumentError, "Query must not include operators #{uh_oh.to_sxp}: #{query_string}"
-      end
-
-      # Additionally, queries must not bind to special variables
-      operators.select {|op| op.is_a?(SPARQL::Algebra::Operator::Extend)}.each do |extend|
-        if extend.operands.first.any? {|v, e| PRE_BOUND.include?(v.to_sym)}
-          raise ArgumentError, "Query must not bind pre-bound variables: #{query_string}"
+        if node_opts[:ask] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Ask)}
+          raise ArgumentError, "Ask query must have askk operator"
+        elsif node_opts[:select] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Project)}
+          raise ArgumentError, "Select query must have project operator"
         end
-      end
 
-      operands << query
-      new(*operands, **node_opts)
+        uh_oh = (operators.map(&:class) & UNSUPPORTED_SPARQL_OPERATORS).map {|c| c.const_get(:NAME)}
+
+        unless uh_oh.empty?
+          raise ArgumentError, "Query must not include operators #{uh_oh.to_sxp}: #{query_string}"
+        end
+
+        # Additionally, queries must not bind to special variables
+        operators.select {|op| op.is_a?(SPARQL::Algebra::Operator::Extend)}.each do |extend|
+          if extend.operands.first.any? {|v, e| PRE_BOUND.include?(v.to_sym)}
+            raise ArgumentError, "Query must not bind pre-bound variables: #{query_string}"
+          end
+        end
+
+        operands << query
+        new(*operands, **node_opts)
+      end
     end
 
   private

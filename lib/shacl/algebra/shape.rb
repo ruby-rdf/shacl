@@ -81,6 +81,7 @@ module SHACL::Algebra
     # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @return [Array<SHACL::ValidationResult>]
     def builtin_datatype(datatype, node, path, value_nodes, **options)
+      datatype = datatype.first if datatype.is_a?(Array)
       value_nodes.map do |n|
         has_datatype = n.literal? && n.datatype == datatype && n.valid?
         satisfy(focus: node, path: path,
@@ -140,6 +141,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_equals(property, node, path, value_nodes, **options)
+      property = property.first if property.is_a?(Array)
       equal_nodes = graph.query({subject: node, predicate: property}).objects
       (value_nodes.map do |n|
         has_value = equal_nodes.include?(n)
@@ -179,6 +181,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_hasValue(term, node, path, value_nodes, **options)
+      term = term.first if term.is_a?(Array)
       has_value = value_nodes.include?(term)
       [satisfy(focus: node, path: path,
         message: "is#{' not' unless has_value} the value #{term.to_sxp}",
@@ -260,7 +263,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxExclusive(term, node, path, value_nodes, **options)
-      compare(:<, [term], node, path, value_nodes,
+      compare(:<, term, node, path, value_nodes,
               RDF::Vocab::SHACL.MaxExclusiveConstraintComponent, **options)
     end
 
@@ -282,7 +285,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxInclusive(term, node, path, value_nodes, **options)
-      compare(:<=, [term], node, path, value_nodes,
+      compare(:<=, term, node, path, value_nodes,
               RDF::Vocab::SHACL.MaxInclusiveConstraintComponent, **options)
     end
 
@@ -294,6 +297,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxLength(term, node, path, value_nodes, **options)
+      term = term.first if term.is_a?(Array)
       value_nodes.map do |n|
         compares = !n.node? && n.to_s.length <= term.to_i
         satisfy(focus: node, path: path,
@@ -323,7 +327,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minExclusive(term, node, path, value_nodes, **options)
-      compare(:>, [term], node, path, value_nodes,
+      compare(:>, term, node, path, value_nodes,
               RDF::Vocab::SHACL.MinExclusiveConstraintComponent, **options)
     end
 
@@ -345,7 +349,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minInclusive(term, node, path, value_nodes, **options)
-      compare(:>=, [term], node, path, value_nodes,
+      compare(:>=, term, node, path, value_nodes,
               RDF::Vocab::SHACL.MinInclusiveConstraintComponent, **options)
     end
 
@@ -357,6 +361,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minLength(term, node, path, value_nodes, **options)
+      term = term.first if term.is_a?(Array)
       value_nodes.map do |n|
         compares = !n.node? && n.to_s.length >= term.to_i
         satisfy(focus: node, path: path,
@@ -402,6 +407,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_nodeKind(term, node, path, value_nodes, **options)
+      term = term.first if term.is_a?(Array)
       value_nodes.map do |n|
         compares = NODE_KIND_COMPARE.fetch(n.class, []).include?(term)
         satisfy(focus: node, path: path,
@@ -431,8 +437,9 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_pattern(pattern, node, path, value_nodes, **options)
+      pattern = pattern.first if pattern.is_a?(Array)
       flags = options[:flags].to_s
-      regex_opts = 0 |
+      regex_opts = 0
       regex_opts |= Regexp::MULTILINE  if flags.include?(?m)
       regex_opts |= Regexp::IGNORECASE if flags.include?(?i)
       regex_opts |= Regexp::EXTENDED   if flags.include?(?x)
@@ -453,6 +460,7 @@ module SHACL::Algebra
 
     # Common comparison logic for lessThan, lessThanOrEqual, max/minInclusive/Exclusive
     def compare(method, terms, node, path, value_nodes, component, **options)
+      terms = [terms] unless terms.is_a?(Array)
       value_nodes.map do |left|
         results = terms.map do |right|
           case left

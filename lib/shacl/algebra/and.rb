@@ -1,7 +1,18 @@
 module SHACL::Algebra
   ##
-  class And < Operator
+  class AndConstraintComponent < ConstraintComponent
     NAME = :and
+
+    @mandatoryParameters = [:and]
+    @optionalParameters = []
+
+    ## Class methods
+    class << self
+      # @see ConstraintComponent.simple
+      def simple?; true; end
+      # @see ConstraintComponent.builtin?
+      def builtin?; false; end
+    end
 
     ##
     # Specifies the condition that each value node conforms to all provided shapes. This is comparable to conjunction and the logical "and" operator.

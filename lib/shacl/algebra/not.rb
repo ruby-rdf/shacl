@@ -1,7 +1,18 @@
 module SHACL::Algebra
   ##
-  class Not < Operator
+  class NotConstraintComponent < ConstraintComponent
     NAME = :not
+
+    @mandatoryParameters = [:not]
+    @optionalParameters = []
+
+    ## Class methods
+    class << self
+      # @see ConstraintComponent.simple
+      def simple?; true; end
+      # @see ConstraintComponent.builtin?
+      def builtin?; false; end
+    end
 
     ##
     # Specifies the condition that each value node cannot conform to a given shape. This is comparable to negation and the logical "not" operator.

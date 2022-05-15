@@ -115,26 +115,29 @@ module SHACL
       block.call(RDF::Statement(subject, RDF::Vocab::SHACL.resultMessage, RDF::Literal(message))) if message
     end
 
-    # Transform a JSON representation of a result, into a native representation
-    # @param [Hash] input
-    # @return [ValidationResult]
-    def self.from_json(input, **options)
-      input = JSON.parse(input) if input.is_a?(String)
-      input = JSON::LD::API.compact(input,
-                "http://github.com/ruby-rdf/shacl/",
-                expandContext: "http://github.com/ruby-rdf/shacl/")
-      raise ArgumentError, "Expect report to be a hash" unless input.is_a?(Hash)
-      result = self.new
+    # Class Methods
+    class << self
+      # Transform a JSON representation of a result, into a native representation
+      # @param [Hash] input
+      # @return [ValidationResult]
+      def from_json(input, **options)
+        input = JSON.parse(input) if input.is_a?(String)
+        input = JSON::LD::API.compact(input,
+                  "http://github.com/ruby-rdf/shacl/",
+                  expandContext: "http://github.com/ruby-rdf/shacl/")
+        raise ArgumentError, "Expect report to be a hash" unless input.is_a?(Hash)
+        result = self.new
 
-      result.focus = Algebra::Operator.to_rdf(:focus, input['focusNode'], base: nil, vocab: false) if input['focusNode']
-      result.path = Algebra::Operator.parse_path(input['resultPath'], **options) if input['resultPath']
-      result.resultSeverity = Algebra::Operator.iri(input['resultSeverity'], **options) if input['resultSeverity']
-      result.component = Algebra::Operator.iri(input['sourceConstraintComponent'], **options) if input['sourceConstraintComponent']
-      result.shape = Algebra::Operator.iri(input['sourceShape'], **options) if input['sourceShape']
-      result.value = Algebra::Operator.to_rdf(:value, input['value'], **options) if input['value']
-      result.details = Algebra::Operator.to_rdf(:details, input['details'], **options) if input['details']
-      result.message = Algebra::Operator.to_rdf(:message, input['message'], **options) if input['message']
-      result
+        result.focus = Algebra::Operator.to_rdf(:focus, input['focusNode'], base: nil, vocab: false) if input['focusNode']
+        result.path = Algebra::Operator.parse_path(input['resultPath'], **options) if input['resultPath']
+        result.resultSeverity = Algebra::Operator.iri(input['resultSeverity'], **options) if input['resultSeverity']
+        result.component = Algebra::Operator.iri(input['sourceConstraintComponent'], **options) if input['sourceConstraintComponent']
+        result.shape = Algebra::Operator.iri(input['sourceShape'], **options) if input['sourceShape']
+        result.value = Algebra::Operator.to_rdf(:value, input['value'], **options) if input['value']
+        result.details = Algebra::Operator.to_rdf(:details, input['details'], **options) if input['details']
+        result.message = Algebra::Operator.to_rdf(:message, input['message'], **options) if input['message']
+        result
+      end
     end
 
     # To results are eql? if their overlapping properties are equal

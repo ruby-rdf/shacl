@@ -13,10 +13,10 @@ module SHACL::Algebra
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, path:, value_nodes:, depth: 0, **options)
       log_debug(NAME, depth: depth) {SXP::Generator.string({node: node, value_nodes: value_nodes}.to_sxp_bin)}
-      max_count = options.fetch(:qualifiedMaxCount, 0).to_i
-      min_count = options.fetch(:qualifiedMinCount, 0).to_i
+      max_count = options.fetch(:qualifiedMaxCount, [0]).first.to_i
+      min_count = options.fetch(:qualifiedMinCount, [0]).first.to_i
       # FIXME: figure this out
-      disjoint = options[:qualifiedValueShapesDisjoint]
+      disjoint = options.fetch(:qualifiedValueShapesDisjoint, [false]).first
 
       operands.map do |op|
         results = value_nodes.map do |n|

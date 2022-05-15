@@ -54,7 +54,7 @@ module SHACL::Algebra
 
       # Evaluate against operands
       op_results = operands.map do |op|
-        if op.is_a?(QualifiedValueShape) || op.is_a?(SPARQLConstraint)
+        if op.is_a?(QualifiedValueShape) || op.is_a?(SPARQLConstraintComponent)
           # All value nodes are passed
           op.conforms(node, value_nodes: value_nodes, path: path, depth: depth + 1, **options)
         else
@@ -100,6 +100,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThan(property, node, path, value_nodes, **options)
+      property = property.first if property.is_a?(Array)
       terms = graph.query({subject: node, predicate: property}).objects
       compare(:<, terms, node, path, value_nodes,
               RDF::Vocab::SHACL.LessThanConstraintComponent, **options)
@@ -113,6 +114,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThanOrEquals(property, node, path, value_nodes, **options)
+      property = property.first if property.is_a?(Array)
       terms = graph.query({subject: node, predicate: property}).objects
       compare(:<=, terms, node, path, value_nodes,
               RDF::Vocab::SHACL.LessThanOrEqualsConstraintComponent, **options)
@@ -130,6 +132,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxCount(count, node, path, value_nodes, **options)
+      count = count.first if count.is_a?(Array)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} <= maxCount #{count}",
         resultSeverity: (options.fetch(:severity) unless value_nodes.count <= count.to_i),
@@ -152,6 +155,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minCount(count, node, path, value_nodes, **options)
+      count = count.first if count.is_a?(Array)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} >= minCount #{count}",
         resultSeverity: (options.fetch(:severity) unless value_nodes.count >= count.to_i),
@@ -167,6 +171,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_uniqueLang(uniq, node, path, value_nodes, **options)
+      uniq = uniq.first if uniq.is_a?(Array)
       if !value_nodes.all?(&:literal?)
         not_satisfied(focus: node, path: path,
           message: "not all values are literals",
