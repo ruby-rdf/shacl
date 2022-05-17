@@ -20,7 +20,7 @@ module SHACL
     autoload :XoneConstraintComponent,              'shacl/algebra/xone.rb'
 
     def self.from_json(operator, **options)
-      raise ArgumentError, "from_json: operator not a Hash: #{operator.inspect}" unless operator.is_a?(Hash)
+      raise SHACL::Error, "from_json: operator not a Hash: #{operator.inspect}" unless operator.is_a?(Hash)
 
       # If operator is a hash containing @list, it is a single array value.
       # Note: context does not use @container: @list on this terms to preserve cardinality expectations
@@ -31,7 +31,7 @@ module SHACL
       klass = case
       when type.include?('NodeShape') then NodeShape
       when type.include?('PropertyShape') then PropertyShape
-      else raise ArgumentError, "from_json: unknown type #{type.inspect}"
+      else raise SHACL::Error, "from_json: unknown type #{type.inspect}"
       end
 
       klass.from_json(operator, **options)

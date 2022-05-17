@@ -46,7 +46,7 @@ module SHACL::Algebra
             **options)
         end.compact
       elsif @options[:ignoredProperties]
-        raise ArgumentError, "shape has ignoredProperties without being closed"
+        raise SHACL::Error, "shape has ignoredProperties without being closed"
       end
 
       # Evaluate against operands

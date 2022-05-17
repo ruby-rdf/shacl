@@ -244,10 +244,10 @@ module SHACL::Algebra
           # Check parameter constraints
           v = as_array(v)
           if param_props[:maxCount] && v.length > param_props[:maxCount]
-            raise ArgumentError, "Property #{k} on #{self.const_get(:NAME)} is too many values: #{v.inspect}"
+            raise SHACL::Error, "Property #{k} on #{self.const_get(:NAME)} has too many values: #{v.inspect}"
           end
 
-          # If an optional parameter exists without corresponding mandatory parameters on a given shape, raise an ArgumentError.
+          # If an optional parameter exists without corresponding mandatory parameters on a given shape, raise a SHACL::Error.
           #
           # Records any instances of components which are created to re-attach non-primary parameters after all operators are processed.
           instances = case k

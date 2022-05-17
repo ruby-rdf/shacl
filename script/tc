@@ -79,8 +79,8 @@ def run_tc(t, **options)
     end
   rescue Interrupt => e
     raise e
-  rescue ArgumentError => e
-    STDERR.puts  "ArgumentError: #{e.message}" if options[:verbose]
+  rescue ArgumentError, SHACL::Error => e
+    STDERR.puts  e.inspect if options[:verbose]
     if t.negative_test?
       result = "passed"
     else

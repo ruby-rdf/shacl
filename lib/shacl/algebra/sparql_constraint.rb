@@ -116,21 +116,21 @@ module SHACL::Algebra
         operators = query.descendants.to_a.unshift(query)
 
         if node_opts[:ask] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Ask)}
-          raise ArgumentError, "Ask query must have askk operator"
+          raise SHACL::Error, "Ask query must have ask operator"
         elsif node_opts[:select] && !operators.any? {|op| op.is_a?(SPARQL::Algebra::Operator::Project)}
-          raise ArgumentError, "Select query must have project operator"
+          raise SHACL::Error, "Select query must have project operator"
         end
 
         uh_oh = (operators.map(&:class) & UNSUPPORTED_SPARQL_OPERATORS).map {|c| c.const_get(:NAME)}
 
         unless uh_oh.empty?
-          raise ArgumentError, "Query must not include operators #{uh_oh.to_sxp}: #{query_string}"
+          raise SHACL::Error, "Query must not include operators #{uh_oh.to_sxp}: #{query_string}"
         end
 
         # Additionally, queries must not bind to special variables
         operators.select {|op| op.is_a?(SPARQL::Algebra::Operator::Extend)}.each do |extend|
           if extend.operands.first.any? {|v, e| PRE_BOUND.include?(v.to_sym)}
-            raise ArgumentError, "Query must not bind pre-bound variables: #{query_string}"
+            raise SHACL::Error, "Query must not bind pre-bound variables: #{query_string}"
           end
         end
 

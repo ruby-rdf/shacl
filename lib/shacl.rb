@@ -83,7 +83,7 @@ module SHACL
     attr_reader :code
 
     ##
-    # Initializes a new patch error instance.
+    # Initializes a new error instance.
     #
     # @param  [String, #to_s]          message
     # @param  [Hash{Symbol => Object}] options
