@@ -419,43 +419,6 @@ module SHACL::Algebra
       end.flatten.compact
     end
 
-    # Specifies a regular expression that each value node matches to satisfy the condition.
-    #
-    # @example
-    #   ex:PatternExampleShape
-    #   	a sh:NodeShape ;
-    #   	sh:targetNode ex:Bob, ex:Alice, ex:Carol ;
-    #   	sh:property [
-    #   		sh:path ex:bCode ;
-    #   		sh:pattern "^B" ;    # starts with 'B'
-    #   		sh:flags "i" ;       # Ignore case
-    #   	] .
-    #
-    # @param [RDF::URI] pattern A regular expression that all value nodes need to match.
-    # @param [RDF::Term] node the focus node
-    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes..
-    # @param [Array<RDF::Term>] value_nodes
-    # @return [Array<SHACL::ValidationResult>]
-    def builtin_pattern(pattern, node, path, value_nodes, **options)
-      pattern = pattern.first if pattern.is_a?(Array)
-      flags = options[:flags].to_s
-      regex_opts = 0
-      regex_opts |= Regexp::MULTILINE  if flags.include?(?m)
-      regex_opts |= Regexp::IGNORECASE if flags.include?(?i)
-      regex_opts |= Regexp::EXTENDED   if flags.include?(?x)
-      pat = Regexp.new(pattern, regex_opts)
-
-      value_nodes.map do |n|
-        compares = !n.node? && pat.match?(n.to_s)
-        satisfy(focus: node, path: path,
-          value: n,
-          message: "is#{' not' unless compares} a match #{pat.inspect}",
-          resultSeverity: (options.fetch(:severity) unless compares),
-          component: RDF::Vocab::SHACL.PatternConstraintComponent,
-          **options)
-      end.flatten.compact
-    end
-
   protected
 
     # Common comparison logic for lessThan, lessThanOrEqual, max/minInclusive/Exclusive

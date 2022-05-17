@@ -16,18 +16,8 @@ module SHACL::Algebra
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
-      options = {severity: RDF::Vocab::SHACL.Violation}.merge(options)
-
-      # Add some instance options to the argument
-      options = %i{
-        flags
-        qualifiedMinCount
-        qualifiedMaxCount
-        qualifiedValueShapesDisjoint
-        severity
-      }.inject(options) do |memo, sym|
-        @options[sym] ? memo.merge(sym => @options[sym]) : memo
-      end
+      options[:severity] = @options[:severity] if @options[:severity]
+      options[:severity] ||= RDF::Vocab::SHACL.Violation
 
       path = @options[:path]
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
@@ -54,9 +44,9 @@ module SHACL::Algebra
 
       # Evaluate against operands
       op_results = operands.map do |op|
-        if op.is_a?(QualifiedValueShape) || op.is_a?(SPARQLConstraintComponent)
+        if op.is_a?(QualifiedValueConstraintComponent) || op.is_a?(SPARQLConstraintComponent)
           # All value nodes are passed
-          op.conforms(node, value_nodes: value_nodes, path: path, depth: depth + 1, **options)
+          op.conforms(node, path: path, value_nodes: value_nodes, depth: depth + 1, **options)
         else
           value_nodes.map do |n|
            res = op.conforms(n, path: path, depth: depth + 1, **options)

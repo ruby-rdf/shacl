@@ -24,8 +24,7 @@ module SHACL::Algebra
       minCount maxCount
       minExclusive minInclusive maxExclusive maxInclusive
       minLength maxLength
-      pattern flags languageIn uniqueLang
-      qualifiedValueShapesDisjoint qualifiedMinCount qualifiedMaxCount
+      languageIn uniqueLang
       equals disjoint lessThan lessThanOrEquals
       closed ignoredProperties hasValue in
       declare namespace prefix
@@ -47,7 +46,6 @@ module SHACL::Algebra
       class: {
         class: :ClassConstraintComponent,
         nodeKind: :IRI,
-        optional: true,
       },
       closed: {
         class: :ClosedConstraintComponent,
@@ -59,6 +57,7 @@ module SHACL::Algebra
         maxCount: 1,
       },
       disjoint: {
+        class: :DisjointConstraintComponent,
         nodeKind: :IRI,
       },
       equals: {
@@ -66,18 +65,24 @@ module SHACL::Algebra
         nodeKind: :IRI,
       },
       expression: {class: :ExpressionConstraintComponent},
+      flags: {
+        class: :PatternConstraintComponent,
+        datatype: RDF::XSD.string,
+        optional: true
+      },
       hasValue: {
         class: :HasValueConstraintComponent,
         nodeKind: :IRIOrLiteral,
       },
       ignoredProperties: {
         class: :ClosedConstraintComponent,
-        nodeKind: :IRI,
+        nodeKind: :IRI, # Added
         optional: true,
       },
       in: {
         class: :InConstraintComponent,
         nodeKind: :IRIOrLiteral,
+        #maxCount: 1, # List internalized
       },
       languageIn: {
         class: :LanguageInConstraintComponent,
@@ -140,11 +145,6 @@ module SHACL::Algebra
       },
       not: {class: :NotConstraintComponent},
       or: {class: :OrConstraintComponent},
-      flags: {
-        class: :PatternConstraintComponent,
-        datatype: RDF::XSD.string,
-        optional: true
-      },
       pattern: {
         class: :PatternConstraintComponent,
         datatype: RDF::XSD.string,
@@ -154,9 +154,11 @@ module SHACL::Algebra
         class: :QualifiedMaxCountConstraintComponent,
         datatype: RDF::XSD.integer,
       },
-      qualifiedValueShape: {class: :QualifiedValueShape},
+      qualifiedValueShape: {
+        class: %i(QualifiedMaxCountConstraintComponent QualifiedMinCountConstraintComponent),
+      },
       qualifiedValueShapesDisjoint: {
-        class: :QualifiedValueShape,
+        class: %i(QualifiedMaxCountConstraintComponent QualifiedMinCountConstraintComponent),
         datatype: RDF::XSD.boolean,
         optional: true,
       },
@@ -173,6 +175,19 @@ module SHACL::Algebra
       xone: {class: :XoneConstraintComponent},
     }
 
+    # Constraint Component classes indexed to their mandatory and optional parameters.
+    #
+    # @note for builtins, corresponding Ruby classes may not exist.
+    COMPONENT_PARAMS = PARAMETERS.inject({}) do |memo, (param, properties)|
+      memo.merge(Array(properties[:class]).inject(memo) do |mem, cls|
+        entry = mem.fetch(cls, {})
+        param_type = properties[:optional] ? :optional : :mandatory
+        entry[param_type] ||= []
+        entry[param_type] << param
+        mem.merge(cls => entry)
+      end)
+    end
+
     ## Class methods
     class << self
       ##
@@ -183,71 +198,129 @@ module SHACL::Algebra
       # @return [Operator]
       def from_json(operator, **options)
         operands = []
+
+        # Node options used to instantiate the relevant class instance.
         node_opts = options.dup
+
+        # Node Options and operands on shape or node, which are not Constraint Component Parameters
         operator.each do |k, v|
-          next if v.nil?
+          k = k.to_sym
+          next if v.nil? || PARAMETERS.include?(k)
           case k
           # List properties
-          when 'id'                 then node_opts[:id] = iri(v, vocab: false, **options)
-          when 'node'
-            operands.push(*as_array(v).map {|vv| NodeShape.from_json(vv, **options)})
-          when 'path'               then node_opts[:path] = parse_path(v, **options)
-          when 'property'
+          when :id                 then node_opts[:id] = iri(v, vocab: false, **options)
+          when :path               then node_opts[:path] = parse_path(v, **options)
+          when :property
             operands.push(*as_array(v).map {|vv| PropertyShape.from_json(vv, **options)})
-          when 'severity'           then node_opts[:severity] = iri(v, **options)
-          when 'sparql'
-            operands.push(*as_array(v).map {|vv| SPARQLConstraintComponent.from_json(vv, **options.merge(shape: node_opts[:id]))})
-          when 'targetClass'        then node_opts[:targetClass] = as_array(v).map {|vv| iri(vv, **options)}
-          when 'targetNode'
+          when :severity           then node_opts[:severity] = iri(v, **options)
+          when :targetClass        then node_opts[:targetClass] = as_array(v).map {|vv| iri(vv, **options)}
+          when :targetNode
             node_opts[:targetNode] = as_array(v).map do |vv|
               from_expanded_value(vv, **options)
             end
-          when 'targetObjectsOf'    then node_opts[:targetObjectsOf] = as_array(v).map {|vv| iri(vv, **options)}
-          when 'targetSubjectsOf'   then node_opts[:targetSubjectsOf] = as_array(v).map {|vv| iri(vv, **options)}
-          when 'type'               then node_opts[:type] = as_array(v).map {|vv| iri(vv, **options)}
+          when :targetObjectsOf    then node_opts[:targetObjectsOf] = as_array(v).map {|vv| iri(vv, **options)}
+          when :targetSubjectsOf   then node_opts[:targetSubjectsOf] = as_array(v).map {|vv| iri(vv, **options)}
+          when :type               then node_opts[:type] = as_array(v).map {|vv| iri(vv, **options)}
           else
-            # If it's a defined parameter, add it to the operator.
-            if PARAMETERS.keys.include?(k.to_sym)
-              param_props = PARAMETERS[k.to_sym]
-              v = as_array(v)
-              if param_props[:maxCount] && v.length > param_props[:maxCount]
-                raise ArgumentError, "Property #{k} on #{self.const_get(:NAME)} is too many values: #{v.inspect}"
-              end
-
-              # Process parameter values based on nodeKind, in, and datatype.
-              elements = if param_props[:nodeKind]
-                case param_props[:nodeKind]
-                when :IRI
-                  v.map {|vv| iri(vv, **options)}
-                when :Literal
-                  v.map do |vv|
-                    vv.is_a?(Hash) ?
-                      from_expanded_value(vv, **options) :
-                      RDF::Literal(vv)
-                  end
-                when :IRIOrLiteral
-                  to_rdf(k.to_sym, v, **options)
-                end
-              elsif param_props[:in]
-                v.map do |vv|
-                  iri(vv, **options) if param_props[:in].include?(vv.to_sym)
-                end
-              elsif param_props[:datatype]
-                v.map {|vv| RDF::Literal(vv, datatype: param_props[:datatype])}
-              else
-                v.map {|vv| SHACL::Algebra.from_json(vv, **options)}
-              end
-
-              # Builtins are added as options to the operator, otherwise, they are class instances of constraint components added as operators.
-              if BUILTIN_KEYS.include?(k.to_sym)
-                node_opts[k.to_sym] = elements
-              else
-                klass = SHACL::Algebra.const_get(param_props[:class])
-                operands.push(*elements.map {|e| klass.new(*e, **options.dup)})
-              end
-            else
+            if BUILTIN_KEYS.include?(k)
               # Add as a plain option otherwise
-              node_opts[k.to_sym] = to_rdf(k.to_sym, v, **options)
+              node_opts[k] = to_rdf(k, v, **options)
+            end
+          end
+        end
+
+        # Node Options and operands on shape or node, which are Constraint Component Parameters.
+        # For constraints with a defined Ruby class, the primary parameter is the NAME from the constraint class. Other parameters are added as named operands to the component operator.
+        used_components = {}
+        operator.each do |k, v|
+          k = k.to_sym
+          next if v.nil? || !PARAMETERS.include?(k)
+          param_props = PARAMETERS[k]
+          param_classes = Array(param_props[:class])
+
+          # Keep track of components which have been used.
+          param_classes.each {|cls| used_components[cls] ||= {}}
+
+          # Check parameter constraints
+          v = as_array(v)
+          if param_props[:maxCount] && v.length > param_props[:maxCount]
+            raise ArgumentError, "Property #{k} on #{self.const_get(:NAME)} is too many values: #{v.inspect}"
+          end
+
+          # If an optional parameter exists without corresponding mandatory parameters on a given shape, raise an ArgumentError.
+          #
+          # Records any instances of components which are created to re-attach non-primary parameters after all operators are processed.
+          instances = case k
+          # List properties
+          when :node
+            as_array(v).map {|vv| NodeShape.from_json(vv, **options)}
+          when :property
+            as_array(v).map {|vv| PropertyShape.from_json(vv, **options)}
+          when :sparql
+            as_array(v).map {|vv| SPARQLConstraintComponent.from_json(vv, **options)}
+          else
+            # Process parameter values based on nodeKind, in, and datatype.
+            elements = if param_props[:nodeKind]
+              case param_props[:nodeKind]
+              when :IRI
+                v.map {|vv| iri(vv, **options)}
+              when :Literal
+                v.map do |vv|
+                  vv.is_a?(Hash) ?
+                    from_expanded_value(vv, **options) :
+                    RDF::Literal(vv)
+                end
+              when :IRIOrLiteral
+                to_rdf(k, v, **options)
+              end
+            elsif param_props[:in]
+              v.map do |vv|
+                iri(vv, **options) if param_props[:in].include?(vv.to_sym)
+              end
+            elsif param_props[:datatype]
+              v.map {|vv| RDF::Literal(vv, datatype: param_props[:datatype])}
+            else
+              v.map {|vv| SHACL::Algebra.from_json(vv, **options)}
+            end
+
+            # Builtins are added as options to the operator, otherwise, they are class instances of constraint components added as operators.
+            if BUILTIN_KEYS.include?(k)
+              node_opts[k] = elements
+              [] # No instances created
+            else
+              klass = SHACL::Algebra.const_get(Array(param_props[:class]).first)
+
+              name = klass.const_get(:NAME)
+              # If the key `k` is the same as the NAME of the class, create the instance with the defined element values.
+              if name == k
+                elements.map {|e| klass.new(*e, **options.dup)}
+              else
+                # Add non-primary parameters for subsequent insertion
+                param_classes.each do |cls|
+                  (used_components[cls][:parameters] ||= []) << elements.unshift(k)
+                end
+                [] # No instances created
+              end
+            end
+          end
+
+          # Record the instances created by class and add as operands
+          param_classes.each do |cls|
+            used_components[cls][:instances] = instances
+          end
+          operands.push(*instances)
+        end
+
+        # Append any parameters to the used components
+        used_components.each do |cls, props|
+          instances = props[:instances]
+          next unless instances # BUILTINs
+
+          parameters = props.fetch(:parameters, [])
+          instances.each do |op|
+            parameters.each do |param|
+              # Note the potential that the parameter gets added twice, if there are multiple classes for both the primary and secondary paramters.
+              op.operands << param
             end
           end
         end
@@ -440,6 +513,7 @@ module SHACL::Algebra
       raise NotImplemented
     end
 
+    # Create structure for serializing this component/shape, beginning with its cononical name.
     def to_sxp_bin
       expressions = BUILTIN_KEYS.inject([self.class.const_get(:NAME)]) do |memo, sym|
         @options[sym] ? memo.push([sym, *@options[sym]]) : memo

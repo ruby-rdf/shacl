@@ -6,17 +6,18 @@ require_relative "algebra/constraint_component"
 module SHACL
   # Based on the SPARQL Algebra, operators for executing a patch
   module Algebra
-    autoload :AndConstraintComponent,      'shacl/algebra/and.rb'
-    #autoload :DatatypeConstraintComponent, 'shacl/algebra/datatype.rb'
-    #autoload :ClassConstraintComponent,    'shacl/algebra/class.rb'
-    autoload :NodeShape,                   'shacl/algebra/node_shape.rb'
-    autoload :NotConstraintComponent,      'shacl/algebra/not.rb'
-    autoload :OrConstraintComponent,       'shacl/algebra/or.rb'
-    autoload :PropertyShape,               'shacl/algebra/property_shape.rb'
-    autoload :QualifiedValueShape,         'shacl/algebra/qualified_value_shape.rb'
-    autoload :Shape,                       'shacl/algebra/shape.rb'
-    autoload :SPARQLConstraintComponent,   'shacl/algebra/sparql_constraint.rb'
-    autoload :XoneConstraintComponent,     'shacl/algebra/xone.rb'
+    autoload :AndConstraintComponent,               'shacl/algebra/and.rb'
+    autoload :NodeShape,                            'shacl/algebra/node_shape.rb'
+    autoload :NotConstraintComponent,               'shacl/algebra/not.rb'
+    autoload :OrConstraintComponent,                'shacl/algebra/or.rb'
+    autoload :PatternConstraintComponent,           'shacl/algebra/pattern.rb'
+    autoload :PropertyShape,                        'shacl/algebra/property_shape.rb'
+    autoload :QualifiedMaxCountConstraintComponent, 'shacl/algebra/qualified_value.rb'
+    autoload :QualifiedMinCountConstraintComponent, 'shacl/algebra/qualified_value.rb'
+    autoload :QualifiedValueConstraintComponent,    'shacl/algebra/qualified_value.rb'
+    autoload :Shape,                                'shacl/algebra/shape.rb'
+    autoload :SPARQLConstraintComponent,            'shacl/algebra/sparql_constraint.rb'
+    autoload :XoneConstraintComponent,              'shacl/algebra/xone.rb'
 
     def self.from_json(operator, **options)
       raise ArgumentError, "from_json: operator not a Hash: #{operator.inspect}" unless operator.is_a?(Hash)
