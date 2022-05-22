@@ -31,7 +31,7 @@ module SHACL::Algebra
     def conforms(node, path: nil, depth: 0, **options)
       return [] if deactivated?
       options = {severity: RDF::Vocab::SHACL.Violation}.merge(options)
-      log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
+      log_debug(NAME, depth: depth) {SXP::Generator.string({node: node}.to_sxp_bin)}
 
       # Aggregate repo containing both data-graph (as the default) and shapes-graph, named by it's IRI
       aggregate = RDF::AggregateRepo.new(graph.data, shapes_graph.data) do |ag|
@@ -49,7 +49,7 @@ module SHACL::Algebra
       solutions = operands.last.execute(aggregate,
         bindings: bindings,
         depth: depth + 1,
-        logger: @options[:logger],
+        logger: (@logger || @options[:logger]),
         **options)
       if solutions.empty?
         satisfy(focus: node, path: path,

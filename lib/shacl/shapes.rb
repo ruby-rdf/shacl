@@ -97,12 +97,17 @@ module SHACL
     # @param [Hash{Symbol => Object}] options
     # @option options [RDF::Term] :focus
     #   An explicit focus node, overriding any defined on the top-level shaps.
+    # @option options [Logger, #write, #<<] :logger
+    #   Record error/info/debug output
     # @return [SHACL::ValidationReport]
     def execute(graph, depth: 0, **options)
       self.each do |shape|
         shape.graph = graph
         shape.shapes_graph = shapes_graph
         shape.each_descendant do |op|
+          if options[:logger]
+            op.instance_variable_set(:@logger, options[:logger])
+          end
           op.graph = graph if op.respond_to?(:graph=)
           op.shapes_graph = shapes_graph if op.respond_to?(:shapes_graph=)
         end
