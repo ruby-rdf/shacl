@@ -105,9 +105,8 @@ module SHACL
         shape.graph = graph
         shape.shapes_graph = shapes_graph
         shape.each_descendant do |op|
-          if options[:logger]
-            op.instance_variable_set(:@logger, options[:logger])
-          end
+          op.instance_variable_set(:@logger, options[:logger]) if
+            options[:logger] && op.respond_to?(:execute)
           op.graph = graph if op.respond_to?(:graph=)
           op.shapes_graph = shapes_graph if op.respond_to?(:shapes_graph=)
         end
