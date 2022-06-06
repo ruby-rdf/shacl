@@ -36,8 +36,7 @@ module SHACL
     # Create graph backed by repo to allow a graph_name
     graph = RDF::Graph.load(input,
                             graph_name: RDF::URI(input),
-                            data: RDF::Repository.new,
-                            **options)
+                            data: RDF::Repository.new)
     self.get_shapes(graph,
       loaded_graphs: [RDF::URI(input, canonicalize: true)],
       **options)

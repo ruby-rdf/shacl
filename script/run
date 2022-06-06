@@ -79,8 +79,7 @@ opts.each do |opt, arg|
   when '--shacl'
     shapes_graph = RDF::Graph.load(arg,
                             graph_name: RDF::URI(arg),
-                            data: RDF::Repository.new,
-                            **options)
+                            data: RDF::Repository.new)
   when '--info'
     logger = Logger.new(STDERR)
     logger.level = Logger::INFO
