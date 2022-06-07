@@ -59,7 +59,7 @@ Implementation Report
 </style>
 </head>
 <body>
-<section about='' typeof='doap:Project Software'>
+<section about='' typeof='Software doap:Project'>
 <h2>
 Ruby SHACL gem test results
 </h2>
@@ -67,18 +67,24 @@ Ruby SHACL gem test results
 This document reports conformance for for
 <a href='https://www.w3.org/TR/shacl/' property='doap:name'>Shapes Constraint Language (SHACL)</a>
 </p>
+<p>
+Alternate versions of the report are available in
+<a href='earl.ttl' rel='alternate'>Turtle</a>
+and
+<a href='earl.jsonld' rel='alternate'>JSON-LD</a>
+</p>
 <dl>
 <dt id='subj_0'>
 <a href='https://rubygems.org/gems/shacl'>
-<span about='https://rubygems.org/gems/shacl' property='doap:name'>Ruby SHACL</span>
+<span about='https://rubygems.org/gems/shacl' property='doap:name'>SHACL</span>
 </a>
 </dt>
 <dd property='earl:testSubjects' resource='https://rubygems.org/gems/shacl' typeof='doap:Project TestSubject Software'>
 <dl>
 <dt>Description</dt>
-<dd lang='en' property='doap:description'>shacl is an Shape Constraint engine for the RDF.rb library suite.</dd>
+<dd lang='en' property='doap:description'>SHACL is a Shape Constraint engine for the Ruby RDF.rb library suite.</dd>
 <dt>Release</dt>
-<dd property='doap:release'><span property='doap:revision'>0.1.0</span></dd>
+<dd property='doap:release'><span property='doap:revision'>0.3.0</span></dd>
 <dt>Programming Language</dt>
 <dd property='doap:programming-language'>Ruby</dd>
 <dt>Home Page</dt>
@@ -89,7 +95,7 @@ https://ruby-rdf.github.io/shacl
 </dd>
 <dt>Developer</dt>
 <dd rel='doap:developer'>
-<div resource='https://greggkellogg.net/foaf#me' typeof='Assertor foaf:Person'>
+<div resource='https://greggkellogg.net/foaf#me' typeof='foaf:Person Assertor'>
 <a href='https://greggkellogg.net/foaf#me'>
 <span property='foaf:name'>Gregg Kellogg</span>
 </a>
@@ -174,6 +180,36 @@ Tests for validation reports
 Untested
 </td>
 </tr>
+<tr>
+<td>
+<a href='#Tests-converted-from-http://datashapes.org/sh/tests/tests/sparql/node'>
+Tests converted from http://datashapes.org/sh/tests/tests/sparql/node
+</a>
+</td>
+<td class='passed-all'>
+4/4 (100.0%)
+</td>
+</tr>
+<tr>
+<td>
+<a href='#Tests-for-pre-binding'>
+Tests for pre-binding
+</a>
+</td>
+<td class='passed-some'>
+11/14 (78.6%)
+</td>
+</tr>
+<tr>
+<td>
+<a href='#Tests-converted-from-http://datashapes.org/sh/tests/tests/sparql/property'>
+Tests converted from http://datashapes.org/sh/tests/tests/sparql/property
+</a>
+</td>
+<td class='passed-all'>
+1/1 (100.0%)
+</td>
+</tr>
 </tbody>
 </table>
 </dd>
@@ -185,7 +221,7 @@ Untested
 <h2>
 Individual Test Results
 </h2>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/complex' resource='urn:x-shacl-test:/core/complex/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/complex' resource='urn:x-shacl-test:/core/complex/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/complex</h2>
 <table class='report'>
 <tr>
@@ -193,7 +229,7 @@ Individual Test Results
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/complex/personexample' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -216,14 +252,14 @@ PASS
 <td>
 Test urn:x-shacl-test:/core/complex/shacl-shacl: frozen eat your own ( eat your own frozen dogfood )
 </td>
-<td class='EXCEPTION' property='earl:assertions' typeof='Assertion'>
+<td class='FAIL' property='earl:assertions' typeof='Assertion'>
 <link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
 <link href='urn:x-shacl-test:/core/complex/shacl-shacl' property='earl:test' />
 <link href='https://rubygems.org/gems/shacl' property='earl:subject' />
 <link href='earl:automatic' property='earl:mode' />
 <span property='earl:result' typeof='TestResult'>
-<span property='earl:outcome' resource='earl:exception'>
-EXCEPTION
+<span property='earl:outcome' resource='earl:failed'>
+FAIL
 </span>
 </span>
 </td>
@@ -238,7 +274,7 @@ Percentage passed out of 2 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/misc' resource='urn:x-shacl-test:/core/misc/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/misc' resource='urn:x-shacl-test:/core/misc/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/misc</h2>
 <table class='report'>
 <tr>
@@ -246,7 +282,7 @@ Percentage passed out of 2 Tests
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/misc/deactivated-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -339,7 +375,7 @@ Percentage passed out of 5 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/node' resource='urn:x-shacl-test:/core/node/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/node' resource='urn:x-shacl-test:/core/node/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/node</h2>
 <table class='report'>
 <tr>
@@ -347,7 +383,7 @@ Percentage passed out of 5 Tests
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/node/and-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -872,7 +908,7 @@ Percentage passed out of 32 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/path' resource='urn:x-shacl-test:/core/path/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/path' resource='urn:x-shacl-test:/core/path/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/path</h2>
 <table class='report'>
 <tr>
@@ -880,7 +916,7 @@ Percentage passed out of 32 Tests
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/path/path-alternative-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -1101,7 +1137,7 @@ Percentage passed out of 13 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/property' resource='urn:x-shacl-test:/core/property/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/property' resource='urn:x-shacl-test:/core/property/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/property</h2>
 <table class='report'>
 <tr>
@@ -1109,7 +1145,7 @@ Percentage passed out of 13 Tests
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/property/and-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -1730,7 +1766,7 @@ Percentage passed out of 38 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/targets' resource='urn:x-shacl-test:/core/targets/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/core/targets' resource='urn:x-shacl-test:/core/targets/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/core/targets</h2>
 <table class='report'>
 <tr>
@@ -1738,7 +1774,7 @@ Percentage passed out of 38 Tests
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/targets/multipleTargets-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -1863,7 +1899,374 @@ Percentage passed out of 7 Tests
 </tr>
 </table>
 </section>
-<section id='Tests-for-validation-reports' resource='urn:x-shacl-test:/core/validation-reports/manifest.ttl' typeof='Report mf:Manifest'>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/sparql/node' resource='urn:x-shacl-test:/sparql/node/manifest.ttl' typeof='mf:Manifest Report'>
+<h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/sparql/node</h2>
+<table class='report'>
+<tr>
+<th>
+Test
+</th>
+<th>
+<a href='#subj_0'>SHACL</a>
+</th>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/node/prefixes-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/node/prefixes-001: Test of sh:prefixes 001
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/node/prefixes-001' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/node/sparql-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/node/sparql-001: Test of sh:sparql at node shape 001
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/node/sparql-001' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/node/sparql-002' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/node/sparql-002: Test of sh:sparql at node shape 002
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/node/sparql-002' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/node/sparql-003' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/node/sparql-003: Test of sh:sparql at node shape 003
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/node/sparql-003' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr class='summary'>
+<td>
+Percentage passed out of 4 Tests
+</td>
+<td class='passed-all'>
+100.0%
+</td>
+</tr>
+</table>
+</section>
+<section id='Tests-converted-from-http://datashapes.org/sh/tests/tests/sparql/property' resource='urn:x-shacl-test:/sparql/property/manifest.ttl' typeof='mf:Manifest Report'>
+<h2 property='rdfs:comment mf:name'>Tests converted from http://datashapes.org/sh/tests/tests/sparql/property</h2>
+<table class='report'>
+<tr>
+<th>
+Test
+</th>
+<th>
+<a href='#subj_0'>SHACL</a>
+</th>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/property/sparql-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/property/sparql-001: Test of sh:sparql at property shape 001
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/property/sparql-001' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr class='summary'>
+<td>
+Percentage passed out of 1 Tests
+</td>
+<td class='passed-all'>
+100.0%
+</td>
+</tr>
+</table>
+</section>
+<section id='Tests-for-pre-binding' resource='urn:x-shacl-test:/sparql/pre-binding/manifest.ttl' typeof='mf:Manifest Report'>
+<h2 property='rdfs:comment mf:name'>Tests for pre-binding</h2>
+<table class='report'>
+<tr>
+<th>
+Test
+</th>
+<th>
+<a href='#subj_0'>SHACL</a>
+</th>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-001: Test of pre-binding in FILTER
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-001' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-002' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-002: Test of pre-binding in UNION
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-002' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-003' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-003: Test of pre-binding in inner {...} blocks
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-003' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-004' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-004: Test of pre-binding in BIND expressions
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-004' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-005' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-005: Test of pre-binding in BGP and FILTER
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-005' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-006' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-006: Test of pre-binding in nested SELECT
+</td>
+<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-006' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:failed'>
+FAIL
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/pre-binding-007' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/pre-binding-007: Test of pre-binding in nested SELECT
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/pre-binding-007' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001: Test of $shapesGraph and $currentShape
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001: Test of unsupported MINUS
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002: Test of unsupported VALUES
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003: Test of unsupported SERVICE
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004: Test of unsupported SELECT
+</td>
+<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:failed'>
+FAIL
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005: Test of unsupported AS ?prebound
+</td>
+<td class='PASS' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:passed'>
+PASS
+</span>
+</span>
+</td>
+</tr>
+<tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
+<td>
+Test urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006: Test of ASK trying to reassign ?value
+</td>
+<td class='FAIL' property='earl:assertions' typeof='Assertion'>
+<link href='https://greggkellogg.net/foaf#me' property='earl:assertedBy' />
+<link href='urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006' property='earl:test' />
+<link href='https://rubygems.org/gems/shacl' property='earl:subject' />
+<link href='earl:automatic' property='earl:mode' />
+<span property='earl:result' typeof='TestResult'>
+<span property='earl:outcome' resource='earl:failed'>
+FAIL
+</span>
+</span>
+</td>
+</tr>
+<tr class='summary'>
+<td>
+Percentage passed out of 14 Tests
+</td>
+<td class='passed-some'>
+78.6%
+</td>
+</tr>
+</table>
+</section>
+<section id='Tests-for-validation-reports' resource='urn:x-shacl-test:/core/validation-reports/manifest.ttl' typeof='mf:Manifest Report'>
 <h2 property='rdfs:comment mf:name'>Tests for validation reports</h2>
 <table class='report'>
 <tr>
@@ -1871,7 +2274,7 @@ Percentage passed out of 7 Tests
 Test
 </th>
 <th>
-<a href='#subj_0'>Ruby SHACL</a>
+<a href='#subj_0'>SHACL</a>
 </th>
 </tr>
 <tr inlist='inlist' rel='mf:entries' resource='urn:x-shacl-test:/core/validation-reports/shared' typeof='http://www.w3.org/ns/shacl-test#Validate TestCriterion TestCase'>
@@ -1901,19 +2304,19 @@ Percentage passed out of 1 Tests
 </table>
 </section>
 </section>
-<section id='appendix' property='earl:generatedBy' resource='http://rubygems.org/gems/earl-report' typeof='[&quot;doap:Project&quot;, &quot;Software&quot;]'>
+<section id='appendix' property='earl:generatedBy' resource='https://rubygems.org/gems/earl-report' typeof='[&quot;Software&quot;, &quot;doap:Project&quot;]'>
 <h2>
 Report Generation Software
 </h2>
 <p>
 This report generated by
-<span property='doap:name'><a href='http://rubygems.org/gems/earl-report'>earl-report</a></span>
+<span property='doap:name'><a href='https://rubygems.org/gems/earl-report'>earl-report</a></span>
 <meta content='Earl Report summary generator' lang='en' property='doap:shortdesc' />
 <meta content='EarlReport generates HTML+RDFa rollups of multiple EARL reports' lang='en' property='doap:description' />
 version
-<span property='doap:release' resource='https://github.com/gkellogg/earl-report/tree/0.5.1' typeof='doap:Version'>
-<span property='doap:revision'>0.5.1</span>
-<meta content='earl-report-0.5.1' property='doap:name' />
+<span property='doap:release' resource='https://github.com/gkellogg/earl-report/tree/0.8.0' typeof='doap:Version'>
+<span property='doap:revision'>0.8.0</span>
+<meta content='earl-report-0.8.0' property='doap:name' />
 <meta datatype='xsd:date' property='doap:created' />
 </span>
 an
