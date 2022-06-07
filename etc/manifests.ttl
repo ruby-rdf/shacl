@@ -658,6 +658,7 @@
 
 <urn:x-shacl-test:/core/misc/message-001> a sht:Validate ;
   rdfs:label "Test of custom sh:message 001" ;
+  rdfs:comment "Test of custom sh:message 001" ;
   mf:action [
     sht:dataGraph <urn:x-shacl-test:/core/misc/message-001.ttl> ;
     sht:shapesGraph <urn:x-shacl-test:/core/misc/message-001.ttl> ;
@@ -820,5 +821,172 @@
   mf:action [
     sht:dataGraph <urn:x-shacl-test:/core/validation-reports/shared-data.ttl> ;
     sht:shapesGraph <urn:x-shacl-test:/core/validation-reports/shared-shapes.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/node/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/sparql/node" ;
+  mf:entries (<urn:x-shacl-test:/sparql/node/prefixes-001> <urn:x-shacl-test:/sparql/node/sparql-001> <urn:x-shacl-test:/sparql/node/sparql-002> <urn:x-shacl-test:/sparql/node/sparql-003>)
+  .
+
+<urn:x-shacl-test:/sparql/node/prefixes-001> a sht:Validate ;
+  rdfs:label "Test of sh:prefixes 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/node/prefixes-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/node/prefixes-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/node/sparql-001> a sht:Validate ;
+  rdfs:label "Test of sh:sparql at node shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/node/sparql-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/node/sparql-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/node/sparql-002> a sht:Validate ;
+  rdfs:label "Test of sh:sparql at node shape 002" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/node/sparql-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/node/sparql-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/node/sparql-003> a sht:Validate ;
+  rdfs:label "Test of sh:sparql at node shape 003" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/node/sparql-003.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/node/sparql-003.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/property/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests converted from http://datashapes.org/sh/tests/tests/sparql/property" ;
+  mf:entries (<urn:x-shacl-test:/sparql/property/sparql-001>)
+  .
+
+<urn:x-shacl-test:/sparql/property/sparql-001> a sht:Validate ;
+  rdfs:label "Test of sh:sparql at property shape 001" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/property/sparql-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/property/sparql-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/manifest.ttl> a mf:Manifest ;
+  rdfs:label "Tests for pre-binding" ;
+  mf:entries (<urn:x-shacl-test:/sparql/pre-binding/pre-binding-001> <urn:x-shacl-test:/sparql/pre-binding/pre-binding-002> <urn:x-shacl-test:/sparql/pre-binding/pre-binding-003> <urn:x-shacl-test:/sparql/pre-binding/pre-binding-004> <urn:x-shacl-test:/sparql/pre-binding/pre-binding-005> <urn:x-shacl-test:/sparql/pre-binding/pre-binding-006> <urn:x-shacl-test:/sparql/pre-binding/pre-binding-007> <urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001> <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001> <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002> <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003> <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004> <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005> <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006>)
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-001> a sht:Validate ;
+  rdfs:label "Test of pre-binding in FILTER" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-002> a sht:Validate ;
+  rdfs:label "Test of pre-binding in UNION" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-003> a sht:Validate ;
+  rdfs:label "Test of pre-binding in inner {...} blocks" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-003.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-003.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-004> a sht:Validate ;
+  rdfs:label "Test of pre-binding in BIND expressions" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-004.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-004.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-005> a sht:Validate ;
+  rdfs:label "Test of pre-binding in BGP and FILTER" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-005.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-005.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-006> a sht:Validate ;
+  rdfs:label "Test of pre-binding in nested SELECT" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-006.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-006.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/pre-binding-007> a sht:Validate ;
+  rdfs:label "Test of pre-binding in nested SELECT" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-007.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/pre-binding-007.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001> a sht:Validate ;
+  rdfs:label "Test of $shapesGraph and $currentShape" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001> a sht:Validate ;
+  rdfs:label "Test of unsupported MINUS" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002> a sht:Validate ;
+  rdfs:label "Test of unsupported VALUES" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003> a sht:Validate ;
+  rdfs:label "Test of unsupported SERVICE" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004> a sht:Validate ;
+  rdfs:label "Test of unsupported SELECT" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005> a sht:Validate ;
+  rdfs:label "Test of unsupported AS ?prebound" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005.ttl> ;
+  ] ;
+  .
+
+<urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006> a sht:Validate ;
+  rdfs:label "Test of ASK trying to reassign ?value" ;
+  mf:action [
+    sht:dataGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006.ttl> ;
+    sht:shapesGraph <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006.ttl> ;
   ] ;
   .
