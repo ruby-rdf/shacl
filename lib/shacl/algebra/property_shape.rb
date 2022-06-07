@@ -9,25 +9,15 @@ module SHACL::Algebra
     #
     # A property conforms the nodes found by evaluating it's `path` all conform.
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     #   Returns a validation result for each value node.
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
-      options = options.merge(severity: RDF::Vocab::SHACL.Violation)
-
-      # Add some instance options to the argument
-      options = %i{
-        flags
-        qualifiedMinCount
-        qualifiedMaxCount
-        qualifiedValueShapesDisjoint
-        severity
-      }.inject(options) do |memo, sym|
-        @options[sym] ? memo.merge(sym => @options[sym]) : memo
-      end
+      options[:severity] = @options[:severity] if @options[:severity]
+      options[:severity] ||= RDF::Vocab::SHACL.Violation
 
       path = @options[:path]
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node, path: path}.to_sxp_bin)}
@@ -54,9 +44,9 @@ module SHACL::Algebra
 
       # Evaluate against operands
       op_results = operands.map do |op|
-        if op.is_a?(QualifiedValueShape)
+        if op.is_a?(QualifiedValueConstraintComponent) || op.is_a?(SPARQLConstraintComponent)
           # All value nodes are passed
-          op.conforms(node, value_nodes: value_nodes, path: path, depth: depth + 1, **options)
+          op.conforms(node, path: path, value_nodes: value_nodes, depth: depth + 1, **options)
         else
           value_nodes.map do |n|
            res = op.conforms(n, path: path, depth: depth + 1, **options)
@@ -79,7 +69,7 @@ module SHACL::Algebra
     end
 
     # The path defined on this property shape
-    # @return [RDF::URI, ]
+    # @return [RDF::URI, SPARQL::Algebra::Expression]
     def path
       @options[:path]
     end
@@ -100,6 +90,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThan(property, node, path, value_nodes, **options)
+      property = property.first if property.is_a?(Array)
       terms = graph.query({subject: node, predicate: property}).objects
       compare(:<, terms, node, path, value_nodes,
               RDF::Vocab::SHACL.LessThanConstraintComponent, **options)
@@ -113,6 +104,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_lessThanOrEquals(property, node, path, value_nodes, **options)
+      property = property.first if property.is_a?(Array)
       terms = graph.query({subject: node, predicate: property}).objects
       compare(:<=, terms, node, path, value_nodes,
               RDF::Vocab::SHACL.LessThanOrEqualsConstraintComponent, **options)
@@ -130,6 +122,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_maxCount(count, node, path, value_nodes, **options)
+      count = count.first if count.is_a?(Array)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} <= maxCount #{count}",
         resultSeverity: (options.fetch(:severity) unless value_nodes.count <= count.to_i),
@@ -152,6 +145,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_minCount(count, node, path, value_nodes, **options)
+      count = count.first if count.is_a?(Array)
       satisfy(focus: node, path: path,
         message: "#{value_nodes.count} >= minCount #{count}",
         resultSeverity: (options.fetch(:severity) unless value_nodes.count >= count.to_i),
@@ -167,6 +161,7 @@ module SHACL::Algebra
     # @param [Array<RDF::Term>] value_nodes
     # @return [Array<SHACL::ValidationResult>]
     def builtin_uniqueLang(uniq, node, path, value_nodes, **options)
+      uniq = uniq.first if uniq.is_a?(Array)
       if !value_nodes.all?(&:literal?)
         not_satisfied(focus: node, path: path,
           message: "not all values are literals",

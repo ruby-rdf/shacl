@@ -21,8 +21,8 @@ module SHACL
   # @option (see Shapes#from_graph)
   # @return (see Shapes#from_graph)
   # @raise  (see Shapes#from_graph)
-  def self.get_shapes(shape_graph, **options)
-    Shapes.from_graph(shape_graph, **options)
+  def self.get_shapes(shapes_graph, **options)
+    Shapes.from_graph(shapes_graph, **options)
   end
 
   ##
@@ -33,8 +33,13 @@ module SHACL
   # @return (see Shapes#from_graph)
   # @raise  (see Shapes#from_graph)
   def self.open(input, **options)
-    graph = RDF::Graph.load(input, **options)
-    self.get_shapes(graph, loaded_graphs: [RDF::URI(input, canonicalize: true)], **options)
+    # Create graph backed by repo to allow a graph_name
+    graph = RDF::Graph.load(input,
+                            graph_name: RDF::URI(input),
+                            data: RDF::Repository.new)
+    self.get_shapes(graph,
+      loaded_graphs: [RDF::URI(input, canonicalize: true)],
+      **options)
   end
 
   ##
@@ -77,7 +82,7 @@ module SHACL
     attr_reader :code
 
     ##
-    # Initializes a new patch error instance.
+    # Initializes a new error instance.
     #
     # @param  [String, #to_s]          message
     # @param  [Hash{Symbol => Object}] options

@@ -3,7 +3,6 @@ require 'rdf/spec'
 require 'rdf/spec/matchers'
 require 'matchers'
 require 'rdf/turtle'
-require 'rdf/ordered_repo'
 begin
   require 'simplecov'
   require 'simplecov-lcov'

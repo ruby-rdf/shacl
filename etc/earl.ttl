@@ -1,19 +1,20 @@
-@base <https://rubygems.org/gems/shacl> .
+@prefix dc:   <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix earl: <http://www.w3.org/ns/earl#> .
+@prefix ex:   <http://example.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dc:   <http://purl.org/dc/terms/> .
-@prefix earl: <http://www.w3.org/ns/earl#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix ex:   <http://example.org/> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 <https://rubygems.org/gems/shacl> a doap:Project, earl:TestSubject, earl:Software ;
-  doap:name          "Ruby SHACL" ;
+  sh:shapesGraph     <doap-shacl.ttl>;
+  doap:name          "SHACL" ;
   doap:homepage      <https://ruby-rdf.github.io/shacl> ;
   doap:license       <https://unlicense.org/1.0/> ;
   doap:shortdesc     "SHACL is a Shapes Constraint engine for Ruby."@en ;
-  doap:description   "SHACL is an Shape Constraint engine for the RDF.rb library suite."@en ;
+  doap:description   "SHACL is a Shape Constraint engine for the Ruby RDF.rb library suite."@en ;
   doap:created       "2020-11-26"^^xsd:date ;
   doap:programming-language "Ruby" ;
   doap:implements    <https://www.w3.org/TR/shacl/> ;
@@ -27,19 +28,16 @@
   doap:maintainer    <https://greggkellogg.net/foaf#me> ;
   doap:documenter    <https://greggkellogg.net/foaf#me> ;
   foaf:maker         <https://greggkellogg.net/foaf#me> ;
-  dc:title           "Ruby SHACL" ;
-  dc:description     "SHACL is an Shape Constraint engine for the RDF.rb library suite."@en ;
-  dc:date            "2020-11-26"^^xsd:date ;
   dc:creator         <https://greggkellogg.net/foaf#me> ;
   dc:isPartOf        <https://rubygems.org/gems/rdf> .
 
 <https://rubygems.org/gems/shacl> doap:release [
-  doap:name "shacl-0.1.0";
-  doap:revision "0.1.0";
-  doap:created "2020-12-29"^^xsd:date;
+  doap:name "shacl-0.3.0";
+  doap:revision "0.3.0";
+  doap:created "2022-06-07"^^xsd:date;
 ] .
 <> foaf:primaryTopic <https://rubygems.org/gems/shacl> ;
-  dc:issued "2021-01-01T15:55:27-08:00"^^xsd:dateTime ;
+  dc:issued "2022-06-07T15:40:54-07:00"^^xsd:dateTime ;
   foaf:maker <https://greggkellogg.net/foaf#me> .
 
 <https://greggkellogg.net/foaf#me> a foaf:Person, earl:Assertor;
@@ -54,7 +52,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -64,7 +62,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -74,7 +72,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -84,7 +82,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -94,7 +92,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -104,7 +102,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -114,7 +112,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -124,7 +122,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -134,7 +132,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -144,7 +142,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -154,7 +152,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -164,7 +162,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -174,7 +172,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -184,7 +182,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -194,7 +192,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -204,7 +202,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -214,7 +212,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -224,7 +222,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -234,7 +232,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -244,7 +242,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -254,7 +252,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -264,7 +262,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -274,7 +272,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -284,7 +282,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -294,7 +292,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -304,7 +302,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -314,7 +312,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -324,7 +322,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -334,7 +332,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -344,7 +342,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -354,7 +352,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -364,7 +362,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -374,7 +372,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -384,7 +382,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -394,7 +392,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -404,7 +402,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -414,7 +412,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -424,7 +422,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -434,7 +432,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -444,7 +442,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -454,7 +452,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -464,7 +462,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -474,7 +472,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -484,7 +482,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -494,7 +492,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -504,7 +502,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -514,7 +512,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -524,7 +522,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -534,7 +532,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -544,7 +542,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -554,7 +552,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -564,7 +562,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -574,7 +572,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -584,7 +582,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -594,7 +592,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -604,7 +602,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -614,7 +612,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -624,7 +622,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -634,7 +632,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -644,7 +642,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -654,7 +652,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -664,7 +662,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -674,7 +672,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -684,7 +682,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -694,7 +692,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -704,7 +702,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -714,7 +712,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -724,7 +722,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -734,7 +732,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -744,7 +742,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -754,7 +752,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -764,7 +762,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -774,7 +772,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -784,7 +782,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -794,7 +792,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -804,7 +802,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -814,7 +812,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -824,7 +822,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -834,7 +832,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -844,7 +842,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -854,7 +852,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -864,7 +862,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -874,7 +872,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -884,7 +882,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -894,7 +892,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -904,7 +902,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -914,7 +912,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -924,7 +922,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -934,7 +932,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -944,7 +942,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -954,7 +952,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -964,7 +962,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -974,7 +972,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -984,7 +982,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -994,7 +992,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -1004,7 +1002,7 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:passed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -1013,8 +1011,8 @@
   earl:test <urn:x-shacl-test:/core/complex/shacl-shacl>;
   earl:result [
     a earl:TestResult;
-    earl:outcome earl:exception;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    earl:outcome earl:failed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .
 
 [ a earl:Assertion;
@@ -1024,5 +1022,195 @@
   earl:result [
     a earl:TestResult;
     earl:outcome earl:failed;
-    dc:date "2021-01-01T15:55:27-08:00"^^xsd:dateTime];
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/node/prefixes-001>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/node/sparql-001>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/node/sparql-002>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/node/sparql-003>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/property/sparql-001>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-001>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-002>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-003>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-004>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-005>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-006>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/pre-binding-007>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/shapesGraph-001>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-001>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-002>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-003>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-004>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-005>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:passed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
+  earl:mode earl:automatic ] .
+
+[ a earl:Assertion;
+  earl:assertedBy <https://greggkellogg.net/foaf#me>;
+  earl:subject <https://rubygems.org/gems/shacl>;
+  earl:test <urn:x-shacl-test:/sparql/pre-binding/unsupported-sparql-006>;
+  earl:result [
+    a earl:TestResult;
+    earl:outcome earl:failed;
+    dc:date "2022-06-07T15:40:54-07:00"^^xsd:dateTime];
   earl:mode earl:automatic ] .

@@ -1,6 +1,6 @@
 module SHACL::Algebra
   ##
-  class And < Operator
+  class AndConstraintComponent < ConstraintComponent
     NAME = :and
 
     ##
@@ -25,7 +25,8 @@ module SHACL::Algebra
     #   		]
     #   	) .
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property path from the focus node to the value nodes.
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, path: nil, depth: 0, **options)

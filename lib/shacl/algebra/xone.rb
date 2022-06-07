@@ -1,6 +1,6 @@
 module SHACL::Algebra
   ##
-  class Xone < Operator
+  class XoneConstraintComponent < ConstraintComponent
     NAME = :xone
 
     ##
@@ -29,7 +29,8 @@ module SHACL::Algebra
     #   		]
     #   	) .
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
+    # @param [RDF::URI, SPARQL::Algebra::Expression] path (nil) the property   
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     def conforms(node, path: nil, depth: 0, **options)

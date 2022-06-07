@@ -22,7 +22,7 @@ task :vocab do
   cmd += " --module-name RDF::Vocab"
   cmd += " --class-name SHACL"
   cmd += " --strict" 
-  cmd += " -o lib/shacl/vocab.rb_t"
+  cmd += " -o lib/rdf/vocab/shacl.rb_t"
   cmd += " https://www.w3.org/ns/shacl.ttl"
   puts "  #{cmd}"
   begin

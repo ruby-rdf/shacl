@@ -9,6 +9,12 @@ module SHACL
   class Shapes < Array
     include RDF::Util::Logger
 
+    # The original shapes graph
+    #
+    # @return [RDF::Graph]
+    attr_reader :shapes_graph
+
+
     # The graphs which have been loaded as shapes
     #
     # @return [Array<RDF::URI>]
@@ -28,6 +34,7 @@ module SHACL
     #
     # @param [RDF::Graph] graph
     # @param [Array<RDF::URI>] loaded_graphs = []
+    #   The graphs which have been loaded as shapes
     # @param [Hash{Symbol => Object}] options
     # @return [Shapes]
     # @raise [SHACL::Error]
@@ -38,8 +45,17 @@ module SHACL
       while (imports = graph.query({predicate: RDF::OWL.imports}).map(&:object)).count > import_count
         # Load each imported graph
         imports.each do |ref|
-          graph.load(imports)
-          loaded_graphs << ref
+          # Don't try import if the import subject is already in the graph
+          unless graph.subject?(ref)
+            begin
+              options[:logger].info('Shapes') {"load import #{ref}"} if options[:logger].respond_to?(:info)
+              graph.load(ref)
+              loaded_graphs << ref
+            rescue IOError => e
+              # Skip import
+              options[:logger].warn('Shapes') {"load import #{ref}"} if options[:logger].respond_to?(:warn)
+            end
+          end
           import_count += 1
         end
       end
@@ -52,6 +68,7 @@ module SHACL
       # Create an array of the framed shapes
       shapes = self.new(shape_json.map {|o| Algebra.from_json(o, **options)})
       shapes.instance_variable_set(:@shape_json, shape_json)
+      shapes.instance_variable_set(:@shapes_graph, graph)
       shapes
     end
 
@@ -65,11 +82,11 @@ module SHACL
     # @raise [SHACL::Error]
     def self.from_queryable(queryable, **options)
       # Query queryable to find one ore more shapes graphs
-      graphs = queryable.query({predicate: RDF::Vocab::SHACL.shapesGraph}).objects
-      graph = RDF::Graph.new do |g|
-        graphs.each {|iri| g.load(iri)}
+      graph_names = queryable.query({predicate: RDF::Vocab::SHACL.shapesGraph}).objects
+      graph = RDF::Graph.new(graph_name: graph_names.first, data: RDF::Repository.new) do |g|
+        graph_names.each {|iri| g.load(iri, graph_name: graph_names.first)}
       end
-      from_graph(graph, loaded_graphs: graphs, **options)
+      from_graph(graph, loaded_graphs: graph_names, **options)
     end
 
     ##
@@ -80,12 +97,18 @@ module SHACL
     # @param [Hash{Symbol => Object}] options
     # @option options [RDF::Term] :focus
     #   An explicit focus node, overriding any defined on the top-level shaps.
+    # @option options [Logger, #write, #<<] :logger
+    #   Record error/info/debug output
     # @return [SHACL::ValidationReport]
     def execute(graph, depth: 0, **options)
       self.each do |shape|
         shape.graph = graph
+        shape.shapes_graph = shapes_graph
         shape.each_descendant do |op|
-          op.graph = graph
+          op.instance_variable_set(:@logger, options[:logger]) if
+            options[:logger] && op.respond_to?(:execute)
+          op.graph = graph if op.respond_to?(:graph=)
+          op.shapes_graph = shapes_graph if op.respond_to?(:shapes_graph=)
         end
       end
 
@@ -115,11 +138,12 @@ module SHACL
         "id": "@id",
         "type": {"@id": "@type", "@container": "@set"},
         "@vocab": "http://www.w3.org/ns/shacl#",
+        "owl": "http://www.w3.org/2002/07/owl#",
         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
         "shacl": "http://www.w3.org/ns/shacl#",
         "sh": "http://www.w3.org/ns/shacl#",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "and": {"@type": "@id", "@container": "@list"},
+        "and": {"@type": "@id"},
         "annotationProperty": {"@type": "@id"},
         "class": {"@type": "@id"},
         "comment": "http://www.w3.org/2000/01/rdf-schema#comment",
@@ -130,30 +154,35 @@ module SHACL
         "entailment": {"@type": "@id"},
         "equals": {"@type": "@id"},
         "ignoredProperties": {"@type": "@id", "@container": "@list"},
+        "imports": {"@id": "owl:imports", "@type": "@id"},
         "in": {"@type": "@none", "@container": "@list"},
         "inversePath": {"@type": "@id"},
         "label": "http://www.w3.org/2000/01/rdf-schema#label",
         "languageIn": {"@container": "@list"},
         "lessThan": {"@type": "@id"},
         "lessThanOrEquals": {"@type": "@id"},
+        "namespace": {"@type": "xsd:anyURI"},
         "nodeKind": {"@type": "@vocab"},
-        "or": {"@type": "@id", "@container": "@list"},
+        "or": {"@type": "@id"},
         "path": {"@type": "@none"},
+        "prefixes": {"@type": "@id"},
         "property": {"@type": "@id"},
         "severity": {"@type": "@vocab"},
+        "sparql": {"@type": "@id"},
         "targetClass": {"@type": "@id"},
         "targetNode": {"@type": "@none"},
-        "xone": {"@type": "@id", "@container": "@list"}
+        "xone": {"@type": "@id"}
       },
       "and": {},
       "class": {},
       "datatype": {},
-      "in": {},
+      "in": {"@embed": "@never"},
       "node": {},
       "nodeKind": {},
       "not": {},
       "or": {},
       "property": {},
+      "sparql": {},
       "targetClass": {},
       "targetNode": {},
       "targetObjectsOf": {},

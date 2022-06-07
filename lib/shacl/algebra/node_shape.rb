@@ -9,30 +9,22 @@ module SHACL::Algebra
     #
     # A node conforms if it is not deactivated and all of its operands conform.
     #
-    # @param [RDF::Term] node
+    # @param [RDF::Term] node focus node
     # @param [Hash{Symbol => Object}] options
     # @return [Array<SHACL::ValidationResult>]
     #   Returns one or more validation results for each operand.
     def conforms(node, depth: 0, **options)
       return [] if deactivated?
       options = id ? options.merge(shape: id) : options
-      options = options.merge(severity: RDF::Vocab::SHACL.Violation)
+      options[:severity] = @options[:severity] if @options[:severity]
+      options[:severity] ||= RDF::Vocab::SHACL.Violation
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
-
-      # Add some instance options to the argument
-      options = %i{
-        flags
-        qualifiedMinCount
-        qualifiedMaxCount
-        qualifiedValueShapesDisjoint
-        severity
-      }.inject(options) do |memo, sym|
-        @options[sym] ? memo.merge(sym => @options[sym]) : memo
-      end
 
       # Evaluate against builtins
       builtin_results = @options.map do |k, v|
-        self.send("builtin_#{k}".to_sym, v, node, nil, [node], depth: depth + 1, **options) if self.respond_to?("builtin_#{k}".to_sym)
+        self.send("builtin_#{k}".to_sym, v, node, nil, [node],
+                  depth: depth + 1,
+                  **options) if self.respond_to?("builtin_#{k}".to_sym)
       end.flatten.compact
 
       # Handle closed shapes
@@ -49,10 +41,12 @@ module SHACL::Algebra
             value: statement.object,
             path: statement.predicate,
             message: "closed node has extra property",
-            resultSeverity: options.fetch(:severity),
+            resultSeverity: options[:severity],
             component: RDF::Vocab::SHACL.ClosedConstraintComponent,
             **options)
         end.compact
+      elsif @options[:ignoredProperties]
+        raise SHACL::Error, "shape has ignoredProperties without being closed"
       end
 
       # Evaluate against operands
@@ -66,7 +60,7 @@ module SHACL::Algebra
           not_satisfied(focus: node,
             value: node,
             message: "node does not conform to #{op.id}",
-            resultSeverity: options.fetch(:severity),
+            resultSeverity: options[:severity],
             component: RDF::Vocab::SHACL.NodeConstraintComponent,
             **options)
         else
