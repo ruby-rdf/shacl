@@ -61,7 +61,7 @@ Evaluating the shapes against a graph results in a {SHACL::ValidationReport} ind
 
 The resulting validation report can be compared with other validation reports, used as native Ruby objects, serialized to s-expressions, or used as an RDF::Enumerable to retrieve the RDF representation of the report, as defined in [SHACL Spec][].
 
-SHACL-SPARQL variable bindings pass a solution to the query composed of the necessary bindings rather than rewrite the query.
+SHACL-SPARQL variable bindings pass a solution to the query composed of the necessary bindings rather than rewrite the query. Supports [SHACL-based Constraints](https://www.w3.org/TR/shacl/#sparql-constraints).
 
 ### Matching Entailed Triples
 Many tests check for entailed triples, such as entailed super-classes of explicit `rdf:type` values. If this is required for a given application, the [RDF::Reasoner][] gem can be used to create such entailed triples.
