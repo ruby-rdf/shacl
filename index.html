@@ -68,7 +68,9 @@
 <ul><li>
 <p>100% pure Ruby with minimal dependencies and no bloat.</p>
 </li><li>
-<p>Fully compatible with <a href="https://www.w3.org/TR/shacl/">SHACL</a> specifications.</p>
+<p>Fully compatible with SHACL Core <a href="https://www.w3.org/TR/shacl/">SHACL</a>.</p>
+</li><li>
+<p>Partially compatible with SHACL-SPARQL <a href="https://www.w3.org/TR/shacl/">SHACL</a>.</p>
 </li><li>
 <p>100% free and unencumbered <a href="https://unlicense.org/">public domain</a> software.</p>
 </li></ul>
@@ -122,6 +124,8 @@
 
 <p>The resulting validation report can be compared with other validation reports, used as native Ruby objects, serialized to s-expressions, or used as an RDF::Enumerable to retrieve the RDF representation of the report, as defined in <a href="https://www.w3.org/TR/shacl/">SHACL Spec</a>.</p>
 
+<p>SHACL-SPARQL variable bindings pass a solution to the query composed of the necessary bindings rather than rewrite the query. Supports <a href="https://www.w3.org/TR/shacl/#sparql-constraints">SHACL-based Constraints</a>.</p>
+
 <h3 id="label-Matching+Entailed+Triples">Matching Entailed Triples</h3>
 
 <p>Many tests check for entailed triples, such as entailed super-classes of explicit <code>rdf:type</code> values. If this is required for a given application, the <a href="https://ruby-rdf.github.io/rdf-reasoner">RDF::Reasoner</a> gem can be used to create such entailed triples.</p>
@@ -140,13 +144,17 @@
 
 <p>This implementation is certainly not performant. Some things that can be be considered in future versions:</p>
 <ul><li>
-<p>Support for SHACL-SPARQL</p>
-</li><li>
 <p>Index shapes on <code>targetNode</code> and <code>targetClass</code> and other targets to allow a more efficient query to find relevant resources in the data graph and not simply iterrate through each top-level shape.</p>
 </li><li>
 <p>Cache target nodes as JSON-LD to reduce the need to separately query for each constraint.</p>
 </li><li>
 <p>Reasoner should support limited RDFS/OWL entailment from the data graph, not just pre-defined vocabularies.</p>
+</li><li>
+<p><a href="https://www.w3.org/TR/shacl/#sparql-constraint-components">SHACL-based Constraint Components</a>.</p>
+</li><li>
+<p>More <a href="https://w3c.github.io/shacl/shacl-af/">SHACL Advanced Features</a>.</p>
+</li><li>
+<p>Support the <a href="https://w3c.github.io/shacl/shacl-compact-syntax/">SHACL Compact Syntax</a>.</p>
 </li></ul>
 
 <h2 id="label-Dependencies">Dependencies</h2>
@@ -225,9 +233,9 @@
 </div></div>
 
       <div id="footer">
-  Generated on Fri Jan 28 00:22:41 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-3.1.0).
+  Generated on Tue Jun  7 22:44:04 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.2).
 </div>
 
     </div>
