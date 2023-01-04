@@ -61,9 +61,22 @@ module SHACL
       end
 
       # Serialize the graph as framed JSON-LD and initialize patterns, recursively.
-      shape_json = JSON::LD::API.fromRdf(graph, useNativeTypes: true) do |expanded|
-        JSON::LD::API.frame(expanded, SHAPES_FRAME, omitGraph: false, embed: '@always', expanded: true)
-      end['@graph']
+      expanded = JSON::LD::API.fromRdf(graph, useNativeTypes: true)
+
+      # Node and Property constraints
+      shape_json = JSON::LD::API.frame(expanded, SHAPES_FRAME,
+        omitGraph: false,
+        embed: '@always',
+        expanded: true)['@graph']
+
+      # Any defined Constraint Components
+      components = JSON::LD::API.frame(expanded, COMPONENTS_FRAME,
+        omitGraph: false,
+        embed: '@always',
+        expanded: true)['@graph']
+
+      # Extract any constraint components and merge to top-level
+      shape_json = components + shape_json
 
       # Create an array of the framed shapes
       shapes = self.new(shape_json.map {|o| Algebra.from_json(o, **options)})
@@ -188,6 +201,49 @@ module SHACL
       "targetObjectsOf": {},
       "xone": {},
       "targetSubjectsOf": {}
+    })).freeze
+
+    COMPONENTS_FRAME = JSON.parse(%({
+      "@context": {
+        "id": "@id",
+        "type": {"@id": "@type", "@container": "@set"},
+        "@vocab": "http://www.w3.org/ns/shacl#",
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "shacl": "http://www.w3.org/ns/shacl#",
+        "sh": "http://www.w3.org/ns/shacl#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "and": {"@type": "@id"},
+        "annotationProperty": {"@type": "@id"},
+        "class": {"@type": "@id"},
+        "comment": "http://www.w3.org/2000/01/rdf-schema#comment",
+        "condition": {"@type": "@id"},
+        "datatype": {"@type": "@vocab"},
+        "declare": {"@type": "@id"},
+        "disjoint": {"@type": "@id"},
+        "entailment": {"@type": "@id"},
+        "equals": {"@type": "@id"},
+        "ignoredProperties": {"@type": "@id", "@container": "@list"},
+        "imports": {"@id": "owl:imports", "@type": "@id"},
+        "in": {"@type": "@none", "@container": "@list"},
+        "inversePath": {"@type": "@id"},
+        "label": "http://www.w3.org/2000/01/rdf-schema#label",
+        "languageIn": {"@container": "@list"},
+        "lessThan": {"@type": "@id"},
+        "lessThanOrEquals": {"@type": "@id"},
+        "namespace": {"@type": "xsd:anyURI"},
+        "nodeKind": {"@type": "@vocab"},
+        "or": {"@type": "@id"},
+        "path": {"@type": "@id"},
+        "prefixes": {"@type": "@id"},
+        "property": {"@type": "@id"},
+        "severity": {"@type": "@vocab"},
+        "sparql": {"@type": "@id"},
+        "targetClass": {"@type": "@id"},
+        "targetNode": {"@type": "@none"},
+        "xone": {"@type": "@id"}
+      },
+      "@type": "ConstraintComponent"
     })).freeze
   end
 end

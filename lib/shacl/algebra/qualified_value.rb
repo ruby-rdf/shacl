@@ -17,8 +17,8 @@ module SHACL::Algebra
       params, ops = operands.partition {|o| o.is_a?(Array) && o.first.is_a?(Symbol)}
       params = params.inject({}) {|memo, a| memo.merge(a.first => a.last)}
 
-      max_count = params[:qualifiedMinCount].to_i
-      min_count = params[:qualifiedMinCount].to_i
+      max_count = params[:qualifiedMinCount]
+      min_count = params[:qualifiedMinCount]
       # FIXME: figure this out
       disjoint = !!params[:qualifiedValueShapesDisjoint]
 
@@ -29,13 +29,13 @@ module SHACL::Algebra
 
         count = results.select(&:conform?).length
         log_debug(NAME, depth: depth) {"#{count}/#{results} conforming shapes"}
-        if count < min_count
+        if min_count && count < min_count.to_i
           not_satisfied(focus: node, path: path,
             message: "only #{count} conforming values, requires at least #{min_count}",
             resultSeverity: options.fetch(:severity),
             component: RDF::Vocab::SHACL.QualifiedMinCountConstraintComponent,
             depth: depth, **options)
-        elsif count > max_count
+        elsif max_count && count > max_count.to_i
           not_satisfied(focus: node, path: path,
             message: "#{count} conforming values, requires at most #{max_count}",
             resultSeverity: options.fetch(:severity),
@@ -43,19 +43,11 @@ module SHACL::Algebra
             depth: depth, **options)
         else
           satisfy(focus: node, path: path,
-            message: "#{min_count} <= #{count} <= #{max_count} values conform",
+            message: "#{min_count.to_i} <= #{count} <= #{max_count || 'inf'} values conform",
             component: RDF::Vocab::SHACL.QualifiedMinCountConstraintComponent,
             depth: depth, **options)
         end
       end
     end
-  end
-
-  # Version on QualifiedConstraintComponent with required `qualifiedMaxCount` parameter
-  class QualifiedMaxCountConstraintComponent < QualifiedValueConstraintComponent
-  end
-
-  # Version on QualifiedConstraintComponent with required `qualifiedMinCount` parameter
-  class QualifiedMinCountConstraintComponent < QualifiedValueConstraintComponent
   end
 end
