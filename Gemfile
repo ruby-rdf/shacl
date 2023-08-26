@@ -8,12 +8,14 @@ gem 'sparql',             git: 'https://github.com/ruby-rdf/sparql.git',        
 gem 'sxp',                git: 'https://github.com/dryruby/sxp.rb.git',               branch: 'develop'
 
 group :development, :test do
+  gem 'ebnf',               git: 'https://github.com/dryruby/ebnf.git',                 branch: 'develop'
   gem 'rdf-isomorphic',     git: 'https://github.com/ruby-rdf/rdf-isomorphic.git',      branch: 'develop'
   gem 'rdf-aggregate-repo', git: 'https://github.com/ruby-rdf/rdf-aggregate-repo.git',  branch: 'develop'
   gem 'rdf-ordered-repo',   git: 'https://github.com/ruby-rdf/rdf-ordered-repo.git',    branch: 'develop'
   gem 'rdf-reasoner',       git: 'https://github.com/ruby-rdf/rdf-reasoner.git',        branch: 'develop'
   gem 'rdf-spec',           git: 'https://github.com/ruby-rdf/rdf-spec.git',            branch: 'develop'
   gem 'rdf-turtle',         git: 'https://github.com/ruby-rdf/rdf-turtle.git',          branch: 'develop'
+  gem 'rdf-vocab',          git: 'https://github.com/ruby-rdf/rdf-vocab.git',           branch: 'develop'
   gem 'rdf-xsd',            git: 'https://github.com/ruby-rdf/rdf-xsd.git',             branch: 'develop'
   gem 'sparql-client',      git: 'https://github.com/ruby-rdf/sparql-client.git',       branch: 'develop'
 
