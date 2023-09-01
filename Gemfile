@@ -20,7 +20,7 @@ group :development, :test do
   gem 'sparql-client',      git: 'https://github.com/ruby-rdf/sparql-client.git',       branch: 'develop'
 
   gem 'rake'
-  gem 'simplecov',          '~> 0.21',  platforms: :mri
+  gem 'simplecov',          '~> 0.22',  platforms: :mri
   gem 'simplecov-lcov',     '~> 0.8',  platforms: :mri
 end
 
