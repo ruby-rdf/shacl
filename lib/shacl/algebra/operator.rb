@@ -40,6 +40,7 @@ module SHACL::Algebra
     # Graph from which original shapes were loaded.
     # @return [RDF::Graph]
     attr_accessor :shapes_graph
+
     # Parameters to components.
     PARAMETERS = {
       and: {class: :AndConstraintComponent},
@@ -151,19 +152,19 @@ module SHACL::Algebra
       },
       property: {class: :PropertyConstraintComponent},
       qualifiedMaxCount: {
-        class: :QualifiedMaxCountConstraintComponent,
+        class: :QualifiedValueConstraintComponent,
         datatype: RDF::XSD.integer,
       },
       qualifiedValueShape: {
-        class: %i(QualifiedMaxCountConstraintComponent QualifiedMinCountConstraintComponent),
+        class: :QualifiedValueConstraintComponent,
       },
       qualifiedValueShapesDisjoint: {
-        class: %i(QualifiedMaxCountConstraintComponent QualifiedMinCountConstraintComponent),
+        class: :QualifiedValueConstraintComponent,
         datatype: RDF::XSD.boolean,
         optional: true,
       },
       qualifiedMinCount: {
-        class: :QualifiedMinCountConstraintComponent,
+        class: :QualifiedValueConstraintComponent,
         datatype: RDF::XSD.integer
       },
       sparql: {class: :SPARQLConstraintComponent},
@@ -175,21 +176,43 @@ module SHACL::Algebra
       xone: {class: :XoneConstraintComponent},
     }
 
-    # Constraint Component classes indexed to their mandatory and optional parameters.
-    #
-    # @note for builtins, corresponding Ruby classes may not exist.
-    COMPONENT_PARAMS = PARAMETERS.inject({}) do |memo, (param, properties)|
-      memo.merge(Array(properties[:class]).inject(memo) do |mem, cls|
-        entry = mem.fetch(cls, {})
-        param_type = properties[:optional] ? :optional : :mandatory
-        entry[param_type] ||= []
-        entry[param_type] << param
-        mem.merge(cls => entry)
-      end)
-    end
-
     ## Class methods
     class << self
+      # Add parameters and class def from a SPARQL-based Constraint Component
+      #
+      # @param [RDF::URI] cls The URI of the constraint component.
+      # @param [Hash{Symbol => Hash}] parameters Definitions of mandatory and optional parameters for this component.
+      def add_component(cls, parameters)
+        # Remember added paraemters.
+        # FIXME: should merge parameters
+        @added_parameters = (@added_parameters || {}).merge(parameters)
+        # Rebuild
+        @params = @component_params = nil
+      end
+
+      # Defined parameters for components, which may be supplemented by SPARQL-based Constraint Components. A parameter may be mapped to more than one component class.
+      #
+      # @return [Hash{Symbol => Hash}] Returns each parameter referencing the component classes it is used in, and the property validators for values of that parameter.
+      def params
+        @params ||= PARAMETERS.merge(@added_parameters || {})
+      end
+
+      # Constraint Component classes indexed to their mandatory and optional parameters, which may be supplemented by SPARQL-based Constraint Components.
+      #
+      # @return [Hash{Symbol => Hash}]
+      #   Returns a hash relating each component URI to its optional and mandatory parameters.
+      def component_params
+        @component_params ||= params.inject({}) do |memo, (param, properties)|
+          memo.merge(Array(properties[:class]).inject(memo) do |mem, cls|
+            entry = mem.fetch(cls, {})
+            param_type = properties[:optional] ? :optional : :mandatory
+            entry[param_type] ||= []
+            entry[param_type] << param
+            mem.merge(cls => entry)
+          end)
+        end
+      end
+
       ##
       # Creates an operator instance from a parsed SHACL representation
       # @param [Hash] operator
@@ -205,7 +228,7 @@ module SHACL::Algebra
         # Node Options and operands on shape or node, which are not Constraint Component Parameters
         operator.each do |k, v|
           k = k.to_sym
-          next if v.nil? || PARAMETERS.include?(k)
+          next if v.nil? || params.include?(k)
           case k
           # List properties
           when :id                 then node_opts[:id] = iri(v, vocab: false, **options)
@@ -234,8 +257,8 @@ module SHACL::Algebra
         used_components = {}
         operator.each do |k, v|
           k = k.to_sym
-          next if v.nil? || !PARAMETERS.include?(k)
-          param_props = PARAMETERS[k]
+          next if v.nil? || !params.include?(k)
+          param_props = params[k]
           param_classes = Array(param_props[:class])
 
           # Keep track of components which have been used.
@@ -293,10 +316,21 @@ module SHACL::Algebra
               name = klass.const_get(:NAME)
               # If the key `k` is the same as the NAME of the class, create the instance with the defined element values.
               if name == k
+                param_classes.each do |cls|
+                  # Add `k` as a mandatory parameter fulfilled
+                  (used_components[cls][:mandatory_parameters] ||= []) << k
+                end
+
+                # Instantiate the compoent
                 elements.map {|e| klass.new(*e, **options.dup)}
               else
                 # Add non-primary parameters for subsequent insertion
                 param_classes.each do |cls|
+                  # Add `k` as a mandatory parameter fulfilled if it is so defined
+                  (used_components[cls][:mandatory_parameters] ||= []) << k unless
+                    params[k][:optional]
+
+                  # Add parameter as S-Expression operand
                   (used_components[cls][:parameters] ||= []) << elements.unshift(k)
                 end
                 [] # No instances created
@@ -304,10 +338,12 @@ module SHACL::Algebra
             end
           end
 
-          # Record the instances created by class and add as operands
+          # Record the instances created by class and its operands
           param_classes.each do |cls|
             used_components[cls][:instances] = instances
           end
+
+          # FIXME: Only add instances when all mandatory parameters are present.
           operands.push(*instances)
         end
 

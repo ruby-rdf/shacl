@@ -2,7 +2,7 @@
 
 This is a pure-Ruby library for working with the [Shape Constraint Language][SHACL Spec] to validate the shape of [RDF][] graphs.
 
-[![Gem Version](https://badge.fury.io/rb/shacl.png)](https://badge.fury.io/rb/shacl)
+[![Gem Version](https://badge.fury.io/rb/shacl.svg)](https://badge.fury.io/rb/shacl)
 [![Build Status](https://github.com/ruby-rdf/shacl/workflows/CI/badge.svg?branch=develop)](https://github.com/ruby-rdf/shacl/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/ruby-rdf/shacl/badge.svg?branch=develop)](https://coveralls.io/github/ruby-rdf/shacl?branch=develop)
 [![Gitter chat](https://badges.gitter.im/ruby-rdf/rdf.png)](https://gitter.im/ruby-rdf/rdf)
@@ -87,10 +87,10 @@ This implementation is certainly not performant. Some things that can be be cons
 
 ## Dependencies
 
-* [Ruby](https://ruby-lang.org/) (>= 2.6)
-* [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.2)
+* [Ruby](https://ruby-lang.org/) (>= 3.0)
+* [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.3)
 * [SPARQL](https://rubygems.org/gems/sparql) (~> 3.2)
-* [json-ld](https://rubygems.org/gems/json-ld) (~> 3.2)
+* [json-ld](https://rubygems.org/gems/json-ld) (~> 3.3)
 * [sxp](https://rubygems.org/gems/sxp) (~> 1.2)
 
 ## Installation

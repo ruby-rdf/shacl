@@ -22,7 +22,9 @@ def run(graph, shapes_graph, **options)
 
   STDERR.puts ("\nSXP:\n" + SXP::Generator.string(shapes.to_sxp_bin)) if options[:verbose]
 
-  if options[:to_sxp]
+  if options[:to_json]
+    puts shapes.shape_json.to_json(JSON::LD::JSON_STATE)
+  elsif options[:to_sxp]
     SXP::Generator.print(shapes.to_sxp_bin)
   else
     res = shapes.execute(graph, **options)
@@ -40,6 +42,7 @@ OPT_ARGS = [
   ["--focus", GetoptLong::REQUIRED_ARGUMENT,          "Starting point"],
   ["--info", GetoptLong::NO_ARGUMENT,                 "Shape matching information"],
   ["--shacl", GetoptLong::REQUIRED_ARGUMENT,          "Location of Shapes document"],
+  ["--to-json", GetoptLong::NO_ARGUMENT,              "Generate JSON for schema instead of validating graph"],
   ["--to-sxp", GetoptLong::NO_ARGUMENT,               "Generate SXP for schema instead of validating graph"],
   #["--validate", GetoptLong::NO_ARGUMENT,             "Validate shapes graph"],
   ["--verbose", GetoptLong::NO_ARGUMENT,              "Display details of processing"],
@@ -86,6 +89,7 @@ opts.each do |opt, arg|
     logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity} #{msg}\n"}
     options[:logger] = logger
     options[:progress] = true
+  when '--to-json'      then options[:to_json] = true
   when '--to-sxp'       then options[:to_sxp] = true
   when '--validate'     then options[:validate] = true
   when '--verbose'      then options[:verbose] = true

@@ -27,10 +27,19 @@ module SHACL
       return operator['@list'].map {|e| from_json(e, **options)} if operator.key?('@list')
 
       type = operator.fetch('type', [])
-      type << (operator["path"] ? 'PropertyShape' : 'NodeShape') if type.empty?
+      if type.empty?
+        type << if operator["path"]
+          'PropertyShape'
+        elsif operator['nodeValidator'] || operator['propertyValidator'] || operator['validator']
+          'ConstraintComponent'
+        else
+          'NodeShape'
+        end
+      end
       klass = case
       when type.include?('NodeShape') then NodeShape
       when type.include?('PropertyShape') then PropertyShape
+      when type.include?('ConstraintComponent') then ConstraintComponent
       else raise SHACL::Error, "from_json: unknown type #{type.inspect}"
       end
 
