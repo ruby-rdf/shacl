@@ -44,7 +44,7 @@ module SHACL::Algebra
             resultSeverity: options[:severity],
             component: RDF::Vocab::SHACL.ClosedConstraintComponent,
             **options)
-        end.compact
+        end.flatten.compact
       elsif @options[:ignoredProperties]
         raise SHACL::Error, "shape has ignoredProperties without being closed"
       end

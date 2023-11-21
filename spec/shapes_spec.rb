@@ -43,6 +43,86 @@ describe SHACL::Shapes do
               sxp: [:ValidationReport, true, []].to_sxp
             }
           }
+        },
+        "nested node shape with closed properties": {
+          shape: %(
+            @prefix sh: <http://www.w3.org/ns/shacl#> .
+            @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+            @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+            @prefix ex: <http://example.org/ns#> .
+
+            ex:WithLabelShape a sh:NodeShape ;
+                sh:closed true ;
+                sh:property [
+                    sh:path rdfs:label ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                ] .
+
+            ex:WithCommentShape a sh:NodeShape ;
+                sh:closed true ;
+                sh:property [
+                    sh:path rdfs:comment ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                ] .
+
+            ex:ResourceShape a sh:NodeShape ;
+                sh:targetClass ex:Resource ;
+                sh:or ( ex:WithLabelShape ex:WithCommentShape ) .
+
+            ),
+          sxp: %{(shapes
+           (
+            (NodeShape
+             (id <http://example.org/ns#WithLabelShape>)
+             (type shacl:NodeShape)
+             (closed true)
+             (PropertyShape (id _:b0) (path rdfs:label) (minCount 1) (maxCount 1)))
+            (NodeShape
+             (id <http://example.org/ns#WithCommentShape>)
+             (type shacl:NodeShape)
+             (closed true)
+             (PropertyShape (id _:b1) (path rdfs:comment) (minCount 1) (maxCount 1)))
+            (NodeShape
+             (id <http://example.org/ns#ResourceShape>)
+             (type shacl:NodeShape)
+             (targetClass <http://example.org/ns#Resource>)
+             (or
+              (NodeShape
+               (id <http://example.org/ns#WithLabelShape>)
+               (type shacl:NodeShape)
+               (closed true)
+               (PropertyShape (id _:b0) (path rdfs:label) (minCount 1) (maxCount 1)))
+              (NodeShape
+               (id <http://example.org/ns#WithCommentShape>)
+               (type shacl:NodeShape)
+               (closed true)
+               (PropertyShape (id _:b1) (path rdfs:comment) (minCount 1) (maxCount 1)))
+             )) ))},
+          data: {
+            "node which is neither of given shapes": {
+              input: %(
+                @prefix ex: <http://example.org/ns#> .
+                @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+                ex:Resource1 a ex:Resource ;
+                    rdfs:label "A Resource with a label" ;
+                    ex:extraProperty "This should not be here" .),
+              valid: false,
+              sxp: %{
+              (ValidationReport #f
+               (
+                (ValidationResult
+                 (value <http://example.org/ns#Resource1>)
+                 (focus <http://example.org/ns#Resource1>)
+                 (shape <http://example.org/ns#ResourceShape>)
+                 (resultSeverity shacl:Violation)
+                 (component shacl:OrConstraintComponent)
+                 (message "node does not conform to any shape")) ))
+              }
+            }
+          }
         }
       }.each do |name, params|
         context name do
