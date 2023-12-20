@@ -29,7 +29,7 @@ Gem::Specification.new do |gem|
   gem.requirements               = []
   gem.add_runtime_dependency     'rdf',         '~> 3.3'
   gem.add_runtime_dependency     'json-ld',     '~> 3.3'
-  gem.add_runtime_dependency     'sxp',         '~> 1.2'
+  gem.add_runtime_dependency     'sxp',         '~> 2.0'
   gem.add_runtime_dependency     'sparql',      '~> 3.3'
 
   gem.add_development_dependency 'rdf-spec',    '~> 3.3'

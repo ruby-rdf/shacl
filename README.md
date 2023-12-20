@@ -85,13 +85,17 @@ This implementation is certainly not performant. Some things that can be be cons
 * More [SHACL Advanced Features](https://w3c.github.io/shacl/shacl-af/).
 * Support the [SHACL Compact Syntax](https://w3c.github.io/shacl/shacl-compact-syntax/).
 
+## Change Log
+
+See [Release Notes on GitHub](https://github.com/ruby-rdf/shacl/releases)
+
 ## Dependencies
 
 * [Ruby](https://ruby-lang.org/) (>= 3.0)
 * [RDF.rb](https://rubygems.org/gems/rdf) (~> 3.3)
 * [SPARQL](https://rubygems.org/gems/sparql) (~> 3.2)
 * [json-ld](https://rubygems.org/gems/json-ld) (~> 3.3)
-* [sxp](https://rubygems.org/gems/sxp) (~> 1.2)
+* [sxp](https://rubygems.org/gems/sxp) (~> 2.0)
 
 ## Installation
 
