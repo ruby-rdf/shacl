@@ -32,6 +32,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency     'sxp',         '~> 2.0'
   gem.add_runtime_dependency     'sparql',      '~> 3.3'
 
+  gem.add_development_dependency 'getoptlong',  '~> 0.2'
   gem.add_development_dependency 'rdf-spec',    '~> 3.3'
   gem.add_development_dependency 'rdf-turtle',  '~> 3.3'
   gem.add_development_dependency 'rdf-vocab',   '~> 3.3'
