@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-require 'rdf/vocab'
-require 'rdf/turtle'
 
 namespace :gem do
   desc "Build the shacl-#{File.read('VERSION').chomp}.gem file"
