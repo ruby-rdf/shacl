@@ -18,6 +18,7 @@ module SHACL::Algebra
       options = id ? options.merge(shape: id) : options
       options[:severity] = @options[:severity] if @options[:severity]
       options[:severity] ||= RDF::Vocab::SHACL.Violation
+      options[:message] = @options[:message] if @options[:message]
       log_debug(NAME, depth: depth) {SXP::Generator.string({id: id, node: node}.to_sxp_bin)}
 
       # Evaluate against builtins

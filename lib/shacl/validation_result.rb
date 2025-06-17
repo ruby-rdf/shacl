@@ -145,7 +145,7 @@ module SHACL
     # @return [Boolean]
     def ==(other)
       return false unless other.is_a?(ValidationResult)
-      %i(focus path resultSeverity component shape value).all? do |prop|
+      %i(focus path resultSeverity component shape value message).all? do |prop|
         ours = self.send(prop)
         theirs = other.send(prop)
         theirs.nil? || (ours && ours.node? && theirs.node?) || ours && ours.eql?(theirs)
