@@ -121,7 +121,7 @@ module Fixtures
           "focusNode": "sh:focusNode",
           "details": "rdfs:details",
           "name": "mf:name",
-          "message": "sh:message",
+          "message": "sh:resultMessage",
           "options": {"@id": "test:options", "@type": "@id"},
           "result": {"@id":"mf:result", "@type": "@id"},
           "resultPath": "sh:resultPath",
