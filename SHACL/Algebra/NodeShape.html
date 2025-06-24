@@ -344,7 +344,8 @@
 69
 70
 71
-72</pre>
+72
+73</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/shacl/algebra/node_shape.rb', line 16</span>
@@ -354,6 +355,7 @@
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_id'>id</span> <span class='op'>?</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>shape:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_options'>options</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:severity</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:severity</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:severity</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:severity</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Vocab</span><span class='op'>::</span><span class='const'>SHACL</span><span class='period'>.</span><span class='const'>Violation</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#NAME-constant" title="SHACL::Algebra::NodeShape::NAME (constant)">NAME</a></span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='const'>SXP</span><span class='op'>::</span><span class='const'>Generator</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>node:</span> <span class='id identifier rubyid_node'>node</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_sxp_bin'>to_sxp_bin</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
   <span class='comment'># Evaluate against builtins
@@ -416,7 +418,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon May 19 18:11:12 2025 by
+  Generated on Tue Jun 24 21:32:45 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
